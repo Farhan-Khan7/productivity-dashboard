@@ -1,3 +1,19 @@
+const body = document.querySelector("body");
+const themeChange = document.querySelector("#theme-select");
+const themeVideo = document.querySelector("#theme-video");
+
+themeChange.addEventListener("change", function(){
+    
+    body.setAttribute("data-theme", this.value)
+    themeVideo.setAttribute("src", `assets/${this.value}-wheather-video.mp4`)
+})
+
+
+
+
+
+
+
 const quotes = [
     {
         quote: "Success is built in silence long before it is seen in public.",

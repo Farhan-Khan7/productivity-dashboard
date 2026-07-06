@@ -25,6 +25,7 @@
           muted
           loop
           preload="auto"
+          id="theme-video"
         ></video>
       </div>
       <div class="container">
@@ -110,10 +111,11 @@
             <!-- topbar complete -->
 
             <select id="theme-select" class="n-card">
-              <option value="morning-mode">Morning Mode</option>
-              <option value="day-mode">Day Mode</option>
-              <option value="evening-mode">Evening Mode</option>
-              <option value="night-mode">Night Mode</option>
+              <option value="" selected disabled>Select Mode</option>
+              <option value="morning">Morning Mode</option>
+              <option value="day">Day Mode</option>
+              <option value="evening">Evening Mode</option>
+              <option value="night">Night Mode</option>
             </select>
 
             <div id="date-pill" class="info-pill n-card">

@@ -1152,8 +1152,8 @@ body {
 #theme-select:focus {
   outline: none;
 }
-#theme-select select option {
-  background-color: var(--surface-2);
+#theme-select option {
+  /* background: transparent; */
   border: 1px solid var(--glass-border);
   padding: var(--space-sm);
   font-size: var(--fs-sm);
@@ -1754,7 +1754,7 @@ body {
   padding: var(--space-md) var(--space-lg);
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   text-align: center;
   position: relative;
@@ -1801,6 +1801,8 @@ body {
   display: flex;
   align-items: center;
   gap: var(--space-xs);
+  position: absolute;
+  bottom: 5%;
 }
 
 
