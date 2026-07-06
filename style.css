@@ -1571,7 +1571,7 @@ body {
   flex: 0 0 auto;
   display: flex;
   gap: var(--space-2xs);
-  margin-bottom: 14px;
+  margin-bottom: var(--space-sm);
   border-bottom: 1px solid rgba(0, 0, 0, 0.06);
 }
 .pomo-tab {
@@ -1649,28 +1649,29 @@ body {
   cursor: pointer;
   padding: var(--space-sm) var(--space-lg);
   border-radius: var(--radius-xs);
-  font-size: 12.5px;
+  font-size: var(--fs-xs);
   font-weight: 600;
   color: var(--heading);
-  background: var(--btn);
+  background-color: transparent;
   box-shadow:
-    inset 4px 4px 8px var(--shadow-light),
+    inset 4px 4px 5px var(--shadow-light),
     inset -4px -4px 8px var(--shadow-light);
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: var(--space-sm);
 }
 #reset-btn {
-  width: 38px;
-  height: 38px;
-  border-radius: 12px;
+  width: 3vw;
+  height: 6vh;
+  font-size: var(--fs-xs);
   border: none;
   border-radius: var(--radius-xs);
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--btn);
+  /* background: var(--btn); */
+  background-color: transparent;
   color: var(--heading);
   box-shadow:
     inset 4px 4px 8px var(--shadow-light),
@@ -1681,12 +1682,12 @@ body {
 #bottom-row {
   flex: 0 0 auto;
   display: flex;
-  gap: 16px;
+  gap: var(--space-md);
   height: 190px;
 }
 #weather-widget {
   flex: 1;
-  padding: 16px 18px;
+  padding: var(--space-sm) var(--space-lg);
   display: flex;
   flex-direction: column;
   min-height: 0;
@@ -1697,11 +1698,14 @@ body {
   justify-content: space-between;
   flex: 0 0 auto;
 }
+.panel-title{
+  font-size: var(--fs-xs);
+}
 #weather-location {
-  font-size: 10.5px;
+  font-size: var(--fs-lg);
   color: var(--heading);
   opacity: 0.6;
-  margin-top: 2px;
+  margin-top: var(--space-sm);
 }
 #weather-refresh-btn {
   border: none;
@@ -1709,7 +1713,7 @@ body {
   cursor: pointer;
   color: var(--heading);
   opacity: 0.6;
-  font-size: 14px;
+  font-size: var(--fs-lg);
 }
 #weather-main {
   display: flex;
@@ -1718,36 +1722,36 @@ body {
   flex: 1;
 }
 #weather-temp {
-  font-size: 30px;
+  font-size: var(--fs-xl);
   font-weight: 700;
   color: var(--heading);
 }
 #weather-desc {
-  font-size: 11px;
+  font-size: var(--fs-sm);
   color: var(--heading);
   opacity: 0.6;
 }
 #weather-icon {
-  font-size: 40px;
+  font-size: var(--fs-2xl);
   color: #e0a840;
 }
 #weather-details {
   display: flex;
-  gap: 14px;
+  gap: var(--space-lg);
   flex: 0 0 auto;
-  font-size: 10px;
+  font-size: var(--fs-sm);
   color: var(--heading);
   opacity: 0.6;
 }
 #weather-details .wd-item {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: var(--space-sm);
 }
 
 #quote-card {
-  flex: 1.6;
-  padding: 20px 26px;
+  flex: 1.5;
+  padding: var(--space-md) var(--space-lg);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -1759,43 +1763,44 @@ body {
 #quote-header {
   position: absolute;
   top: 14px;
-  left: 20px;
+  left: 14px;
   display: flex;
   align-items: center;
-  gap: 8px;
-  font-size: 13px;
+  gap: var(--space-sm);
+  font-size: var(--fs-xs);
   font-weight: 700;
   color: var(--heading);
 }
 #quote-text {
-  font-size: 15px;
+  font-size: var(--fs-md);
   font-weight: 600;
   color: var(--heading);
   line-height: 1.5;
   max-width: 80%;
+  margin-top: var(--space-lg);
 }
 #quote-author {
-  font-size: 11.5px;
+  font-size: var(--fs-xs);
   color: var(--heading);
   opacity: 0.6;
   margin-top: 8px;
 }
 #new-quote-btn {
-  margin-top: 14px;
+  margin-top: var(--space-lg);
   border: none;
   cursor: pointer;
-  padding: 8px 18px;
-  border-radius: 12px;
-  font-size: 11px;
+  padding: var(--space-sm) var(--space-lg);
+  border-radius: var(--radius-xs);
+  font-size: var(--fs-xs);
   font-weight: 600;
   color: var(--heading);
-  background: var(--surface-2);
+  background: transparent;
   box-shadow:
-    3px 3px 6px var(--shadow-dark),
-    -3px -3px 6px var(--shadow-light);
+    inset 3px 3px 8px var(--shadow-light),
+    inset -3px -3px 8px var(--shadow-light);
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: var(--space-xs);
 }
 
 
