@@ -16,11 +16,11 @@
   </head>
 
   <body>
-    <body data-theme="night">
+    <body data-theme="day">
       <div class="videos">
         <!-- <div class="video-overlay"></div> -->
         <video
-          src="assets/night-wheather-video.mp4"
+          src="assets/day-wheather-video.mp4"
           autoplay
           muted
           loop
@@ -166,13 +166,15 @@
                 <div class="stat-icon-ring"><i class="ri-star-line"></i></div>
                 <div id="goals-numbers" style="flex: 1">
                   <div class="stat-value-row">
-                    <span class="stat-label">Goals</span>
-                    <span class="stat-value" id="goals-total">3</span>
-                    <span class="stat-sub">Total Goals</span>
+                    <!-- <span class="stat-label">Goals</span> -->
+                    <div class="goals left">
+                      <span class="stat-sub">Total Goals</span>
+                      <span class="stat-value" id="goals-total">3</span>
+                    </div>
                   </div>
-                  <div style="text-align: right">
+                  <div class="goals-right">
+                    <div class="stat-sub">Completed Goals</div>
                     <div class="stat-value" id="goals-completed">2</div>
-                    <div class="stat-sub">Completed</div>
                   </div>
                 </div>
               </div>
@@ -194,58 +196,84 @@
                   <i class="ri-file-list-3-line"></i>Todo List
                 </div>
               </div>
-              <div id="todo-input-wrap">
+              <!-- <div id="todo-input-wrap">
                 <input
                   type="text"
                   id="todo-input"
                   placeholder="What needs to be done?"
                 />
-              </div>
-              <ul id="todo-list">
-                <li class="todo-item" data-id="1">
-                  <div class="todo-checkbox"></div>
-                  <span class="todo-text">Finish JavaScript Project</span>
+              </div> -->
+              <ul class="todo-list">
+                <li class="todo-item">
+                  <!-- <button class="todo-checkbox"> -->
+                    <!-- <i class="ri-check-line"></i> -->
+                     <input type="checkbox" class="todo-checkbox"></input>
+                  <!-- </button> -->
+
+                  <p class="todo-text">Finish JavaScript Project</p>
+
                   <button class="todo-delete-btn">
                     <i class="ri-delete-bin-line"></i>
                   </button>
-                  <div class="todo-check-btn done">
+
+                  <!-- <button class="todo-check-btn completed">
                     <i class="ri-check-line"></i>
-                  </div>
+                  </button> -->
                 </li>
-                <li class="todo-item" data-id="2">
-                  <div class="todo-checkbox"></div>
-                  <span class="todo-text">Workout for 30 minutes</span>
+
+                <li class="todo-item">
+                  <!-- <button class="todo-checkbox"> -->
+                    <!-- <i class="ri-check-line"></i> -->
+                     <input type="checkbox" class="todo-checkbox"></input>
+                  <!-- </button> -->
+
+                  <p class="todo-text">Finish JavaScript Project</p>
+
                   <button class="todo-delete-btn">
                     <i class="ri-delete-bin-line"></i>
                   </button>
-                  <div class="todo-check-btn"></div>
-                </li>
-                <li class="todo-item" data-id="3">
-                  <div class="todo-checkbox"></div>
-                  <span class="todo-text">Read 20 pages of book</span>
-                  <button class="todo-delete-btn">
-                    <i class="ri-delete-bin-line"></i>
-                  </button>
-                  <div class="todo-check-btn"></div>
-                </li>
-                <li class="todo-item completed" data-id="4">
-                  <div class="todo-checkbox"></div>
-                  <span class="todo-text">Learn React Basics</span>
-                  <button class="todo-delete-btn">
-                    <i class="ri-delete-bin-line"></i>
-                  </button>
-                  <div class="todo-check-btn done">
+
+                  <!-- <button class="todo-check-btn completed">
                     <i class="ri-check-line"></i>
-                  </div>
+                  </button> -->
                 </li>
-                <li class="todo-item" data-id="5">
-                  <div class="todo-checkbox"></div>
-                  <span class="todo-text">Drink 3L Water</span>
+
+                <li class="todo-item">
+                  <!-- <button class="todo-checkbox"> -->
+                    <!-- <i class="ri-check-line"></i> -->
+                     <input type="checkbox" class="todo-checkbox"></input>
+                  <!-- </button> -->
+
+                  <p class="todo-text">Finish JavaScript Project</p>
+
                   <button class="todo-delete-btn">
                     <i class="ri-delete-bin-line"></i>
                   </button>
-                  <div class="todo-check-btn"></div>
+
+                  <!-- <button class="todo-check-btn completed">
+                    <i class="ri-check-line"></i>
+                  </button> -->
                 </li>
+
+                <li class="todo-item">
+                  <!-- <button class="todo-checkbox"> -->
+                    <!-- <i class="ri-check-line"></i> -->
+                     <input type="checkbox" class="todo-checkbox"></input>
+                  <!-- </button> -->
+
+                  <p class="todo-text">Finish JavaScript Project</p>
+
+                  <button class="todo-delete-btn">
+                    <i class="ri-delete-bin-line"></i>
+                  </button>
+
+                  <!-- <button class="todo-check-btn completed">
+                    <i class="ri-check-line"></i>
+                  </button> -->
+                </li>
+
+                
+                
               </ul>
             </div>
 
@@ -276,18 +304,7 @@
                   <span class="planner-time">01:00 PM</span
                   ><span class="planner-task">Learn React</span>
                 </li>
-                <li class="planner-item">
-                  <span class="planner-time">03:00 PM</span
-                  ><span class="planner-task">Workout</span>
-                </li>
-                <li class="planner-item">
-                  <span class="planner-time">05:00 PM</span
-                  ><span class="planner-task">Read Book</span>
-                </li>
-                <li class="planner-item">
-                  <span class="planner-time">07:00 PM</span
-                  ><span class="planner-task">Personal Time</span>
-                </li>
+                
               </ul>
             </div>
 
@@ -297,8 +314,7 @@
                 <div class="panel-title">
                   <i class="ri-timer-2-line"></i>Pomodoro Timer
                 </div>
-                <i
-                  class="ri-more-2-fill"
+                <i class="ri-more-2-fill"
                   style="color: var(--heading); opacity: 0.6; cursor: pointer"
                 ></i>
               </div>
