@@ -1130,6 +1130,10 @@ body {
   font-weight: 700;
   color: var(--heading);
 }
+
+#greeting-title .user-name {
+  display: inline-block;
+}
 #greeting-title .wave {
   display: inline-block;
 }
@@ -1180,18 +1184,21 @@ body {
 }
 
 #theme-toggle-card {
-  flex: 0 0 auto;
+  /* flex: 0 0 auto; */
+  flex: .8;
   display: flex;
   align-items: center;
+  justify-content: space-evenly;
   gap: var(--space-md);
   padding: 0 var(--space-sm);
   font-size: var(--fs-xs);
   color: var(--heading);
   font-weight: 500;
   border-radius: var(--radius-sm);
+  cursor: pointer;
 }
 #theme-toggle-card i {
-  font-size: var(--fs-sm);
+  font-size: var(--fs-lg);
   color: var(--heading);
   opacity: 0.6;
 }
