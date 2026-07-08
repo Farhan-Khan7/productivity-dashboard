@@ -1,104 +1,90 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Productive Dashboard</title>
-    <link rel="stylesheet" href="style.css" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Material+Icons"
-      rel="stylesheet"
-    />
-    <link
-      href="https://cdn.jsdelivr.net/npm/remixicon@4.9.0/fonts/remixicon.css"
-      rel="stylesheet"
-    />
-  </head>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Productive Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.9.0/fonts/remixicon.css" rel="stylesheet" />
+</head>
+
+<body>
 
   <body>
-    <body>
-      <div class="videos">
-        <!-- <div class="video-overlay"></div> -->
-        <video
-          src="assets/day-wheather-video.mp4"
-          autoplay
-          muted
-          loop
-          preload="auto"
-          id="theme-video"
-        ></video>
-      </div>
-      <div class="container">
-        <aside class="sidebar">
-          <!-- Header -->
-          <div class="header">
-            <div class="logo-icon">
-              <!-- <img src="assets/logo.png" alt="Logo" /> -->
-            </div>
-            <div class="header-text">
-              <h1>ProductiveOS</h1>
-              <p>Your daily productivity partner</p>
-            </div>
+    <div class="videos">
+      <!-- <div class="video-overlay"></div> -->
+      <video src="assets/day-wheather-video.mp4" autoplay muted loop preload="auto" id="theme-video"></video>
+    </div>
+    <div class="container">
+      <aside class="sidebar n-card">
+        <!-- Header -->
+        <div class="header">
+          <div class="logo-icon">
+            <!-- <img src="assets/logo.png" alt="Logo" /> -->
           </div>
-
-          <!-- Main Navigation -->
-          <nav class="nav-menu">
-            <a href="#" class="nav-item active">
-              <i class="ri-home-4-line"></i>
-              Dashboard
-            </a>
-            <a href="#" class="nav-item">
-              <i class="ri-checkbox-line"></i>
-              Todo List
-            </a>
-            <a href="#" class="nav-item">
-              <i class="ri-calendar-todo-line"></i>
-              Planner
-            </a>
-            <a href="#" class="nav-item">
-              <i class="ri-time-line"></i>
-              Timer
-            </a>
-            <a href="#" class="nav-item">
-              <i class="ri-cloud-windy-line"></i>
-              Weather
-            </a>
-            <a href="#" class="nav-item">
-              <i class="ri-double-quotes-l"></i>
-              Quotes
-            </a>
-
-            <div class="divider"></div>
-
-            <!-- <a href="#" class="nav-item">
-                <i class="ri-settings-3-line"></i>
-                Settings
-            </a>
-            <a href="#" class="nav-item">
-                <i class="ri-sun-line"></i>
-                Theme
-            </a> -->
-          </nav>
-
-          <!-- User Profile Card -->
-          <div class="user-card">
-            <div class="avatar">
-              <i class="ri-user-3-fill"></i>
-            </div>
-            <div class="user-info">
-              <h4>Hello, Farhan!</h4>
-              <p>Stay focused and<br />make it happen ✨</p>
-            </div>
+          <div class="header-text">
+            <h1>ProductiveOS</h1>
+            <p>Your daily productivity partner</p>
           </div>
-          <div class="logout-btn">
-            <i class="ri-logout-box-r-line"></i>
-            <h3>Logout</h3>
+        </div>
+
+        <!-- Main Navigation -->
+        <nav class="nav-menu">
+          <a href="#" class="nav-item active" data-page="dashboard">
+            <i class="ri-home-4-line"></i>
+            Dashboard
+          </a>
+          <a href="#" class="nav-item" data-page="todo-list">
+            <i class="ri-checkbox-line"></i>
+            Todo List
+          </a>
+          <a href="#" class="nav-item" data-page="planner">
+            <i class="ri-calendar-todo-line"></i>
+            Planner
+          </a>
+          <a href="#" class="nav-item" data-page="timer">
+            <i class="ri-time-line"></i>
+            Timer
+          </a>
+          <a href="#" class="nav-item" data-page="weather">
+            <i class="ri-cloud-windy-line"></i>
+            Weather
+          </a>
+          <a href="#" class="nav-item" data-page="quotes">
+            <i class="ri-double-quotes-l"></i>
+            Quotes
+          </a>
+
+          <div class="divider"></div>
+
+          <a href="#" class="nav-item">
+            <i class="ri-sun-line"></i>
+            Dark Mode
+          </a>
+        </nav>
+
+        <!-- User Profile Card -->
+        <div class="user-card">
+          <div class="avatar">
+            <i class="ri-user-3-fill"></i>
           </div>
-        </aside>
+          <div class="user-info">
+            <h4>Hello, Farhan!</h4>
+            <p>Stay focused and<br />make it happen ✨</p>
+          </div>
+        </div>
+        <div class="logout-btn">
+          <i class="ri-logout-box-r-line"></i>
+          <h3>Logout</h3>
+        </div>
+      </aside>
 
-        <!-- sidebar done  -->
+      <!-- sidebar done  -->
 
-        <main class="main" id="main">
+      <main class="rightConatainer">
+        <main class="dashboard-main" id="dashboard-main">
           <!-- Top bar -->
           <section id="topbar">
             <div id="greeting-card" class="n-card">
@@ -205,8 +191,8 @@
               <ul class="todo-list">
                 <li class="todo-item">
                   <!-- <button class="todo-checkbox"> -->
-                    <!-- <i class="ri-check-line"></i> -->
-                     <input type="checkbox" class="todo-checkbox"></input>
+                  <!-- <i class="ri-check-line"></i> -->
+                  <input type="checkbox" class="todo-checkbox"></input>
                   <!-- </button> -->
 
                   <p class="todo-text">Finish JavaScript Project</p>
@@ -215,15 +201,17 @@
                     <i class="ri-delete-bin-line"></i>
                   </button>
 
-                  <!-- <button class="todo-check-btn completed">
-                    <i class="ri-check-line"></i>
-                  </button> -->
+
+
+                  <button class="todo-important-btn completed">
+                    <i class="ri-star-line"></i>
+                  </button>
                 </li>
 
                 <li class="todo-item">
                   <!-- <button class="todo-checkbox"> -->
-                    <!-- <i class="ri-check-line"></i> -->
-                     <input type="checkbox" class="todo-checkbox"></input>
+                  <!-- <i class="ri-check-line"></i> -->
+                  <input type="checkbox" class="todo-checkbox"></input>
                   <!-- </button> -->
 
                   <p class="todo-text">Finish JavaScript Project</p>
@@ -236,11 +224,13 @@
                     <i class="ri-check-line"></i>
                   </button> -->
                 </li>
+
+
 
                 <li class="todo-item">
                   <!-- <button class="todo-checkbox"> -->
-                    <!-- <i class="ri-check-line"></i> -->
-                     <input type="checkbox" class="todo-checkbox"></input>
+                  <!-- <i class="ri-check-line"></i> -->
+                  <input type="checkbox" class="todo-checkbox"></input>
                   <!-- </button> -->
 
                   <p class="todo-text">Finish JavaScript Project</p>
@@ -254,25 +244,8 @@
                   </button> -->
                 </li>
 
-                <li class="todo-item">
-                  <!-- <button class="todo-checkbox"> -->
-                    <!-- <i class="ri-check-line"></i> -->
-                     <input type="checkbox" class="todo-checkbox"></input>
-                  <!-- </button> -->
 
-                  <p class="todo-text">Finish JavaScript Project</p>
 
-                  <button class="todo-delete-btn">
-                    <i class="ri-delete-bin-line"></i>
-                  </button>
-
-                  <!-- <button class="todo-check-btn completed">
-                    <i class="ri-check-line"></i>
-                  </button> -->
-                </li>
-
-                
-                
               </ul>
             </div>
 
@@ -288,22 +261,18 @@
               </div>
               <ul id="planner-list">
                 <li class="planner-item">
-                  <span class="planner-time">09:00 AM</span
-                  ><span class="planner-task">Study JavaScript</span>
+                  <span class="planner-time">09:00 AM</span><span class="planner-task">Study JavaScript</span>
                 </li>
                 <li class="planner-item">
-                  <span class="planner-time">10:30 AM</span
-                  ><span class="planner-task">Project Work</span>
+                  <span class="planner-time">10:30 AM</span><span class="planner-task">Project Work</span>
                 </li>
                 <li class="planner-item">
-                  <span class="planner-time">12:00 PM</span
-                  ><span class="planner-task">Lunch Break</span>
+                  <span class="planner-time">12:00 PM</span><span class="planner-task">Lunch Break</span>
                 </li>
                 <li class="planner-item">
-                  <span class="planner-time">01:00 PM</span
-                  ><span class="planner-task">Learn React</span>
+                  <span class="planner-time">01:00 PM</span><span class="planner-task">Learn React</span>
                 </li>
-                
+
               </ul>
             </div>
 
@@ -313,9 +282,7 @@
                 <div class="panel-title">
                   <i class="ri-timer-2-line"></i>Pomodoro Timer
                 </div>
-                <i class="ri-more-2-fill"
-                  style="color: var(--heading); opacity: 0.6; cursor: pointer"
-                ></i>
+                <i class="ri-more-2-fill" style="color: var(--heading); opacity: 0.6; cursor: pointer"></i>
               </div>
               <div id="pomodoro-tabs">
                 <div class="pomo-tab active" data-mode="pomodoro">Pomodoro</div>
@@ -326,14 +293,8 @@
                 <div id="timer-ring-wrap">
                   <svg viewBox="0 0 140 140">
                     <circle id="timer-track" cx="70" cy="70" r="60"></circle>
-                    <circle
-                      id="timer-progress"
-                      cx="70"
-                      cy="70"
-                      r="60"
-                      stroke-dasharray="377"
-                      stroke-dashoffset="80"
-                    ></circle>
+                    <circle id="timer-progress" cx="70" cy="70" r="60" stroke-dasharray="377" stroke-dashoffset="80">
+                    </circle>
                   </svg>
                   <div id="timer-center">
                     <div id="timer-display">25:00</div>
@@ -351,7 +312,7 @@
               </div>
             </div>
           </section>
-          
+
           <!-- Bottom row -->
           <section id="bottom-row">
             <div id="quote-card" class="n-card">
@@ -375,7 +336,8 @@
                     <i class="ri-cloud-line"></i>Weather
                   </div>
                   <div id="weather-location">
-                    <i class="ri-map-pin-line"></i> Bhopal, India
+                    <i class="ri-map-pin-line"></i>
+                    <span id="location-value">Bhopal, India</span>
                   </div>
                 </div>
                 <button id="weather-refresh-btn">
@@ -391,24 +353,217 @@
               </div>
               <div id="weather-details">
                 <div class="wd-item">
-                  <i class="ri-drop-line"></i
-                  ><span id="humidity-value">62%</span>
+                  <i class="ri-drop-line"></i><span id="humidity-value">62%</span>
                 </div>
                 <div class="wd-item">
-                  <i class="ri-windy-line"></i
-                  ><span id="wind-value">12 km/h</span>
+                  <i class="ri-windy-line"></i><span id="wind-value">12 km/h</span>
                 </div>
                 <div class="wd-item">
-                  <i class="ri-temp-hot-line"></i
-                  ><span id="feels-like-value">36°C</span>
+                  <i class="ri-temp-hot-line"></i><span id="feels-like-value">36°C</span>
                 </div>
               </div>
             </div>
 
           </section>
         </main>
+
+
+
+
+       <section id="task-manager">
+
+  <!-- Header -->
+
+  <div class="task-topbar">
+
+    <div>
+
+      <h2 class="task-heading">
+
+        <i class="ri-file-list-3-line"></i>
+
+        Task Manager
+
+      </h2>
+
+      <p class="task-subtitle">
+
+        Stay organised and finish today's priorities.
+
+      </p>
+
+    </div>
+
+  </div>
+
+  <!-- Stats -->
+
+  <div class="task-overview">
+
+    <div class="task-stat-card n-card">
+
+      <span>Total Tasks</span>
+
+      <h3 id="task-total-count">08</h3>
+
+    </div>
+
+    <div class="task-stat-card n-card">
+
+      <span>Today's Tasks</span>
+
+      <h3 id="task-today-count">05</h3>
+
+    </div>
+
+    <div class="task-stat-card n-card">
+
+      <span>Completed</span>
+
+      <h3 id="task-completed-count">02</h3>
+
+    </div>
+
+  </div>
+
+  <!-- Controls -->
+
+  <form id="task-form">
+
+    <div class="task-input-area">
+
+      <input
+        type="text"
+        id="task-input"
+        class="n-card"
+        placeholder="What do you need to do today?"
+      >
+
+      <input
+        type="date"
+        id="task-date"
+        class="n-card"
+      >
+
+      <select
+        id="task-priority"
+        class="n-card"
+      >
+
+        <option value="low">Low</option>
+
+        <option value="medium">Medium</option>
+
+        <option value="high">High</option>
+
+      </select>
+
+      <button
+        type="button"
+        id="task-star-btn"
+        class="n-card"
+      >
+
+        <i class="ri-star-line"></i>
+
+      </button>
+
+      <button
+        type="submit"
+        id="task-add-btn"
+        class="n-card"
+      >
+
+        <i class="ri-add-line"></i>
+
+        Add Task
+
+      </button>
+
+    </div>
+
+  </form>
+
+  <!-- Empty State -->
+
+  <div id="task-empty-state" class="n-card">
+
+    <i class="ri-checkbox-circle-line"></i>
+
+    <h3>No Tasks Yet</h3>
+
+    <p>Add your first task and start being productive.</p>
+
+  </div>
+
+  <!-- Todo List -->
+
+  <ul id="task-list-container" class="todo-main">
+
+    <li class="task-card n-card">
+
+      <div class="task-left">
+
+        <input
+          type="checkbox"
+          class="task-check"
+        >
+
+        <div class="task-info">
+
+          <h4 class="task-name">
+
+            Finish JavaScript Project
+
+          </h4>
+
+          <div class="task-meta">
+
+            <span class="task-date-tag n-card">
+
+              <i class="ri-calendar-line"></i>
+
+              08 Jul 2026
+
+            </span>
+
+            <span class="task-priority high-priority n-card">
+
+              High
+
+            </span>
+
+          </div>
+
+        </div>
+
       </div>
-    </body>
-    <script src="script.js"></script>
+
+      <div class="task-actions">
+
+        <button class="task-important n-card">
+
+          <i class="ri-star-fill"></i>
+
+        </button>
+
+        <button class="task-remove n-card">
+
+          <i class="ri-delete-bin-line"></i>
+
+        </button>
+
+      </div>
+
+    </li>
+
+  </ul>
+
+</section>
+      </main>
+    </div>
   </body>
+  <script src="script.js"></script>
+</body>
+
 </html>
