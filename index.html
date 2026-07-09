@@ -6,8 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Productive Dashboard</title>
   <link rel="stylesheet" href="style.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/remixicon@4.9.0/fonts/remixicon.css" rel="stylesheet" />
 </head>
 
@@ -16,7 +16,7 @@
   <body>
     <div class="videos">
       <!-- <div class="video-overlay"></div> -->
-      <video src="assets/day-wheather-video.mp4" autoplay muted loop preload="auto" id="theme-video"></video>
+      <video src="assets/night-wheather-video.mp4" autoplay muted loop preload="auto" id="theme-video"></video>
     </div>
     <div class="container">
       <aside class="sidebar">
@@ -108,15 +108,14 @@
             </div>
 
 
-            <div id="theme-select" value="morning" class="n-card">🌅</div>
-              <div id="theme-select" value="day" class="n-card">☀️</div>
-              <div id="theme-select" value="evening" class="n-card">🌇</div>
-              <div id="theme-select" value="night" class="n-card">🌙</div>
-
-            <!-- <div id="theme-toggle-card" class="n-card">
-              <i class="ri-sun-line" id="theme-icon"></i>
-              <span id="theme-label">Light Mode</span>
-            </div> -->
+            <div id="theme-btns">
+              <div class="theme-select n-card" data-theme="morning">🌅</div>
+              <div class="theme-select n-card" data-theme="day">☀️</div>
+              <div class="theme-select n-card" data-theme="evening">🌇</div>
+              <div class="theme-select n-card" data-theme="night">🌙</div>
+              <div class="theme-select n-card" data-theme="auto"><span class="material-symbols-outlined">brightness_auto</span></div>
+            </div>
+           
           </section>
 
           <!-- Stats row -->

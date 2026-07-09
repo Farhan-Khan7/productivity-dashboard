@@ -1107,8 +1107,15 @@ body {
   opacity: 0.65;
   margin-top: var(--space-2xs);
 }
-#theme-select {
-  width: 5%;
+#theme-btns{
+  /* background-color: yellow; */
+  width: 25vw;
+  height: auto;
+  display: flex;
+  justify-content: space-between;
+}
+.theme-select {
+  width: 4vw;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1118,8 +1125,12 @@ body {
   font-size: var(--fs-md);
   /* background: var(--surface-2); */
 }
-
-#theme-select i{
+.theme-select span{
+  background: transparent;
+  padding: var(--space-2xs) var(--space-sm);
+  color: yellow;
+}
+.theme-select i{
   cursor: pointer;
   background: transparent;
   padding: var(--space-sm);
@@ -1740,7 +1751,7 @@ body {
   color: var(--heading);
 }
 #quote-text {
-  font-size: var(--fs-md);
+  font-size: var(--fs-xs);
   font-weight: 600;
   color: var(--heading);
   line-height: 1.5;
