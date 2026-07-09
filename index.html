@@ -7,6 +7,7 @@
   <title>Productive Dashboard</title>
   <link rel="stylesheet" href="style.css" />
   <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"/>
   <link href="https://cdn.jsdelivr.net/npm/remixicon@4.9.0/fonts/remixicon.css" rel="stylesheet" />
 </head>
 
@@ -18,7 +19,7 @@
       <video src="assets/day-wheather-video.mp4" autoplay muted loop preload="auto" id="theme-video"></video>
     </div>
     <div class="container">
-      <aside class="sidebar n-card">
+      <aside class="sidebar">
         <!-- Header -->
         <div class="header">
           <div class="logo-icon">
@@ -96,14 +97,6 @@
             </div>
             <!-- topbar complete -->
 
-            <select id="theme-select" class="n-card">
-              <option value="" selected disabled>Select Mode</option>
-              <option value="morning">Morning Theme</option>
-              <option value="day">Day Theme</option>
-              <option value="evening">Evening Theme</option>
-              <option value="night">Night Theme</option>
-            </select>
-
             <div id="date-pill" class="info-pill n-card">
               <i class="ri-calendar-line"></i>
               <span id="current-date">Wednesday, 07 May 2025</span>
@@ -114,10 +107,16 @@
               <span id="current-time">10:45 AM</span>
             </div>
 
-            <div id="theme-toggle-card" class="n-card">
+
+            <div id="theme-select" value="morning" class="n-card">🌅</div>
+              <div id="theme-select" value="day" class="n-card">☀️</div>
+              <div id="theme-select" value="evening" class="n-card">🌇</div>
+              <div id="theme-select" value="night" class="n-card">🌙</div>
+
+            <!-- <div id="theme-toggle-card" class="n-card">
               <i class="ri-sun-line" id="theme-icon"></i>
               <span id="theme-label">Light Mode</span>
-            </div>
+            </div> -->
           </section>
 
           <!-- Stats row -->
@@ -367,199 +366,178 @@
           </section>
         </main>
 
+        <!-- main dashboard done  -->
 
+        <div class="todo-main">
+          <section id="task-manager">
 
+            <!-- Header -->
 
-       <section id="task-manager">
+            <div class="task-topbar">
 
-  <!-- Header -->
+              <div>
 
-  <div class="task-topbar">
+                <h2 class="task-heading">
 
-    <div>
+                  <i class="ri-file-list-3-line"></i>
 
-      <h2 class="task-heading">
+                  Task Manager
 
-        <i class="ri-file-list-3-line"></i>
+                </h2>
 
-        Task Manager
+                <p class="task-subtitle">
 
-      </h2>
+                  Stay organised and finish today's priorities.
 
-      <p class="task-subtitle">
+                </p>
 
-        Stay organised and finish today's priorities.
+              </div>
 
-      </p>
+            </div>
 
-    </div>
+            <!-- Stats -->
 
-  </div>
+            <div class="task-overview">
 
-  <!-- Stats -->
+              <div class="task-stat-card n-card">
 
-  <div class="task-overview">
+                <span>Total Tasks</span>
 
-    <div class="task-stat-card n-card">
+                <h3 id="task-total-count">08</h3>
 
-      <span>Total Tasks</span>
+              </div>
 
-      <h3 id="task-total-count">08</h3>
+              <div class="task-stat-card n-card">
 
-    </div>
+                <span>Today's Tasks</span>
 
-    <div class="task-stat-card n-card">
+                <h3 id="task-today-count">05</h3>
 
-      <span>Today's Tasks</span>
+              </div>
 
-      <h3 id="task-today-count">05</h3>
+              <div class="task-stat-card n-card">
 
-    </div>
+                <span>Completed</span>
 
-    <div class="task-stat-card n-card">
+                <h3 id="task-completed-count">02</h3>
 
-      <span>Completed</span>
+              </div>
 
-      <h3 id="task-completed-count">02</h3>
+            </div>
 
-    </div>
+            <!-- Controls -->
 
-  </div>
+            <form id="task-form">
 
-  <!-- Controls -->
+              <div class="task-input-area">
 
-  <form id="task-form">
+                <input type="text" id="task-input" class="n-card" placeholder="What do you need to do today?">
 
-    <div class="task-input-area">
+                <input type="date" id="task-date" class="n-card">
 
-      <input
-        type="text"
-        id="task-input"
-        class="n-card"
-        placeholder="What do you need to do today?"
-      >
+                <!-- <select id="task-priority" class="n-card">
 
-      <input
-        type="date"
-        id="task-date"
-        class="n-card"
-      >
+                <option value="low">Low</option>
 
-      <select
-        id="task-priority"
-        class="n-card"
-      >
+                <option value="medium">Medium</option>
 
-        <option value="low">Low</option>
+                <option value="high">High</option>
 
-        <option value="medium">Medium</option>
+              </select> -->
 
-        <option value="high">High</option>
+                <button type="button" id="task-star-btn" class="n-card">
 
-      </select>
+                  <i class="ri-star-line"></i>
 
-      <button
-        type="button"
-        id="task-star-btn"
-        class="n-card"
-      >
+                </button>
 
-        <i class="ri-star-line"></i>
+                <button type="submit" id="task-add-btn" class="n-card">
 
-      </button>
+                  <i class="ri-add-line"></i>
 
-      <button
-        type="submit"
-        id="task-add-btn"
-        class="n-card"
-      >
+                  Add Task
 
-        <i class="ri-add-line"></i>
+                </button>
 
-        Add Task
+              </div>
 
-      </button>
+            </form>
 
-    </div>
+            <!-- Empty State -->
 
-  </form>
+            <div id="task-empty-state" class="n-card">
 
-  <!-- Empty State -->
+              <i class="ri-checkbox-circle-line"></i>
 
-  <div id="task-empty-state" class="n-card">
+              <h3>No Tasks Yet</h3>
 
-    <i class="ri-checkbox-circle-line"></i>
+              <p>Add your first task and start being productive.</p>
 
-    <h3>No Tasks Yet</h3>
+            </div>
 
-    <p>Add your first task and start being productive.</p>
+            <!-- Todo List -->
 
-  </div>
+            <ul id="task-list-container" class="todo-main">
 
-  <!-- Todo List -->
+              <li class="task-card n-card">
 
-  <ul id="task-list-container" class="todo-main">
+                <div class="task-left">
 
-    <li class="task-card n-card">
+                  <input type="checkbox" class="task-check">
 
-      <div class="task-left">
+                  <div class="task-info">
 
-        <input
-          type="checkbox"
-          class="task-check"
-        >
+                    <h4 class="task-name">
 
-        <div class="task-info">
+                      Finish JavaScript Project
 
-          <h4 class="task-name">
+                    </h4>
 
-            Finish JavaScript Project
+                    <div class="task-meta">
 
-          </h4>
+                      <span class="task-date-tag n-card">
 
-          <div class="task-meta">
+                        <i class="ri-calendar-line"></i>
 
-            <span class="task-date-tag n-card">
+                        08 Jul 2026
 
-              <i class="ri-calendar-line"></i>
+                      </span>
 
-              08 Jul 2026
+                      <span class="task-priority high-priority n-card">
 
-            </span>
+                        High
 
-            <span class="task-priority high-priority n-card">
+                      </span>
 
-              High
+                    </div>
 
-            </span>
+                  </div>
 
-          </div>
+                </div>
 
+                <div class="task-actions">
+
+                  <button class="task-important n-card">
+
+                    <i class="ri-star-fill"></i>
+
+                  </button>
+
+                  <button class="task-remove n-card">
+
+                    <i class="ri-delete-bin-line"></i>
+
+                  </button>
+
+                </div>
+
+              </li>
+
+            </ul>
+
+          </section>
         </div>
 
-      </div>
-
-      <div class="task-actions">
-
-        <button class="task-important n-card">
-
-          <i class="ri-star-fill"></i>
-
-        </button>
-
-        <button class="task-remove n-card">
-
-          <i class="ri-delete-bin-line"></i>
-
-        </button>
-
-      </div>
-
-    </li>
-
-  </ul>
-
-</section>
       </main>
     </div>
   </body>
