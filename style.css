@@ -804,9 +804,9 @@ body {
 .sidebar {
   width: 24%;
   height: 100%;
-  background: var(--surface-3);
+  background: var(--surface-2);
   /* background-color: transparent; */
-  opacity: 0.8;
+  opacity: 1;
   /* border-radius: var(--radius-sm); */
   padding: var(--space-md) var(--space-xl);
   display: flex;
@@ -1061,15 +1061,15 @@ body {
   -webkit-backdrop-filter: blur(18px);
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-sm);
-  box-shadow:
+  /* box-shadow:
     8px 8px 18px var(--shadow-dark),
-    -8px -8px 18px var(--shadow-light);
+    -8px -8px 18px var(--shadow-light); */
 }
-.n-inset {
+/* .n-inset {
   box-shadow:
     inset 4px 4px 8px var(--shadow-dark),
     inset -4px -4px 8px var(--shadow-light);
-}
+} */
 
 /* ---- Top bar ---- */
 #topbar {
@@ -1115,6 +1115,7 @@ body {
   justify-content: space-between;
 }
 .theme-select {
+  cursor: pointer;
   width: 4vw;
   display: flex;
   align-items: center;
@@ -1130,14 +1131,14 @@ body {
   padding: var(--space-2xs) var(--space-sm);
   color: yellow;
 }
-.theme-select i{
+/* .theme-select{
   cursor: pointer;
   background: transparent;
   padding: var(--space-sm);
   font-size: var(--fs-md);
   color: var(--heading);
   font-weight: 500;
-}
+} */
 
 .info-pill {
   flex: 0 0 auto;
@@ -1279,6 +1280,7 @@ body {
 
 #goals-card {
   width: 60%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: stretch;
@@ -1301,7 +1303,7 @@ body {
 }
 #goals-progress-track {
   width: 100%;
-  height: 5vh;
+  height: 5%;
   border-radius: var(--radius-sm);
   background: var(--surface-3);
   box-shadow:
@@ -1319,7 +1321,7 @@ body {
   font-size: var(--fs-xs);
   font-weight: 600;
   color: var(--heading);
-  margin-top: var(--space-xs);
+  /* margin-top: var(--space-xs); */
   white-space: nowrap;
   display: flex;
   align-items: center;
@@ -1379,6 +1381,9 @@ body {
 .panel-title i {
   font-size: var(--fs-sm);
   color: var(--heading);
+}
+#timer-progress{
+  background: var(--surface-3);
 }
 
 /* Todo List */

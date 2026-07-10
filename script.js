@@ -5,31 +5,6 @@ const themeBtns = document.querySelectorAll("#theme-btns .theme-select");
 const themeVideo = document.querySelector("#theme-video");
 
 const greeting = document.querySelector("#greeting-name");
-localStorage.getItem("greetings", greeting);
-
-function greetings() {
-  const savedTheme = localStorage.getItem("theme");
-
-  if (savedTheme === "morning") {
-    greeting.textContent = "Good Morning ";
-  } else if (savedTheme === "day") {
-    greeting.textContent = "Good Afternoon ";
-  } else if (savedTheme === "evening") {
-    greeting.textContent = "Good Evening ";
-  } else if (savedTheme === "night") {
-    greeting.textContent = "Good Night";
-  }
-}
-greetings();
-// greetings functions
-
-themeBtns.forEach((buttons) => {
-  buttons.addEventListener("click", function (details) {
-    console.log(buttons.dataset.theme);
-  });
-});
-
-//
 
 const currentDate = document.querySelector("#current-date");
 const currentTime = document.querySelector("#current-time");
@@ -51,12 +26,39 @@ function updateDateTime() {
   currentDate.textContent = date;
   currentTime.textContent = time;
 }
+updateDateTime();
 
+let autoMode = true;
 let currentTheme = "";
+
+function applyTheme(theme) {
+  currentTheme = theme;
+  body.setAttribute("theme", theme);
+
+  themeVideo.src = `assets/${theme}-wheather-video.mp4`;
+
+  themeVideo.load();
+
+  themeVideo.play();
+
+  localStorage.setItem("storeTheme", theme);
+
+  if (theme === "morning") {
+    greeting.textContent = "Good Morning";
+  } else if (theme === "day") {
+    greeting.textContent = "Good Afternoon";
+  } else if (theme === "evening") {
+    greeting.textContent = "Good Evening";
+  } else {
+    greeting.textContent = "Good Night";
+  }
+}
+
 function updateThemeBasedOnTime() {
+  if (!autoMode) return;
   const hour = new Date().getHours();
 
-  let newThaeme = "";
+  let newTheme = "";
 
   if (hour >= 6 && hour < 12) {
     newTheme = "morning";
@@ -67,26 +69,43 @@ function updateThemeBasedOnTime() {
   } else {
     newTheme = "night";
   }
-
   // Agar theme already wahi hai to kuch mat karo
 
   if (currentTheme === newTheme) return;
-
-  currentTheme = newTheme;
-
-  body.setAttribute("theme", newTheme);
-
-  themeVideo.src = `assets/${newTheme}-wheather-video.mp4`;
-
-  themeVideo.load();
-
-  themeVideo.play();
+  applyTheme(newTheme);
 }
 
-updateDateTime();
-updateThemeBasedOnTime();
+const savedTheme = localStorage.getItem("storeTheme");
+const savedMode = localStorage.getItem("themeMode");
+
+if (savedMode === "manual" && savedTheme) {
+  autoMode = false;
+
+  applyTheme(savedTheme);
+} else {
+  autoMode = true;
+
+  updateThemeBasedOnTime();
+}
 setInterval(updateThemeBasedOnTime, 60000);
 setInterval(updateDateTime, 1000);
+
+themeBtns.forEach((buttons) => {
+  buttons.addEventListener("click", function (details) {
+    const selectedTheme = buttons.dataset.theme;
+
+    if (selectedTheme === "auto") {
+      autoMode = true;
+      localStorage.setItem("themeMode", "auto");
+      updateThemeBasedOnTime();
+      return;
+    }
+
+    autoMode = false;
+    localStorage.setItem("themeMode", "manual");
+    applyTheme(selectedTheme);
+  });
+});
 
 // complete live date and time code
 
