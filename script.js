@@ -107,100 +107,8 @@ themeBtns.forEach((buttons) => {
   });
 });
 
-// complete live date and time code
+// theme logic done 
 
-// const quotes = [
-//   {
-//     quote: "Success is built in silence long before it is seen in public.",
-//     author: "— Naval Ravikant",
-//   },
-//   {
-//     quote:
-//       "The person who can stay focused while others are distracted will own the future.",
-//     author: "— James Clear",
-//   },
-//   {
-//     quote:
-//       "Discipline is choosing between what you want now and what you want most.",
-//     author: "— Abraham Lincoln",
-//   },
-//   {
-//     quote: "Your comfort zone is the most expensive place to live.",
-//     author: "— Alex Hormozi",
-//   },
-//   {
-//     quote: "Small daily improvements create extraordinary results over time.",
-//     author: "— Robin Sharma",
-//   },
-//   {
-//     quote:
-//       "The hardest worker in the room eventually becomes the most valuable.",
-//     author: "— Patrick Bet-David",
-//   },
-//   {
-//     quote: "Talent opens the door, consistency keeps it open.",
-//     author: "— Angela Duckworth",
-//   },
-//   {
-//     quote: "The future rewards those who can delay gratification today.",
-//     author: "— Morgan Housel",
-//   },
-//   {
-//     quote: "Most people quit when they are one breakthrough away from success.",
-//     author: "— Les Brown",
-//   },
-//   {
-//     quote: "Your habits are the architects of your destiny.",
-//     author: "— James Clear",
-//   },
-//   {
-//     quote: "Dreams become reality only when action becomes a daily ritual.",
-//     author: "— Denzel Washington",
-//   },
-//   {
-//     quote: "You do not rise to your goals, you fall to your systems.",
-//     author: "— James Clear",
-//   },
-//   {
-//     quote: "Every expert was once a beginner who refused to quit.",
-//     author: "— Helen Hayes",
-//   },
-//   {
-//     quote: "A year from now you will wish you had started today.",
-//     author: "— Karen Lamb",
-//   },
-//   {
-//     quote: "Focus is a superpower in a world designed to distract you.",
-//     author: "— Cal Newport",
-//   },
-//   {
-//     quote: "Your current situation is not your final destination.",
-//     author: "— Nido Qubein",
-//   },
-//   {
-//     quote: "What feels impossible today becomes your warm-up tomorrow.",
-//     author: "— David Goggins",
-//   },
-//   {
-//     quote:
-//       "The quality of your future depends on what you repeatedly do today.",
-//     author: "— Brian Tracy",
-//   },
-//   {
-//     quote: "My Internal Wealth Will Definitely Create My External Wealth...",
-//     author: "— Farhan Khan",
-//   },
-// ];
-
-// function updateQuote() {
-//   let randomQuoteIdx = Math.floor(Math.random() * quotes.length);
-
-//   quoteText.textContent = quotes[randomQuoteIdx].quote;
-//   quoteAuthor.textContent = quotes[randomQuoteIdx].author;
-// }
-// updateQuote();
-
-// Quote Chaning JS Done
 
 const quoteText = document.querySelector("#quote-text");
 const quoteAuthor = document.querySelector("#quote-author");
@@ -216,6 +124,8 @@ async function updateQuote() {
 }
 updateQuote();
 quoteRefreshBtn.addEventListener("click", updateQuote);
+
+// quote logic done 
 
 // Weather Location
 const weatherLocation = document.querySelector("#weather-location");
@@ -323,3 +233,10 @@ navTabs.forEach((link) => {
     }
   });
 });
+
+
+
+
+
+
+// todos section start

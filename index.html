@@ -45,6 +45,10 @@
             <i class="ri-calendar-todo-line"></i>
             Planner
           </a>
+          <a href="#" class="nav-item" data-page="planner">
+            <i class="ri-trophy-line"></i>
+            Goals
+          </a>
           <a href="#" class="nav-item" data-page="timer">
             <i class="ri-time-line"></i>
             Timer
@@ -60,10 +64,10 @@
 
           <div class="divider"></div>
 
-          <a href="#" class="nav-item">
+          <!-- <a href="#" class="nav-item">
             <i class="ri-sun-line"></i>
             Dark Mode
-          </a>
+          </a> -->
         </nav>
 
         <!-- User Profile Card -->
@@ -113,9 +117,10 @@
               <div class="theme-select n-card" data-theme="day">☀️</div>
               <div class="theme-select n-card" data-theme="evening">🌇</div>
               <div class="theme-select n-card" data-theme="night">🌙</div>
-              <div class="theme-select n-card" data-theme="auto"><span class="material-symbols-outlined">brightness_auto</span></div>
+              <div class="theme-select n-card" data-theme="auto"><span
+                  class="material-symbols-outlined">brightness_auto</span></div>
             </div>
-           
+
           </section>
 
           <!-- Stats row -->
@@ -186,65 +191,7 @@
                   placeholder="What needs to be done?"
                 />
               </div> -->
-              <ul class="todo-list">
-                <li class="todo-item">
-                  <!-- <button class="todo-checkbox"> -->
-                  <!-- <i class="ri-check-line"></i> -->
-                  <input type="checkbox" class="todo-checkbox"></input>
-                  <!-- </button> -->
 
-                  <p class="todo-text">Finish JavaScript Project</p>
-
-                  <button class="todo-delete-btn">
-                    <i class="ri-delete-bin-line"></i>
-                  </button>
-
-
-
-                  <button class="todo-important-btn completed">
-                    <i class="ri-star-line"></i>
-                  </button>
-                </li>
-
-                <li class="todo-item">
-                  <!-- <button class="todo-checkbox"> -->
-                  <!-- <i class="ri-check-line"></i> -->
-                  <input type="checkbox" class="todo-checkbox"></input>
-                  <!-- </button> -->
-
-                  <p class="todo-text">Finish JavaScript Project</p>
-
-                  <button class="todo-delete-btn">
-                    <i class="ri-delete-bin-line"></i>
-                  </button>
-
-                  <!-- <button class="todo-check-btn completed">
-                    <i class="ri-check-line"></i>
-                  </button> -->
-                </li>
-
-
-
-                <li class="todo-item">
-                  <!-- <button class="todo-checkbox"> -->
-                  <!-- <i class="ri-check-line"></i> -->
-                  <input type="checkbox" class="todo-checkbox"></input>
-                  <!-- </button> -->
-
-                  <p class="todo-text">Finish JavaScript Project</p>
-
-                  <button class="todo-delete-btn">
-                    <i class="ri-delete-bin-line"></i>
-                  </button>
-
-                  <!-- <button class="todo-check-btn completed">
-                    <i class="ri-check-line"></i>
-                  </button> -->
-                </li>
-
-
-
-              </ul>
             </div>
 
             <!-- Planner -->
@@ -253,9 +200,9 @@
                 <div class="panel-title">
                   <i class="ri-calendar-2-line"></i>Today's Planner
                 </div>
-                <div class="planner-badge-icon">
-                  <i class="ri-calendar-line"></i>
-                </div>
+                <!-- <div class="planner-badge-icon">
+                   <i class="ri-calendar-line"></i>
+                </div> -->
               </div>
               <ul id="planner-list">
                 <li class="planner-item">
@@ -274,58 +221,22 @@
               </ul>
             </div>
 
-            <!-- Pomodoro -->
-            <div class="panel n-card" id="pomodoro-panel">
+            <!-- Goals -->
+            <div class="panel n-card" id="goals-panel">
               <div class="panel-header">
                 <div class="panel-title">
-                  <i class="ri-timer-2-line"></i>Pomodoro Timer
+                  <i class="ri-target-fill"></i>Goals
                 </div>
-                <i class="ri-more-2-fill" style="color: var(--heading); opacity: 0.6; cursor: pointer"></i>
               </div>
-              <div id="pomodoro-tabs">
-                <div class="pomo-tab active" data-mode="pomodoro">Pomodoro</div>
-                <div class="pomo-tab" data-mode="short">Short Break</div>
-                <div class="pomo-tab" data-mode="long">Long Break</div>
-              </div>
-              <div id="pomodoro-body">
-                <div id="timer-ring-wrap">
-                  <svg viewBox="0 0 140 140">
-                    <circle id="timer-track" cx="70" cy="70" r="60"></circle>
-                    <circle id="timer-progress" cx="70" cy="70" r="60" stroke-dasharray="377" stroke-dashoffset="80">
-                    </circle>
-                  </svg>
-                  <div id="timer-center">
-                    <div id="timer-display">25:00</div>
-                    <div id="timer-label">Focus Time</div>
-                  </div>
-                </div>
-                <div id="pomodoro-controls">
-                  <button id="start-btn">
-                    <i class="ri-play-fill"></i>Start
-                  </button>
-                  <button id="reset-btn">
-                    <i class="ri-restart-line"></i>
-                  </button>
-                </div>
+              <div id="goals-body">
+
+
               </div>
             </div>
           </section>
 
           <!-- Bottom row -->
           <section id="bottom-row">
-            <div id="quote-card" class="n-card">
-              <div id="quote-header">
-                <i class="ri-double-quotes-l"></i>Daily Motivation
-              </div>
-              <p id="quote-text">
-                Success is not final, failure is not fatal: It is the courage to
-                continue that counts.
-              </p>
-              <p id="quote-author">— Winston Churchill</p>
-              <button id="new-quote-btn">
-                <i class="ri-refresh-line"></i>New Quote
-              </button>
-            </div>
 
             <div id="weather-widget" class="n-card">
               <div id="weather-header">
@@ -362,182 +273,189 @@
               </div>
             </div>
 
+            <div class="panel n-card" id="pomodoro-panel">
+              <div class="panel-header">
+                <div class="panel-title">
+                  <i class="ri-timer-2-line"></i>Pomodoro Timer
+                </div>
+                <!-- <i class="ri-more-2-fill" style="color: var(--heading); opacity: 0.6; cursor: pointer"></i> -->
+              </div>
+              <div id="pomodoro-body">
+                <div id="timer-ring-wrap">
+                  <svg viewBox="0 0 140 140">
+                    <circle id="timer-track" cx="70" cy="70" r="50"></circle>
+                    <circle id="timer-progress" cx="70" cy="70" r="50" stroke-dasharray="377" stroke-dashoffset="80">
+                    </circle>
+                  </svg>
+                  <div id="timer-center">
+                    <div id="timer-display">25:00</div>
+                    <div id="timer-label">Focus Time</div>
+                  </div>
+                </div>
+                <div id="pomodoro-controls">
+                  <button id="start-btn">
+                    <i class="ri-play-fill"></i>Start
+                  </button>
+                  <button id="pause-btn">
+                    <i class="ri-pause-line"></i>Pause
+                  </button>
+                  <button id="reset-btn">
+                    <i class="ri-restart-line"></i>Reset
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div id="quote-card" class="n-card">
+              <div id="quote-header">
+                <i class="ri-double-quotes-l"></i>Daily Motivation
+              </div>
+              <p id="quote-text">
+                Success is not final, failure is not fatal: It is the courage to
+                continue that counts.
+              </p>
+              <p id="quote-author">— Winston Churchill</p>
+              <button id="new-quote-btn">
+                <i class="ri-refresh-line"></i>New Quote
+              </button>
+            </div>
+
+
           </section>
         </main>
 
         <!-- main dashboard done  -->
 
         <div class="todo-main">
-          <section id="task-manager">
 
-            <!-- Header -->
+          <section id="todo-section">
+            <div class="logout-btn back-btn">
+              <i class="ri-arrow-left-box-line"></i>
+              <h3>Back</h3>
+            </div>
 
-            <div class="task-topbar">
+            <!-- Add Task -->
 
-              <div>
+            <div class="add-task n-card">
 
-                <h2 class="task-heading">
+              <!-- Task Input -->
 
-                  <i class="ri-file-list-3-line"></i>
+              <input type="text" id="task-input" placeholder="Enter your task...">
 
-                  Task Manager
+              <!-- Important -->
 
-                </h2>
+              <label class="important-label">
 
-                <p class="task-subtitle">
+                <input type="checkbox" id="important-checkbox">
 
-                  Stay organised and finish today's priorities.
+                <i class="ri-star-smile-line custom-star"></i>
 
-                </p>
+                <span>Important</span>
+
+              </label>
+
+              <!-- Date -->
+
+              <div class="date-input-wrap">
+
+                <input type="date" id="task-date">
+
+                <i class="ri-calendar-line"></i>
 
               </div>
+
+              <button type="button" id="add-task-btn">
+
+                <i class="ri-add-line"></i>
+
+                <span>Add Task</span>
+
+              </button>
 
             </div>
 
-            <!-- Stats -->
+            <!-- Right -->
 
-            <div class="task-overview">
 
-              <div class="task-stat-card n-card">
 
-                <span>Total Tasks</span>
-
-                <h3 id="task-total-count">08</h3>
-
-              </div>
-
-              <div class="task-stat-card n-card">
-
-                <span>Today's Tasks</span>
-
-                <h3 id="task-today-count">05</h3>
-
-              </div>
-
-              <div class="task-stat-card n-card">
-
-                <span>Completed</span>
-
-                <h3 id="task-completed-count">02</h3>
-
-              </div>
-
-            </div>
-
-            <!-- Controls -->
-
-            <form id="task-form">
-
-              <div class="task-input-area">
-
-                <input type="text" id="task-input" class="n-card" placeholder="What do you need to do today?">
-
-                <input type="date" id="task-date" class="n-card">
-
-                <!-- <select id="task-priority" class="n-card">
-
-                <option value="low">Low</option>
-
-                <option value="medium">Medium</option>
-
-                <option value="high">High</option>
-
-              </select> -->
-
-                <button type="button" id="task-star-btn" class="n-card">
-
-                  <i class="ri-star-line"></i>
-
-                </button>
-
-                <button type="submit" id="task-add-btn" class="n-card">
-
-                  <i class="ri-add-line"></i>
-
-                  Add Task
-
-                </button>
-
-              </div>
-
-            </form>
-
-            <!-- Empty State -->
-
-            <div id="task-empty-state" class="n-card">
-
-              <i class="ri-checkbox-circle-line"></i>
-
+            <div class="show-task n-card">
+              <i class="ri-inbox-line"></i>
               <h3>No Tasks Yet</h3>
+              <p>Every big achievement starts with one task.</p>
 
-              <p>Add your first task and start being productive.</p>
+              <!-- task item -->
+              <div class="empty-task">
+                <li class="todo-item">
 
-            </div>
+                  <!-- Left -->
 
-            <!-- Todo List -->
+                  <div class="todo-left">
 
-            <ul id="task-list-container" class="todo-main">
+                    <!-- Task -->
 
-              <li class="task-card n-card">
-
-                <div class="task-left">
-
-                  <input type="checkbox" class="task-check">
-
-                  <div class="task-info">
-
-                    <h4 class="task-name">
-
-                      Finish JavaScript Project
-
-                    </h4>
-
-                    <div class="task-meta">
-
-                      <span class="task-date-tag n-card">
-
-                        <i class="ri-calendar-line"></i>
-
-                        08 Jul 2026
-
-                      </span>
-
-                      <span class="task-priority high-priority n-card">
-
-                        High
-
-                      </span>
-
-                    </div>
+                    <input type="text" class="todo-title" value="Complete JavaScript Array Methods" readonly>
 
                   </div>
 
-                </div>
+                  <!-- Due Date -->
 
-                <div class="task-actions">
+                  <span class="todo-tag date-tag">
 
-                  <button class="task-important n-card">
+                    <!-- <i class="ri-calendar-line"></i> -->
+
+                    11 Jul 2026
+
+                  </span>
+
+                  <!-- Important -->
+
+                  <span class="todo-tag important-tag">
 
                     <i class="ri-star-fill"></i>
 
+                  </span>
+
+
+                  <!-- Edit -->
+
+                  <div class="todo-actions">
+                    <button class="todo-btn edit-btn" title="Edit Task">
+
+                    <i class="ri-edit-2-line"></i>
+
                   </button>
 
-                  <button class="task-remove n-card">
+                  <!-- Complete -->
+
+                  <button class="todo-btn complete-btn" title="Complete Task">
+
+                    <i class="ri-checkbox-circle-line"></i>
+
+                  </button>
+
+                  <!-- Delete -->
+
+                  <button class="todo-btn delete-btn" title="Delete Task">
 
                     <i class="ri-delete-bin-line"></i>
 
                   </button>
+                  </div>
 
-                </div>
 
-              </li>
 
-            </ul>
-
-          </section>
+                </li>
+              </div>
+            </div>
         </div>
 
-      </main>
+    </div>
+
+
+    </section>
+    </div>
+
+    </main>
     </div>
   </body>
   <script src="script.js"></script>
