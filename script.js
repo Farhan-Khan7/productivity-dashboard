@@ -212,7 +212,7 @@ getLocation();
 weatherRefreshBtn.addEventListener("click", getLocation);
 
 const dashboard = document.querySelector("#dashboard-main");
-const todos = document.querySelector("#todo-main");
+const todoDashboard = document.querySelector(".todo-main");
 
 const navTabs = document.querySelectorAll(".nav-menu .nav-item");
 
@@ -226,10 +226,10 @@ navTabs.forEach((link) => {
 
     if (link.dataset.page === "dashboard") {
       dashboard.style.display = "flex";
-      todos.style.display = "none";
+      todoDashboard.style.display = "none";
     } else if (link.dataset.page === "todo-list") {
       dashboard.style.display = "none";
-      todos.style.display = "initial";
+      todoDashboard.style.display = "flex";
     }
   });
 });
@@ -240,3 +240,185 @@ navTabs.forEach((link) => {
 
 
 // todos section start
+
+// Task Input
+const taskInput = document.querySelector("#task-input");
+
+// Important Checkbox
+const importantCheckbox = document.querySelector("#important-checkbox");
+
+// Due Date
+const taskDate = document.querySelector("#task-date");
+const today = new Date().toISOString().split("T")[0];
+taskDate.min = today;
+taskDate.setAttribute("min", today)
+
+// Add Button
+const addTaskBtn = document.querySelector("#add-task-btn");
+
+// Todo List Container
+const todoList = document.querySelector(".todo-list"); // apni ul ki id likhna
+
+// Empty State
+const emptyState = document.querySelector(".empty-state"); // agar hai to
+
+// Counters (agar hai)
+const totalTaskCount = document.querySelector("#total-task-count");
+const todayTaskCount = document.querySelector("#today-task-count");
+const completedTaskCount = document.querySelector("#completed-task-count");
+const emptyMessage = document.querySelector(".empty-message")
+
+
+let todos = [];
+
+function renderTodos() {
+
+  if (todos.length === 0) {
+    emptyMessage.style.display = "flex";
+  } else {
+    emptyMessage.style.display = "none";
+  }
+
+  let todoHTML = "";
+  todoList.innerHTML = ""
+
+  todos.forEach((todo) => {
+    const formattedDate = new Date(todo.dueDate).toLocaleDateString("en-GB", {
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
+    });
+
+    todoHTML += `<li class="todo-item">
+
+                  <!-- Left -->
+
+                  <div class="todo-left">
+
+                    <!-- Task -->
+
+                    <input type="text" class="todo-title" value="${todo.taskdesc}" readonly>
+
+                  </div>
+
+                  <!-- Due Date -->
+
+                  <span class="todo-tag date-tag">
+
+                    <!-- <i class="ri-calendar-line"></i> -->
+
+                    ${formattedDate}
+
+                  </span>
+
+                  <!-- Important -->
+
+                  ${todo.isImportant ? `<span class="todo-tag important-tag">
+
+                    <i class="ri-star-fill"></i>
+
+                  </span>`: ""}
+
+
+                  <!-- Edit -->
+
+                  <div class="todo-actions">
+                    <button class="todo-btn edit-btn" title="Edit Task">
+
+                      <i class="ri-edit-2-line"></i>
+
+                    </button>
+
+                    <!-- Complete -->
+
+                    <button class="todo-btn complete-btn" title="Complete Task">
+
+                      <i class="ri-checkbox-circle-line"></i>
+
+                    </button>
+
+                    <!-- Delete -->
+
+                    <button class="todo-btn delete-btn" title="Delete Task">
+
+                      <i class="ri-delete-bin-line"></i>
+
+                    </button>
+                  </div>
+
+
+
+                </li>`
+
+
+  })
+  todoList.innerHTML = todoHTML;
+
+}
+
+
+function resetInputs() {
+  taskInput.value = "";
+  importantCheckbox.checked = false;
+  taskDate.value = "";
+}
+renderTodos()
+
+function addTodos() {
+  let taskdesc = taskInput.value.trim();
+  let isImportant = importantCheckbox.checked;
+  let dueDate = taskDate.value;
+
+  if (taskdesc === "") {
+    alert("Enter a task before adding.")
+    return
+  } else if (dueDate === "") {
+    alert("Please select a due date.");
+    return;
+  } else if (taskDate.value < today) {
+    alert("Please select today or a future date.")
+    return
+  }
+
+  const todoDetails = {
+    id: Date.now(),
+    taskdesc,
+    isImportant,
+    dueDate,
+    complete: false
+  }
+
+  if (isImportant) {
+    todos.unshift(todoDetails)
+  } else {
+    todos.push(todoDetails)
+  }
+
+  localStorage.setItem("todoItem", JSON.stringify(todos));
+
+  renderTodos()
+  resetInputs()
+
+}
+
+
+addTaskBtn.addEventListener("click", addTodos)
+
+
+
+renderTodos();
+
+function loadPage() {
+
+  const storedTodo = localStorage.getItem("todoItem");
+
+  if (storedTodo) {
+
+    todos = JSON.parse(storedTodo);
+
+    renderTodos();
+
+  }
+
+}
+loadPage();

@@ -358,7 +358,7 @@
 
               <div class="date-input-wrap">
 
-                <input type="date" id="task-date">
+                <input type="date" id="task-date" taskDate.min=todayDate>
 
                 <i class="ri-calendar-line"></i>
 
@@ -379,83 +379,81 @@
 
 
             <div class="show-task n-card">
-              <i class="ri-inbox-line"></i>
+              <div class="empty-message">
+                <i class="ri-inbox-line"></i>
               <h3>No Tasks Yet</h3>
               <p>Every big achievement starts with one task.</p>
+              </div>
 
               <!-- task item -->
-              <div class="empty-task">
-                <li class="todo-item">
+              <div class="empty-state">
+                <ul class="todo-list">
+                  <li class="todo-item">
 
-                  <!-- Left -->
+                    <!-- Left -->
 
-                  <div class="todo-left">
+                    <div class="todo-left">
 
-                    <!-- Task -->
+                      <!-- Task -->
 
-                    <input type="text" class="todo-title" value="Complete JavaScript Array Methods" readonly>
+                      <input type="text" class="todo-title" value="Complete JavaScript Array Methods" readonly>
 
-                  </div>
+                    </div>
 
-                  <!-- Due Date -->
+                    <!-- Due Date -->
 
-                  <span class="todo-tag date-tag">
+                    <span class="todo-tag date-tag">
 
-                    <!-- <i class="ri-calendar-line"></i> -->
+                      <!-- <i class="ri-calendar-line"></i> -->
 
-                    11 Jul 2026
+                      11 Jul 2026
 
-                  </span>
+                    </span>
 
-                  <!-- Important -->
+                    <!-- Important -->
 
-                  <span class="todo-tag important-tag">
+                    <span class="todo-tag important-tag">
 
-                    <i class="ri-star-fill"></i>
+                      <i class="ri-star-fill"></i>
 
-                  </span>
-
-
-                  <!-- Edit -->
-
-                  <div class="todo-actions">
-                    <button class="todo-btn edit-btn" title="Edit Task">
-
-                    <i class="ri-edit-2-line"></i>
-
-                  </button>
-
-                  <!-- Complete -->
-
-                  <button class="todo-btn complete-btn" title="Complete Task">
-
-                    <i class="ri-checkbox-circle-line"></i>
-
-                  </button>
-
-                  <!-- Delete -->
-
-                  <button class="todo-btn delete-btn" title="Delete Task">
-
-                    <i class="ri-delete-bin-line"></i>
-
-                  </button>
-                  </div>
+                    </span>
 
 
+                    <!-- Edit -->
 
-                </li>
+                    <div class="todo-actions">
+                      <button class="todo-btn edit-btn" title="Edit Task">
+
+                        <i class="ri-edit-2-line"></i>
+
+                      </button>
+
+                      <!-- Complete -->
+
+                      <button class="todo-btn complete-btn" title="Complete Task">
+
+                        <i class="ri-checkbox-circle-line"></i>
+
+                      </button>
+
+                      <!-- Delete -->
+
+                      <button class="todo-btn delete-btn" title="Delete Task">
+
+                        <i class="ri-delete-bin-line"></i>
+
+                      </button>
+                    </div>
+
+
+
+                  </li>
+                </ul>
               </div>
             </div>
         </div>
+      </main>
 
-    </div>
-
-
-    </section>
-    </div>
-
-    </main>
     </div>
   </body>
   <script src="script.js"></script>
