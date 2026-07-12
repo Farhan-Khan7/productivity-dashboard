@@ -213,6 +213,7 @@ weatherRefreshBtn.addEventListener("click", getLocation);
 
 const dashboard = document.querySelector("#dashboard-main");
 const todoDashboard = document.querySelector(".todo-main");
+const goalDashboard = document.querySelector(".goal-main");
 
 const navTabs = document.querySelectorAll(".nav-menu .nav-item");
 
@@ -227,9 +228,15 @@ navTabs.forEach((link) => {
     if (link.dataset.page === "dashboard") {
       dashboard.style.display = "flex";
       todoDashboard.style.display = "none";
+      goalDashboard.style.display = "none"
     } else if (link.dataset.page === "todo-list") {
       dashboard.style.display = "none";
       todoDashboard.style.display = "flex";
+      goalDashboard.style.display = "none"
+    } else if (link.dataset.page === "goals") {
+      dashboard.style.display = "none";
+      todoDashboard.style.display = "none";
+      goalDashboard.style.display = "flex"
     }
   });
 });
@@ -249,7 +256,7 @@ const importantCheckbox = document.querySelector("#important-checkbox");
 
 // Due Date
 const taskDate = document.querySelector("#task-date");
-const today = new Date().toISOString().split("T")[0];
+const today = new Date().toLocaleDateString("en-CA");
 taskDate.min = today;
 taskDate.setAttribute("min", today)
 
@@ -270,6 +277,8 @@ const emptyMessage = document.querySelector(".empty-message")
 
 
 let todos = [];
+let editingId = null;
+
 
 function renderTodos() {
 
@@ -323,7 +332,7 @@ function renderTodos() {
                   <!-- Edit -->
 
                   <div class="todo-actions">
-                    <button class="todo-btn edit-btn" title="Edit Task">
+                    <button class="todo-btn edit-btn" title="Edit Task" data-id="${todo.id}">
 
                       <i class="ri-edit-2-line"></i>
 
@@ -331,7 +340,7 @@ function renderTodos() {
 
                     <!-- Delete -->
 
-                    <button class="todo-btn delete-btn" title="Delete Task">
+                    <button class="todo-btn delete-btn" title="Delete Task" data-id="${todo.id}">
 
                       <i class="ri-delete-bin-line"></i>
 
@@ -351,8 +360,62 @@ function renderTodos() {
 }
 
 
+
+// Edit Button functionalty
+
+todoList.addEventListener("click", function (event) {
+
+
+  const editBtn = event.target.closest(".edit-btn");
+
+
+  if (!editBtn) return;
+
+  const todoItem = editBtn.closest(".todo-item");
+  const taskDesc = todoItem.querySelector(".todo-title");
+  const id = editBtn.dataset.id;
+
+
+  if (editingId === null) {
+    editBtn.innerHTML = `<i class="ri-check-double-line"></i>`
+    taskDesc.readOnly = false;
+    taskDesc.focus();
+    editingId = Number(id);
+  } else if (editingId === Number(id)) {
+    let selectedEditTodos = todos.find((item) => {
+      return item.id == editingId
+    })
+    selectedEditTodos.taskdesc = taskDesc.value;
+    localStorage.setItem("todoItem", JSON.stringify(todos))
+    editBtn.innerHTML = ` <i class="ri-edit-2-line"></i>`
+    taskDesc.readOnly = true;
+    editingId = null;
+    renderTodos();
+  } else {
+    alert("Please save the current task first.");
+  }
+})
+
+// delete button functionalty
+todoList.addEventListener("click", function (event) {
+  const deleteBtn = event.target.closest(".delete-btn")
+
+  if (!deleteBtn) return;
+
+  const deleteId = Number(deleteBtn.dataset.id);
+
+  todos = todos.filter((item) => {
+    return item.id !== deleteId
+  })
+  localStorage.setItem("todoItem", JSON.stringify(todos))
+  renderTodos()
+
+})
+
+
+// Dashboard todos Render functionalty
 const dashboardTodos = document.querySelector(".dashboard-todos");
-function renderDashboardTodos(){
+function renderDashboardTodos() {
   dashboardTodos.innerHTML = "";
   const today = new Date().toLocaleDateString("en-CA");
 
@@ -360,18 +423,13 @@ function renderDashboardTodos(){
     return todo.dueDate === today
   })
 
-   console.log("Today:", today);
-
-console.log("Todos:", todos);
-
-console.log("Filtered:", todayTodos);
   let dashboardTodoItem = "";
-  todayTodos.forEach((todo) =>{
+  todayTodos.forEach((todo) => {
 
     dashboardTodoItem += `<div class="dashboard-items">
                   <span>${todo.taskdesc}</span>
                   <div class="dashboard-todo-tags">
-                    ${todo.isImportant? `<span class="dashboard-important-tag">
+                    ${todo.isImportant ? `<span class="dashboard-important-tag">
                       <i class="ri-star-fill"></i>
                     </span>`: ""}
                   <button class="complete-btn" title="Complete Task">
@@ -385,6 +443,8 @@ console.log("Filtered:", todayTodos);
 }
 
 
+
+// Reset input functionalty
 function resetInputs() {
   taskInput.value = "";
   importantCheckbox.checked = false;
@@ -392,6 +452,8 @@ function resetInputs() {
 }
 renderTodos()
 
+
+// Add todos functionalty
 function addTodos() {
   let taskdesc = taskInput.value.trim();
   let isImportant = importantCheckbox.checked;
@@ -426,18 +488,116 @@ function addTodos() {
 
   renderTodos()
   resetInputs()
-  renderDashboardTodos()
+}
+
+addTaskBtn.addEventListener("click", addTodos);
+// todos functionalty done 
+
+
+
+const goalInput = document.querySelector("#goal-input");
+const goalDate = document.querySelector("#goal-date");
+const goalEmptyMessage = document.querySelector(".goal-empty-message");
+const goalList = document.querySelector(".goal-list");
+
+const addGoal = document.querySelector("#add-goal-btn")
+
+goalDate.min = today;
+goalDate.setAttribute("min", today)
+
+let goals = []
+
+function renderGoals() {
+
+  if (goals.length === 0) {
+    goalEmptyMessage.style.display = "flex";
+  } else {
+    goalEmptyMessage.style.display = "none";
+  }
+
+  let goalHTML = "";
+  goalList.innerHTML = ""
+  goals.forEach((goal) => {
+    const formattedDate = new Date(goal.dueDate).toLocaleDateString("en-GB", {
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
+    });
+
+    goalHTML += `<li class="goal-item">
+
+                    <!-- Left -->
+
+                    <div class="goal-left">
+
+                      <!-- Task -->
+
+                      <input type="text" class="goal-title" value="${goal.goaldesc}" readonly>
+
+                    </div>
+
+                    <span class="todo-tag date-tag">
+
+                      <!-- <i class="ri-calendar-line"></i> -->
+
+                      ${formattedDate}
+
+                    </span>
+
+                    <!-- Complete -->
+
+                   
+                      <button class="goal-btn goal-complete-btn" title="Edit goal">
+
+                        <i class="ri-progress-5-line"></i>
+
+                      </button>
+
+                  </li>`
+
+                  
+                })
+                goalList.innerHTML = goalHTML;
+
 
 }
 
+function addGoals() {
+  const goaldesc = goalInput.value.trim();
+  const dueDate = goalDate.value;
 
-addTaskBtn.addEventListener("click", addTodos)
+  if (goaldesc === "") {
+    alert("Enter a task before adding.")
+    return
+  } else if (dueDate === "") {
+    alert("Please select a due date.");
+    return;
+  } else if (goalDate.value < today) {
+    alert("Please select today or a future date.")
+    return
+  }
+
+  const goalsDetails = {
+    id: Date.now(),
+    goaldesc,
+    dueDate,
+    complete: false
+  }
+
+  goals.push(goalsDetails);
+  localStorage.setItem("goalItems", JSON.stringify(goals));
+
+  renderGoals();
+}
+
+
+addGoal.addEventListener("click", addGoals)
 
 
 
-renderTodos();
 
-function loadPage() {
+// empty localstorage pagload function 
+function loadTodosFromStorage() {
 
   const storedTodo = localStorage.getItem("todoItem");
 
@@ -446,9 +606,7 @@ function loadPage() {
     todos = JSON.parse(storedTodo);
 
     renderTodos();
-    renderDashboardTodos()
-
   }
 
 }
-loadPage();
+loadTodosFromStorage();

@@ -41,13 +41,13 @@
             <i class="ri-checkbox-line"></i>
             Todo List
           </a>
+          <a href="#" class="nav-item" data-page="goals">
+            <i class="ri-trophy-line"></i>
+            Goals
+          </a>
           <a href="#" class="nav-item" data-page="planner">
             <i class="ri-calendar-todo-line"></i>
             Planner
-          </a>
-          <a href="#" class="nav-item" data-page="planner">
-            <i class="ri-trophy-line"></i>
-            Goals
           </a>
           <a href="#" class="nav-item" data-page="timer">
             <i class="ri-time-line"></i>
@@ -185,7 +185,7 @@
                 </div>
               </div>
               <div class="dashboard-todos">
-                               
+
               </div>
 
             </div>
@@ -439,6 +439,84 @@
                 </ul>
               </div>
             </div>
+        </div>
+
+
+        <div class="goal-main">
+
+          <section id="goal-section">
+            <div class="logout-btn back-btn">
+              <i class="ri-arrow-left-box-line"></i>
+              <h3>Back</h3>
+            </div>
+
+            <!-- Add Task -->
+
+            <div class="add-goal n-card">
+
+              <!-- Task Input -->
+
+              <input type="text" id="goal-input" placeholder="Enter your goal...">
+
+
+              <!-- Date -->
+
+              <div class="date-input-wrap">
+
+                <input type="date" id="goal-date" taskDate.min=todayDate>
+
+                <i class="ri-calendar-line"></i>
+
+              </div>
+
+              <button type="button" id="add-goal-btn">
+
+                <i class="ri-add-line"></i>
+
+                <span>Add Goal</span>
+
+              </button>
+
+            </div>
+
+            <!-- Right -->
+
+
+
+          <div class="show-main">
+            <div class="show-goal n-card">
+              <div class="goal-empty-message">
+                <i class="ri-inbox-line"></i>
+                <h3>No Goal Yet</h3>
+                <p>Every big achievement starts with one task.</p>
+              </div>
+
+              <!-- task item -->
+              <div class="goal-empty-state">
+                <ul class="goal-list">
+                  
+                </ul>
+              </div>
+            </div>
+
+            <div class="show-goal-data n-card">
+            <div class="layover n-card">
+              <div class="show-data n-card">
+                <span>Total Goals <i class="ri-target-fill"></i></span>
+                <h1>0</h1>
+              </div>
+              <div class="show-data n-card">
+                <span>Today Goals <i class="ri-target-fill"></i></span>
+                <h1>0</h1>
+              </div>
+              <div class="show-data n-card">
+                <span>Completed Goals <i class="ri-target-fill"></i></span>
+                <h1>0</h1>
+              </div>
+            </div>
+            </div>
+          </div>
+          </section>
         </div>
       </main>
 
