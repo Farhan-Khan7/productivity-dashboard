@@ -1064,7 +1064,7 @@ body {
   position: relative;
   /* z-index: 2; */
   /* display: flex; */
-  display: none;
+  display: flex;
   flex-direction: column;
   gap: var(--space-sm);
   width: 100%;
@@ -1149,14 +1149,6 @@ body {
   padding: var(--space-2xs) var(--space-sm);
   color: yellow;
 }
-/* .theme-select{
-  cursor: pointer;
-  background: transparent;
-  padding: var(--space-sm);
-  font-size: var(--fs-md);
-  color: var(--heading);
-  font-weight: 500;
-} */
 
 .info-pill {
   flex: 0 0 auto;
@@ -1382,7 +1374,9 @@ body {
   display: flex;
   flex-direction: column;
   padding: var(--space-sm) var(--space-md);
-  min-height: 0;
+  max-height: 37vh;
+  overflow: hidden;
+  /* background-color: yellow; */
 }
 .panel-header {
   display: flex;
@@ -1408,6 +1402,55 @@ body {
 }
 
 /* Todo List */
+.dashboard-todos{
+  width: 100%;
+  height: auto;
+  background:transparent;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: var(--space-xs);
+  overflow-y: auto;
+  /* padding: var(--space-sm); */
+}
+.dashboard-items{
+  width: 100%;
+  height: 2.5vw;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+  padding: var(--space-sm) var(--space-lg);
+  border: 1px solid var(--heading);
+  border-radius: var(--radius-xs);
+}
+.dashboard-todo-tags{
+  width: 20%;
+  height: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: transparent;
+  position: relative;
+}
+.complete-btn{
+  position: absolute;
+  right: 0%;
+  cursor: pointer;
+  color: var(--heading);
+  font-size: var(--fs-lg);
+  background-color: transparent;
+  border: none;
+
+}
+.dashboard-important-tag{
+  cursor: pointer;
+  color: var(--important);
+  font-size: var(--fs-lg);
+  background-color: transparent;
+  border: none;
+}
+
 
 /* Planner */
 .planner-badge-icon {
@@ -2051,7 +2094,7 @@ body {
   width: 20%;
   height: auto;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
   align-items: center;
   /* background-color: black; */
 }

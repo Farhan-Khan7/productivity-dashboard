@@ -329,14 +329,6 @@ function renderTodos() {
 
                     </button>
 
-                    <!-- Complete -->
-
-                    <button class="todo-btn complete-btn" title="Complete Task">
-
-                      <i class="ri-checkbox-circle-line"></i>
-
-                    </button>
-
                     <!-- Delete -->
 
                     <button class="todo-btn delete-btn" title="Delete Task">
@@ -354,6 +346,42 @@ function renderTodos() {
   })
   todoList.innerHTML = todoHTML;
 
+  renderDashboardTodos()
+
+}
+
+
+const dashboardTodos = document.querySelector(".dashboard-todos");
+function renderDashboardTodos(){
+  dashboardTodos.innerHTML = "";
+  const today = new Date().toLocaleDateString("en-CA");
+
+  let todayTodos = todos.filter((todo) => {
+    return todo.dueDate === today
+  })
+
+   console.log("Today:", today);
+
+console.log("Todos:", todos);
+
+console.log("Filtered:", todayTodos);
+  let dashboardTodoItem = "";
+  todayTodos.forEach((todo) =>{
+
+    dashboardTodoItem += `<div class="dashboard-items">
+                  <span>${todo.taskdesc}</span>
+                  <div class="dashboard-todo-tags">
+                    ${todo.isImportant? `<span class="dashboard-important-tag">
+                      <i class="ri-star-fill"></i>
+                    </span>`: ""}
+                  <button class="complete-btn" title="Complete Task">
+                    <i class="ri-check-double-line"></i>
+                  </button>
+                  </div>
+                </div>`
+  })
+
+  dashboardTodos.innerHTML = dashboardTodoItem;
 }
 
 
@@ -398,6 +426,7 @@ function addTodos() {
 
   renderTodos()
   resetInputs()
+  renderDashboardTodos()
 
 }
 
@@ -417,6 +446,7 @@ function loadPage() {
     todos = JSON.parse(storedTodo);
 
     renderTodos();
+    renderDashboardTodos()
 
   }
 
