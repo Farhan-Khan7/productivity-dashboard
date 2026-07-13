@@ -2810,7 +2810,7 @@ body {
   outline: none;
 }
 
-.fixed-planner-date{
+.fixed-planner-date-input{
   font-size: var(--fs-md);
   padding: var(--space-xs) var(--space-md);
   border-radius: var(--radius-xs);
@@ -2819,17 +2819,17 @@ body {
   position: relative;
   color: var(--heading);
 }
-.fixed-planner-date input{
+.fixed-planner-date-input input{
   font-size: var(--fs-md);
   background: var(--surface);
   border: none;
   cursor: pointer;
   color: var(--heading);
 }
-.fixed-planner-date input:focus{
+.fixed-planner-date-input input:focus{
   outline: none;
 }
-.fixed-planner-date i{
+.fixed-planner-date-input i{
   cursor: pointer;
   background: var(--surface);
   position: absolute;

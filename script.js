@@ -703,14 +703,14 @@ let planners = [];
 let editingPlannerId = null;
 
 
-const fixedplanDate = document.querySelectorAll("#fixed-planner-date");
-const fixedcalendarIcon = document.querySelectorAll(".fixed-planner-date i");
+const fixedplanDate = document.querySelectorAll(".fixed-planner-date-input");
+const fixedcalendarIcon = document.querySelectorAll(".fixed-planner-date-input i");
 
 fixedcalendarIcon.forEach((icon) => {
 
   icon.addEventListener("click", () => {
 
-    const dateInput = icon.closest(".fixed-planner-date").querySelector("input");
+    const dateInput = icon.closest(".fixed-planner-date-input").querySelector("input");
 
     dateInput.min = today;
     dateInput.showPicker();
@@ -816,6 +816,21 @@ plannerList.addEventListener("click", function(event){
 });
 
 
+const fixedPlannerInputs = document.querySelectorAll(".fixed-planner-input");
+
+document.addEventListener("click", function(event){
+
+  if(event.target.closest(".fixed-planner-item")) return;
+
+  fixedPlannerInputs.forEach((input) =>{
+    input.readOnly = false;
+
+    const plannerItem = input.closest(".fixed-planner-item");
+    const dueDate = plannerItem.querySelector(".fixed-planner-date-input input")
+
+    dueDate.disabled = false;
+  })
+})
 
 // empty localstorage pagload function
 function loadTodosFromStorage() {
