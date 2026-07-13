@@ -1433,7 +1433,7 @@ body {
   background-color: transparent;
   position: relative;
 }
-.complete-btn{
+.todos-complete-btn{
   position: absolute;
   right: 0%;
   cursor: pointer;
@@ -1441,7 +1441,6 @@ body {
   font-size: var(--fs-lg);
   background-color: transparent;
   border: none;
-
 }
 .dashboard-important-tag{
   cursor: pointer;
@@ -1530,15 +1529,36 @@ body {
 } */
 /* planner code done  */
 
-#goals-body {
-  flex: 1;
+#dashboard-goals {
+  width: 100%;
+  height: auto;
+  background:transparent;
   display: flex;
-  /* flex-direction: column; */
-  align-items: center;
-  justify-content: center;
-  /* gap: var(--space-sm); */
-  min-height: 0;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: var(--space-xs);
+  overflow-y: auto;
 }
+.dashboard-goal-items{
+  width: 100%;
+  height: 2.5vw;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+  padding: var(--space-sm) var(--space-lg);
+  border: 1px solid var(--heading);
+  border-radius: var(--radius-xs);
+}
+.goal-complete-btn{
+  cursor: pointer;
+  color: var(--heading);
+  font-size: var(--fs-lg);
+  background-color: transparent;
+  border: none;
+}
+
+
 
 /* ---- Bottom row (Weather / Quote) ---- */
 /* Pomodoro */
@@ -2081,6 +2101,15 @@ body {
   font-size: var(--fs-xl);
   /* color: yellow; */
 }
+.ri-star-fill {
+    background: var(--important);
+
+    -webkit-background-clip: text;
+    background-clip: text;
+
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+}
 .todo-tag{
   position: absolute;
   left: 65%;
@@ -2392,7 +2421,7 @@ body {
   outline: none;
 }
 
-.goal-btn{
+.gaol-delete-btn{
   width: 42px;
   height: 42px;
   display: flex;
@@ -2435,7 +2464,7 @@ body {
 }
 .show-data{
   width: 100%;
-  height: 33%;
+  height: 50%;
   background: var(--surface-2);
   padding: var(--space-md);
   position: relative;
@@ -2446,7 +2475,7 @@ body {
 .show-data h1{
   font-family:monospace;
   position: absolute;
-  top: 35%;
-  left: 40%;
-  font-size: var(--fs-4xl);
+  top: 15%;
+  left: 30%;
+  font-size: 10vw;
 }

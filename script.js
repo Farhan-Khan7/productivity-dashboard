@@ -415,6 +415,8 @@ todoList.addEventListener("click", function (event) {
 
 // Dashboard todos Render functionalty
 const dashboardTodos = document.querySelector(".dashboard-todos");
+
+
 function renderDashboardTodos() {
   dashboardTodos.innerHTML = "";
   const today = new Date().toLocaleDateString("en-CA");
@@ -432,7 +434,7 @@ function renderDashboardTodos() {
                     ${todo.isImportant ? `<span class="dashboard-important-tag">
                       <i class="ri-star-fill"></i>
                     </span>`: ""}
-                  <button class="complete-btn" title="Complete Task">
+                  <button class="todos-complete-btn" title="Complete Task">
                     <i class="ri-check-double-line"></i>
                   </button>
                   </div>
@@ -506,12 +508,17 @@ const goalEmptyMessage = document.querySelector(".goal-empty-message");
 const goalList = document.querySelector(".goal-list");
 
 const addGoal = document.querySelector("#add-goal-btn")
+const totalGoalCount = document.querySelector(".total-goal-count")
+const todayGoalCount = document.querySelector(".today-goal-count")
 
 goalDate.min = today;
 goalDate.setAttribute("min", today)
 
 
 let goals = []
+
+// let totalGoals = goals.length;
+
 
 // render Goals UI
 function renderGoals() {
@@ -532,49 +539,47 @@ function renderGoals() {
     });
 
     goalHTML += `<li class="goal-item">
-
+    
                     <!-- Left -->
 
                     <div class="goal-left">
 
                       <!-- Task -->
-
+                      
                       <input type="text" class="goal-title" value="${goal.goaldesc}" readonly>
-
-                    </div>
-
-                    <span class="goal-tag date-tag">
-
+                      
+                      </div>
+                      
+                      <span class="goal-tag date-tag">
+                      
                       <!-- <i class="ri-calendar-line"></i> -->
-
+                      
                       ${formattedDate}
 
-                    </span>
-
-                      <!-- Complete -->
-
-                   
-                      <button class="goal-btn goal-complete-btn" title="Edit goal" data-id="${goal.id}">
-
-                        <i class="ri-progress-5-line"></i>
-
-                      </button>
-
+                      </span>
+                      
                       <!-- Delete -->
 
                       <button class="goal-btn gaol-delete-btn" title="Delete goal" data-id="${goal.id}">
-
-                        <i class="ri-delete-bin-line"></i>
-
+                      
+                      <i class="ri-delete-bin-line"></i>
+                      
                       </button>
+                      
+                      
+                      
+                      </li>`
 
-                       
 
-                  </li>`
+  })
+  totalGoalCount.innerHTML = goals.length;
+  goalList.innerHTML = goalHTML;
 
-                  
-                })
-                goalList.innerHTML = goalHTML;
+  const todayGoals = goals.filter((goal) => {
+    return goal.dueDate === today;
+  });
+
+  todayGoalCount.innerHTML = todayGoals.length;
 
 
 }
@@ -608,19 +613,24 @@ function addGoals() {
   renderGoals();
   resetInputs();
 }
-
 addGoal.addEventListener("click", addGoals);
 
-// Delete
 
-goalList.addEventListener("click", function(event){
+// Goals Complete Functionalty
+goalList.addEventListener("click", function (event) {
+
+})
+
+// Goals delete functionalty
+
+goalList.addEventListener("click", function (event) {
   const deleteBtn = event.target.closest(".gaol-delete-btn")
 
-  if(!deleteBtn) return;
+  if (!deleteBtn) return;
 
   const deletedId = Number(deleteBtn.dataset.id)
 
-  goals = goals.filter((item) =>{
+  goals = goals.filter((item) => {
     return item.id !== deletedId
   })
 
