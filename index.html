@@ -225,54 +225,8 @@
                 </div>
               </div>
               <div id="dashboard-goals">
-                <div class="dashboard-goal-items">
-                  <span>Hey Everyone </span>
-                  <!-- Complete goals button  -->
-                  <button class="goal-btn goal-complete-btn" title="Complete goal">
-                    <i class="ri-progress-5-line"></i>
-                  </button>
-                </div>
 
 
-                <div class="dashboard-goal-items">
-                  <span>Hey Everyone </span>
-                  <!-- Complete goals button  -->
-                  <button class="goal-btn goal-complete-btn" title="Complete goal">
-                    <i class="ri-progress-5-line"></i>
-                  </button>
-                </div>
-
-                <div class="dashboard-goal-items">
-                  <span>Hey Everyone </span>
-                  <!-- Complete goals button  -->
-                  <button class="goal-btn goal-complete-btn" title="Complete goal">
-                    <i class="ri-progress-5-line"></i>
-                  </button>
-                </div>
-
-                <div class="dashboard-goal-items">
-                  <span>Hey Everyone </span>
-                  <!-- Complete goals button  -->
-                  <button class="goal-btn goal-complete-btn" title="Complete goal">
-                    <i class="ri-progress-5-line"></i>
-                  </button>
-                </div>
-
-                <div class="dashboard-goal-items">
-                  <span>Hey Everyone </span>
-                  <!-- Complete goals button  -->
-                  <button class="goal-btn goal-complete-btn" title="Complete goal">
-                    <i class="ri-progress-5-line"></i>
-                  </button>
-                </div>
-
-                <div class="dashboard-goal-items">
-                  <span>Hey Everyone </span>
-                  <!-- Complete goals button  -->
-                  <button class="goal-btn goal-complete-btn" title="Complete goal">
-                    <i class="ri-progress-5-line"></i>
-                  </button>
-                </div>
               </div>
             </div>
           </section>
@@ -368,7 +322,7 @@
 
         <!-- main dashboard done  -->
 
-        <div class="todo-main">
+        <div class="todo-main" id="todo-main">
 
           <section id="todo-section">
             <div class="logout-btn back-btn">
@@ -487,8 +441,9 @@
             </div>
         </div>
 
+        <!-- todo dashboard done -->
 
-        <div class="goal-main">
+        <div class="goal-main" id="goal-main">
 
           <section id="goal-section">
             <div class="logout-btn back-btn">
@@ -555,14 +510,477 @@
                     <span>Today Goals <i class="ri-target-fill"></i></span>
                     <h1 class="today-goal-count">0</h1>
                   </div>
-                  <!-- <div class="show-data n-card">
-                    <span>Completed Goals <i class="ri-target-fill"></i></span>
-                    <h1>0</h1>
-                  </div> -->
                 </div>
               </div>
             </div>
           </section>
+        </div>
+
+        <!-- goal dashboard done  -->
+
+        <div class="planner-main" id="planner-main">
+          <div class="logout-btn back-btn">
+            <i class="ri-arrow-left-box-line"></i>
+            <h3>Back</h3>
+          </div>
+
+          <!-- planner container -->
+          <div class="planner-container n-card">
+            <div class="planner-topbar">
+              <span id="custom-planner" class="n-card" data-planner="custom">Custom Planner</span>
+              <span id="fixed-planner" data-planner="fixed">Fixed Planner</span>
+            </div>
+
+            <div class="custom-planner-container">
+              <div class="add-plans n-card">
+
+                <!-- Plan -->
+                <input type="text" id="plan-input" placeholder="Write your today plan...">
+
+                <!-- Date -->
+                <div class="plan-date">
+                  <input type="date" id="plan-date">
+                  <label for="plan-date">
+                    <i class="ri-calendar-line"></i>
+                  </label>
+                </div>
+
+                <!-- Time -->
+                <div class="plan-time">
+
+                  <!-- Hour -->
+                  <select id="plan-hour">
+                    <option selected disabled value="">HH</option>
+
+                    <option>01</option>
+                    <option>02</option>
+                    <option>03</option>
+                    <option>04</option>
+                    <option>05</option>
+                    <option>06</option>
+                    <option>07</option>
+                    <option>08</option>
+                    <option>09</option>
+                    <option>10</option>
+                    <option>11</option>
+                    <option>12</option>
+                  </select>
+
+                  <span>:</span>
+
+                  <!-- Minute -->
+                  <select id="plan-minute">
+                    <option selected disabled value="">MM</option>
+
+                    <option>00</option>
+                    <option>05</option>
+                    <option>10</option>
+                    <option>15</option>
+                    <option>20</option>
+                    <option>25</option>
+                    <option>30</option>
+                    <option>35</option>
+                    <option>40</option>
+                    <option>45</option>
+                    <option>50</option>
+                    <option>55</option>
+                  </select>
+
+                  <!-- AM PM -->
+                  <select id="plan-period">
+                    <option selected disabled value="">AM/PM</option>
+                    <option value="AM">AM</option>
+                    <option value="PM">PM</option>
+                  </select>
+
+                </div>
+
+                <!-- Add -->
+                <button id="add-plan-btn">
+                  <i class="ri-add-line"></i>
+                  <span>Add Plan</span>
+                </button>
+
+              </div>
+
+              <div class="show-custom-plans">
+                <div class="planner-empty-message">
+                  <i class="ri-calendar-check-fill"></i>
+                  <h3>No Planner Yet</h3>
+                  <p>Every big achievement starts with one Plan</p>
+                </div>
+                <ul class="planner-list">
+
+                </ul>
+
+
+              </div>
+            </div>
+
+            <div class="fixed-planner-container">
+              
+              <!-- 12:00 AM -->
+              <div class="fixed-planner-item" data-time="00:00">
+                <div class="fixed-planner-time"><span>12:00 AM</span></div>
+                <input type="text" class="fixed-planner-input" placeholder="Write your plan..." readonly>
+                <div class="fixed-planner-date">
+                  <input type="date" id="fixed-planner-date">
+                  <label for="fixed-planner-date">
+                    <i class="ri-calendar-line"></i>
+                  </label>
+                </div>
+                <button class="fixed-planner-delete-btn" title="Delete Plan">
+                  <i class="ri-delete-bin-line"></i>
+                </button>
+              </div>
+
+              <!-- 01:00 AM -->
+              <div class="fixed-planner-item" data-time="01:00">
+                <div class="fixed-planner-time"><span>01:00 AM</span></div>
+                <input type="text" class="fixed-planner-input" placeholder="Write your plan..." readonly>
+                <div class="fixed-planner-date">
+                  <input type="date" id="fixed-planner-date">
+                  <label for="fixed-planner-date">
+                    <i class="ri-calendar-line"></i>
+                  </label>
+                </div>
+                <button class="fixed-planner-delete-btn" title="Delete Plan">
+                  <i class="ri-delete-bin-line"></i>
+                </button>
+              </div>
+
+              <!-- 02:00 AM -->
+              <div class="fixed-planner-item" data-time="02:00">
+                <div class="fixed-planner-time"><span>02:00 AM</span></div>
+                <input type="text" class="fixed-planner-input" placeholder="Write your plan..." readonly>
+                <div class="fixed-planner-date">
+                  <input type="date" id="fixed-planner-date">
+                  <label for="fixed-planner-date">
+                    <i class="ri-calendar-line"></i>
+                  </label>
+                </div>
+                <button class="fixed-planner-delete-btn" title="Delete Plan">
+                  <i class="ri-delete-bin-line"></i>
+                </button>
+              </div>
+
+              <!-- 03:00 AM -->
+              <div class="fixed-planner-item" data-time="03:00">
+                <div class="fixed-planner-time"><span>03:00 AM</span></div>
+                <input type="text" class="fixed-planner-input" placeholder="Write your plan..." readonly>
+                <div class="fixed-planner-date">
+                  <input type="date" id="fixed-planner-date">
+                  <label for="fixed-planner-date">
+                    <i class="ri-calendar-line"></i>
+                  </label>
+                </div>
+                <button class="fixed-planner-delete-btn" title="Delete Plan">
+                  <i class="ri-delete-bin-line"></i>
+                </button>
+              </div>
+
+              <!-- 04:00 AM -->
+              <div class="fixed-planner-item" data-time="04:00">
+                <div class="fixed-planner-time"><span>04:00 AM</span></div>
+                <input type="text" class="fixed-planner-input" placeholder="Write your plan..." readonly>
+                <div class="fixed-planner-date">
+                  <input type="date" id="fixed-planner-date">
+                  <label for="fixed-planner-date">
+                    <i class="ri-calendar-line"></i>
+                  </label>
+                </div>
+                <button class="fixed-planner-delete-btn" title="Delete Plan">
+                  <i class="ri-delete-bin-line"></i>
+                </button>
+              </div>
+
+              <!-- 05:00 AM -->
+              <div class="fixed-planner-item" data-time="05:00">
+                <div class="fixed-planner-time"><span>05:00 AM</span></div>
+                <input type="text" class="fixed-planner-input" placeholder="Write your plan..." readonly>
+                <div class="fixed-planner-date">
+                  <input type="date" id="fixed-planner-date">
+                  <label for="fixed-planner-date">
+                    <i class="ri-calendar-line"></i>
+                  </label>
+                </div>
+                <button class="fixed-planner-delete-btn" title="Delete Plan">
+                  <i class="ri-delete-bin-line"></i>
+                </button>
+              </div>
+
+              <!-- 06:00 AM -->
+              <div class="fixed-planner-item" data-time="06:00">
+                <div class="fixed-planner-time"><span>06:00 AM</span></div>
+                <input type="text" class="fixed-planner-input" placeholder="Write your plan..." readonly>
+                <div class="fixed-planner-date">
+                  <input type="date" id="fixed-planner-date">
+                  <label for="fixed-planner-date">
+                    <i class="ri-calendar-line"></i>
+                  </label>
+                </div>
+                <button class="fixed-planner-delete-btn" title="Delete Plan">
+                  <i class="ri-delete-bin-line"></i>
+                </button>
+              </div>
+
+              <!-- 07:00 AM -->
+              <div class="fixed-planner-item" data-time="07:00">
+                <div class="fixed-planner-time"><span>07:00 AM</span></div>
+                <input type="text" class="fixed-planner-input" placeholder="Write your plan..." readonly>
+                <div class="fixed-planner-date">
+                  <input type="date" id="fixed-planner-date">
+                  <label for="fixed-planner-date">
+                    <i class="ri-calendar-line"></i>
+                  </label>
+                </div>
+                <button class="fixed-planner-delete-btn" title="Delete Plan">
+                  <i class="ri-delete-bin-line"></i>
+                </button>
+              </div>
+
+              <!-- 08:00 AM -->
+              <div class="fixed-planner-item" data-time="08:00">
+                <div class="fixed-planner-time"><span>08:00 AM</span></div>
+                <input type="text" class="fixed-planner-input" placeholder="Write your plan..." readonly>
+                <div class="fixed-planner-date">
+                  <input type="date" id="fixed-planner-date">
+                  <label for="fixed-planner-date">
+                    <i class="ri-calendar-line"></i>
+                  </label>
+                </div>
+                <button class="fixed-planner-delete-btn" title="Delete Plan">
+                  <i class="ri-delete-bin-line"></i>
+                </button>
+              </div>
+
+              <!-- 09:00 AM -->
+              <div class="fixed-planner-item" data-time="09:00">
+                <div class="fixed-planner-time"><span>09:00 AM</span></div>
+                <input type="text" class="fixed-planner-input" placeholder="Write your plan..." readonly>
+                <div class="fixed-planner-date">
+                  <input type="date" id="fixed-planner-date">
+                  <label for="fixed-planner-date">
+                    <i class="ri-calendar-line"></i>
+                  </label>
+                </div>
+                <button class="fixed-planner-delete-btn" title="Delete Plan">
+                  <i class="ri-delete-bin-line"></i>
+                </button>
+              </div>
+
+              <!-- 10:00 AM -->
+              <div class="fixed-planner-item" data-time="10:00">
+                <div class="fixed-planner-time"><span>10:00 AM</span></div>
+                <input type="text" class="fixed-planner-input" placeholder="Write your plan..." readonly>
+                <div class="fixed-planner-date">
+                  <input type="date" id="fixed-planner-date">
+                  <label for="fixed-planner-date">
+                    <i class="ri-calendar-line"></i>
+                  </label>
+                </div>
+                <button class="fixed-planner-delete-btn" title="Delete Plan">
+                  <i class="ri-delete-bin-line"></i>
+                </button>
+              </div>
+
+              <!-- 11:00 AM -->
+              <div class="fixed-planner-item" data-time="11:00">
+                <div class="fixed-planner-time"><span>11:00 AM</span></div>
+                <input type="text" class="fixed-planner-input" placeholder="Write your plan..." readonly>
+                <div class="fixed-planner-date">
+                  <input type="date" id="fixed-planner-date">
+                  <label for="fixed-planner-date">
+                    <i class="ri-calendar-line"></i>
+                  </label>
+                </div>
+                <button class="fixed-planner-delete-btn" title="Delete Plan">
+                  <i class="ri-delete-bin-line"></i>
+                </button>
+              </div>
+
+              <!-- 12:00 PM -->
+              <div class="fixed-planner-item" data-time="12:00">
+                <div class="fixed-planner-time"><span>12:00 PM</span></div>
+                <input type="text" class="fixed-planner-input" placeholder="Write your plan..." readonly>
+                <div class="fixed-planner-date">
+                  <input type="date" id="fixed-planner-date">
+                  <label for="fixed-planner-date">
+                    <i class="ri-calendar-line"></i>
+                  </label>
+                </div>
+                <button class="fixed-planner-delete-btn" title="Delete Plan">
+                  <i class="ri-delete-bin-line"></i>
+                </button>
+              </div>
+
+              <!-- 01:00 PM -->
+              <div class="fixed-planner-item" data-time="13:00">
+                <div class="fixed-planner-time"><span>01:00 PM</span></div>
+                <input type="text" class="fixed-planner-input" placeholder="Write your plan..." readonly>
+                <div class="fixed-planner-date">
+                  <input type="date" id="fixed-planner-date">
+                  <label for="fixed-planner-date">
+                    <i class="ri-calendar-line"></i>
+                  </label>
+                </div>
+                <button class="fixed-planner-delete-btn" title="Delete Plan">
+                  <i class="ri-delete-bin-line"></i>
+                </button>
+              </div>
+
+              <!-- 02:00 PM -->
+              <div class="fixed-planner-item" data-time="14:00">
+                <div class="fixed-planner-time"><span>02:00 PM</span></div>
+                <input type="text" class="fixed-planner-input" placeholder="Write your plan..." readonly>
+                <div class="fixed-planner-date">
+                  <input type="date" id="fixed-planner-date">
+                  <label for="fixed-planner-date">
+                    <i class="ri-calendar-line"></i>
+                  </label>
+                </div>
+                <button class="fixed-planner-delete-btn" title="Delete Plan">
+                  <i class="ri-delete-bin-line"></i>
+                </button>
+              </div>
+
+              <!-- 03:00 PM -->
+              <div class="fixed-planner-item" data-time="15:00">
+                <div class="fixed-planner-time"><span>03:00 PM</span></div>
+                <input type="text" class="fixed-planner-input" placeholder="Write your plan..." readonly>
+                <div class="fixed-planner-date">
+                  <input type="date" id="fixed-planner-date">
+                  <label for="fixed-planner-date">
+                    <i class="ri-calendar-line"></i>
+                  </label>
+                </div>
+                <button class="fixed-planner-delete-btn" title="Delete Plan">
+                  <i class="ri-delete-bin-line"></i>
+                </button>
+              </div>
+
+              <!-- 04:00 PM -->
+              <div class="fixed-planner-item" data-time="16:00">
+                <div class="fixed-planner-time"><span>04:00 PM</span></div>
+                <input type="text" class="fixed-planner-input" placeholder="Write your plan..." readonly>
+                <div class="fixed-planner-date">
+                  <input type="date" id="fixed-planner-date">
+                  <label for="fixed-planner-date">
+                    <i class="ri-calendar-line"></i>
+                  </label>
+                </div>
+                <button class="fixed-planner-delete-btn" title="Delete Plan">
+                  <i class="ri-delete-bin-line"></i>
+                </button>
+              </div>
+
+              <!-- 05:00 PM -->
+              <div class="fixed-planner-item" data-time="17:00">
+                <div class="fixed-planner-time"><span>05:00 PM</span></div>
+                <input type="text" class="fixed-planner-input" placeholder="Write your plan..." readonly>
+                <div class="fixed-planner-date">
+                  <input type="date" id="fixed-planner-date">
+                  <label for="fixed-planner-date">
+                    <i class="ri-calendar-line"></i>
+                  </label>
+                </div>
+                <button class="fixed-planner-delete-btn" title="Delete Plan">
+                  <i class="ri-delete-bin-line"></i>
+                </button>
+              </div>
+
+              <!-- 06:00 PM -->
+              <div class="fixed-planner-item" data-time="18:00">
+                <div class="fixed-planner-time"><span>06:00 PM</span></div>
+                <input type="text" class="fixed-planner-input" placeholder="Write your plan..." readonly>
+                <div class="fixed-planner-date">
+                  <input type="date" id="fixed-planner-date">
+                  <label for="fixed-planner-date">
+                    <i class="ri-calendar-line"></i>
+                  </label>
+                </div>
+                <button class="fixed-planner-delete-btn" title="Delete Plan">
+                  <i class="ri-delete-bin-line"></i>
+                </button>
+              </div>
+
+              <!-- 07:00 PM -->
+              <div class="fixed-planner-item" data-time="19:00">
+                <div class="fixed-planner-time"><span>07:00 PM</span></div>
+                <input type="text" class="fixed-planner-input" placeholder="Write your plan..." readonly>
+                <div class="fixed-planner-date">
+                  <input type="date" id="fixed-planner-date">
+                  <label for="fixed-planner-date">
+                    <i class="ri-calendar-line"></i>
+                  </label>
+                </div>
+                <button class="fixed-planner-delete-btn" title="Delete Plan">
+                  <i class="ri-delete-bin-line"></i>
+                </button>
+              </div>
+
+              <!-- 08:00 PM -->
+              <div class="fixed-planner-item" data-time="20:00">
+                <div class="fixed-planner-time"><span>08:00 PM</span></div>
+                <input type="text" class="fixed-planner-input" placeholder="Write your plan..." readonly>
+                <div class="fixed-planner-date">
+                  <input type="date" id="fixed-planner-date">
+                  <label for="fixed-planner-date">
+                    <i class="ri-calendar-line"></i>
+                  </label>
+                </div>
+                <button class="fixed-planner-delete-btn" title="Delete Plan">
+                  <i class="ri-delete-bin-line"></i>
+                </button>
+              </div>
+
+              <!-- 09:00 PM -->
+              <div class="fixed-planner-item" data-time="21:00">
+                <div class="fixed-planner-time"><span>09:00 PM</span></div>
+                <input type="text" class="fixed-planner-input" placeholder="Write your plan..." readonly>
+                <div class="fixed-planner-date">
+                  <input type="date" id="fixed-planner-date">
+                  <label for="fixed-planner-date">
+                    <i class="ri-calendar-line"></i>
+                  </label>
+                </div>
+                <button class="fixed-planner-delete-btn" title="Delete Plan">
+                  <i class="ri-delete-bin-line"></i>
+                </button>
+              </div>
+
+              <!-- 10:00 PM -->
+              <div class="fixed-planner-item" data-time="22:00">
+                <div class="fixed-planner-time"><span>10:00 PM</span></div>
+                <input type="text" class="fixed-planner-input" placeholder="Write your plan..." readonly>
+                <div class="fixed-planner-date">
+                  <input type="date" id="fixed-planner-date">
+                  <label for="fixed-planner-date">
+                    <i class="ri-calendar-line"></i>
+                  </label>
+                </div>
+                <button class="fixed-planner-delete-btn" title="Delete Plan">
+                  <i class="ri-delete-bin-line"></i>
+                </button>
+              </div>
+
+              <!-- 11:00 PM -->
+              <div class="fixed-planner-item" data-time="23:00">
+                <div class="fixed-planner-time"><span>11:00 PM</span></div>
+                <input type="text" class="fixed-planner-input" placeholder="Write your plan..." readonly>
+                <div class="fixed-planner-date">
+                  <input type="date" id="fixed-planner-date">
+                  <label for="fixed-planner-date">
+                    <i class="ri-calendar-line"></i>
+                  </label>
+                </div>
+                <button class="fixed-planner-delete-btn" title="Delete Plan">
+                  <i class="ri-delete-bin-line"></i>
+                </button>
+              </div>
+
+            </div>
+          </div>
         </div>
       </main>
 

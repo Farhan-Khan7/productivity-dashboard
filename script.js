@@ -107,8 +107,7 @@ themeBtns.forEach((buttons) => {
   });
 });
 
-// theme logic done 
-
+// theme logic done
 
 const quoteText = document.querySelector("#quote-text");
 const quoteAuthor = document.querySelector("#quote-author");
@@ -125,7 +124,7 @@ async function updateQuote() {
 updateQuote();
 quoteRefreshBtn.addEventListener("click", updateQuote);
 
-// quote logic done 
+// quote logic done
 
 // Weather Location
 const weatherLocation = document.querySelector("#weather-location");
@@ -212,13 +211,17 @@ getLocation();
 weatherRefreshBtn.addEventListener("click", getLocation);
 
 const dashboard = document.querySelector("#dashboard-main");
-const todoDashboard = document.querySelector(".todo-main");
-const goalDashboard = document.querySelector(".goal-main");
+const todoDashboard = document.querySelector("#todo-main");
+const goalDashboard = document.querySelector("#goal-main");
+const plannerDashboard = document.querySelector("#planner-main");
 
 const navTabs = document.querySelectorAll(".nav-menu .nav-item");
 
 navTabs.forEach((link) => {
   link.addEventListener("click", function () {
+    dashboard.style.display = "none";
+    todoDashboard.style.display = "none";
+    goalDashboard.style.display = "none";
     navTabs.forEach((item) => {
       item.classList.remove("active");
     });
@@ -227,24 +230,16 @@ navTabs.forEach((link) => {
 
     if (link.dataset.page === "dashboard") {
       dashboard.style.display = "flex";
-      todoDashboard.style.display = "none";
-      goalDashboard.style.display = "none"
     } else if (link.dataset.page === "todo-list") {
-      dashboard.style.display = "none";
       todoDashboard.style.display = "flex";
-      goalDashboard.style.display = "none"
     } else if (link.dataset.page === "goals") {
-      dashboard.style.display = "none";
-      todoDashboard.style.display = "none";
-      goalDashboard.style.display = "flex"
+      goalDashboard.style.display = "flex";
+    } else if (link.dataset.page === "planner") {
+      plannerDashboard.style.display = "flex";
+      alert("Please use either the Fixed Planner or the Custom Planner, not both at the same time.");
     }
   });
 });
-
-
-
-
-
 
 // todos section start
 
@@ -258,7 +253,7 @@ const importantCheckbox = document.querySelector("#important-checkbox");
 const taskDate = document.querySelector("#task-date");
 const today = new Date().toLocaleDateString("en-CA");
 taskDate.min = today;
-taskDate.setAttribute("min", today)
+taskDate.setAttribute("min", today);
 
 // Add Button
 const addTaskBtn = document.querySelector("#add-task-btn");
@@ -273,15 +268,12 @@ const emptyState = document.querySelector(".empty-state"); // agar hai to
 const totalTaskCount = document.querySelector("#total-task-count");
 const todayTaskCount = document.querySelector("#today-task-count");
 const completedTaskCount = document.querySelector("#completed-task-count");
-const emptyMessage = document.querySelector(".empty-message")
-
+const emptyMessage = document.querySelector(".empty-message");
 
 let todos = [];
 let editingId = null;
 
-
 function renderTodos() {
-
   if (todos.length === 0) {
     emptyMessage.style.display = "flex";
   } else {
@@ -289,7 +281,7 @@ function renderTodos() {
   }
 
   let todoHTML = "";
-  todoList.innerHTML = ""
+  todoList.innerHTML = "";
 
   todos.forEach((todo) => {
     const formattedDate = new Date(todo.dueDate).toLocaleDateString("en-GB", {
@@ -322,11 +314,15 @@ function renderTodos() {
 
                   <!-- Important -->
 
-                  ${todo.isImportant ? `<span class="todo-tag important-tag">
+                  ${
+                    todo.isImportant
+                      ? `<span class="todo-tag important-tag">
 
                     <i class="ri-star-fill"></i>
 
-                  </span>`: ""}
+                  </span>`
+                      : ""
+                  }
 
 
                   <!-- Edit -->
@@ -349,25 +345,17 @@ function renderTodos() {
 
 
 
-                </li>`
-
-
-  })
+                </li>`;
+  });
   todoList.innerHTML = todoHTML;
 
-  renderDashboardTodos()
-
+  renderDashboardTodos();
 }
-
-
 
 // Edit Button functionalty
 
 todoList.addEventListener("click", function (event) {
-
-
   const editBtn = event.target.closest(".edit-btn");
-
 
   if (!editBtn) return;
 
@@ -375,76 +363,73 @@ todoList.addEventListener("click", function (event) {
   const taskDesc = todoItem.querySelector(".todo-title");
   const id = editBtn.dataset.id;
 
-
   if (editingId === null) {
-    editBtn.innerHTML = `<i class="ri-check-double-line"></i>`
+    editBtn.innerHTML = `<i class="ri-check-double-line"></i>`;
     taskDesc.readOnly = false;
     taskDesc.focus();
     editingId = Number(id);
   } else if (editingId === Number(id)) {
     let selectedEditTodos = todos.find((item) => {
-      return item.id == editingId
-    })
+      return item.id == editingId;
+    });
     selectedEditTodos.taskdesc = taskDesc.value;
-    localStorage.setItem("todoItem", JSON.stringify(todos))
-    editBtn.innerHTML = ` <i class="ri-edit-2-line"></i>`
+    localStorage.setItem("todoItem", JSON.stringify(todos));
+    editBtn.innerHTML = ` <i class="ri-edit-2-line"></i>`;
     taskDesc.readOnly = true;
     editingId = null;
     renderTodos();
   } else {
     alert("Please save the current task first.");
   }
-})
+});
 
 // delete button functionalty
 todoList.addEventListener("click", function (event) {
-  const deleteBtn = event.target.closest(".delete-btn")
+  const deleteBtn = event.target.closest(".delete-btn");
 
   if (!deleteBtn) return;
 
   const deleteId = Number(deleteBtn.dataset.id);
 
   todos = todos.filter((item) => {
-    return item.id !== deleteId
-  })
-  localStorage.setItem("todoItem", JSON.stringify(todos))
-  renderTodos()
-
-})
-
+    return item.id !== deleteId;
+  });
+  localStorage.setItem("todoItem", JSON.stringify(todos));
+  renderTodos();
+});
 
 // Dashboard todos Render functionalty
 const dashboardTodos = document.querySelector(".dashboard-todos");
-
 
 function renderDashboardTodos() {
   dashboardTodos.innerHTML = "";
   const today = new Date().toLocaleDateString("en-CA");
 
   let todayTodos = todos.filter((todo) => {
-    return todo.dueDate === today
-  })
+    return todo.dueDate === today;
+  });
 
   let dashboardTodoItem = "";
   todayTodos.forEach((todo) => {
-
     dashboardTodoItem += `<div class="dashboard-items">
                   <span>${todo.taskdesc}</span>
                   <div class="dashboard-todo-tags">
-                    ${todo.isImportant ? `<span class="dashboard-important-tag">
+                    ${
+                      todo.isImportant
+                        ? `<span class="dashboard-important-tag">
                       <i class="ri-star-fill"></i>
-                    </span>`: ""}
+                    </span>`
+                        : ""
+                    }
                   <button class="todos-complete-btn" title="Complete Task">
                     <i class="ri-check-double-line"></i>
                   </button>
                   </div>
-                </div>`
-  })
+                </div>`;
+  });
 
   dashboardTodos.innerHTML = dashboardTodoItem;
 }
-
-
 
 // Reset input functionalty
 function resetInputs() {
@@ -456,9 +441,14 @@ function resetInputs() {
   // goalsinputs resets
   goalInput.value = "";
   goalDate.value = "";
-}
-renderTodos()
 
+  plannerInput.value = "";
+  plannerDate.value = "";
+  plannerHour.value = "";
+  plannerMinute.value = "";
+  plannerPeriod.value = "";
+}
+renderTodos();
 
 // Add todos functionalty
 function addTodos() {
@@ -467,14 +457,14 @@ function addTodos() {
   let dueDate = taskDate.value;
 
   if (taskdesc === "") {
-    alert("Enter a task before adding.")
-    return
+    alert("Enter a task before adding.");
+    return;
   } else if (dueDate === "") {
     alert("Please select a due date.");
     return;
   } else if (taskDate.value < today) {
-    alert("Please select today or a future date.")
-    return
+    alert("Please select today or a future date.");
+    return;
   }
 
   const todoDetails = {
@@ -482,47 +472,43 @@ function addTodos() {
     taskdesc,
     isImportant,
     dueDate,
-    complete: false
-  }
+    complete: false,
+  };
 
   if (isImportant) {
-    todos.unshift(todoDetails)
+    todos.unshift(todoDetails);
   } else {
-    todos.push(todoDetails)
+    todos.push(todoDetails);
   }
 
   localStorage.setItem("todoItem", JSON.stringify(todos));
 
-  renderTodos()
-  resetInputs()
+  renderTodos();
+  resetInputs();
 }
 
 addTaskBtn.addEventListener("click", addTodos);
-// todos functionalty done 
+// todos functionalty done
 
-
-
+const dashboardGolas = document.querySelector("#dashboard-goals");
 const goalInput = document.querySelector("#goal-input");
 const goalDate = document.querySelector("#goal-date");
 const goalEmptyMessage = document.querySelector(".goal-empty-message");
 const goalList = document.querySelector(".goal-list");
 
-const addGoal = document.querySelector("#add-goal-btn")
-const totalGoalCount = document.querySelector(".total-goal-count")
-const todayGoalCount = document.querySelector(".today-goal-count")
+const addGoal = document.querySelector("#add-goal-btn");
+const totalGoalCount = document.querySelector(".total-goal-count");
+const todayGoalCount = document.querySelector(".today-goal-count");
 
 goalDate.min = today;
-goalDate.setAttribute("min", today)
+goalDate.setAttribute("min", today);
 
-
-let goals = []
+let goals = [];
 
 // let totalGoals = goals.length;
 
-
 // render Goals UI
 function renderGoals() {
-
   if (goals.length === 0) {
     goalEmptyMessage.style.display = "flex";
   } else {
@@ -530,7 +516,7 @@ function renderGoals() {
   }
 
   let goalHTML = "";
-  goalList.innerHTML = ""
+  goalList.innerHTML = "";
   goals.forEach((goal) => {
     const formattedDate = new Date(goal.dueDate).toLocaleDateString("en-GB", {
       day: "2-digit",
@@ -568,10 +554,8 @@ function renderGoals() {
                       
                       
                       
-                      </li>`
-
-
-  })
+                      </li>`;
+  });
   totalGoalCount.innerHTML = goals.length;
   goalList.innerHTML = goalHTML;
 
@@ -581,8 +565,35 @@ function renderGoals() {
 
   todayGoalCount.innerHTML = todayGoals.length;
 
-
+  renderDashboardGoals();
 }
+
+// Render dashboard goals
+
+function renderDashboardGoals() {
+  dashboardGolas.innerHTML = "";
+  const today = new Date().toLocaleDateString("en-CA");
+
+  const todayGoals = goals.filter((item) => {
+    return item.dueDate === today;
+  });
+
+  let dashboardGoalsItem = "";
+
+  todayGoals.forEach((goal) => {
+    dashboardGoalsItem += `<div class="dashboard-goal-items">
+                  <span>${goal.goaldesc}</span>
+                  <!-- Complete goals button  -->
+                  <button class="goal-btn goal-complete-btn" title="Complete goal" data-id="${goal.id}">
+                    <i class="ri-progress-5-line"></i>
+                  </button>
+                </div>`;
+  });
+
+  dashboardGolas.innerHTML = dashboardGoalsItem;
+}
+
+renderDashboardGoals();
 
 // Add Goals funcitonalty
 function addGoals() {
@@ -590,22 +601,22 @@ function addGoals() {
   const dueDate = goalDate.value;
 
   if (goaldesc === "") {
-    alert("Enter a task before adding.")
-    return
+    alert("Enter a task before adding.");
+    return;
   } else if (dueDate === "") {
     alert("Please select a due date.");
     return;
   } else if (goalDate.value < today) {
-    alert("Please select today or a future date.")
-    return
+    alert("Please select today or a future date.");
+    return;
   }
 
   const goalsDetails = {
     id: Date.now(),
     goaldesc,
     dueDate,
-    complete: false
-  }
+    complete: false,
+  };
 
   goals.push(goalsDetails);
   localStorage.setItem("goalItems", JSON.stringify(goals));
@@ -615,45 +626,217 @@ function addGoals() {
 }
 addGoal.addEventListener("click", addGoals);
 
-
-// Goals Complete Functionalty
-goalList.addEventListener("click", function (event) {
-
-})
-
 // Goals delete functionalty
 
 goalList.addEventListener("click", function (event) {
-  const deleteBtn = event.target.closest(".gaol-delete-btn")
+  const deleteBtn = event.target.closest(".gaol-delete-btn");
 
   if (!deleteBtn) return;
 
-  const deletedId = Number(deleteBtn.dataset.id)
+  const deletedId = Number(deleteBtn.dataset.id);
 
   goals = goals.filter((item) => {
-    return item.id !== deletedId
-  })
+    return item.id !== deletedId;
+  });
 
-  localStorage.setItem("goalItems", JSON.stringify(goals))
+  localStorage.setItem("goalItems", JSON.stringify(goals));
   renderGoals();
-})
+});
+
+// goals section fully done
+
+const plannerTabs = document.querySelectorAll(".planner-topbar span")
+const customPlanner = document.querySelector("#custom-planner")
+const fixedPlanner = document.querySelector("#fixed-planner")
+
+const customPlannerContainer = document.querySelector(".custom-planner-container")
+const fixedPlannerContainer = document.querySelector(".fixed-planner-container")
+
+plannerTabs.forEach((tab) => {
+
+    tab.addEventListener("click", function(event){
+
+        if(event.target.dataset.planner === "custom"){
+          customPlannerContainer.style.display = "initial"
+          fixedPlannerContainer.style.display = "none"
+          customPlanner.classList.add("n-card")
+          fixedPlanner.classList.remove("n-card")
+        }else if(event.target.dataset.planner === "fixed"){
+          customPlannerContainer.style.display = "none"
+          fixedPlannerContainer.style.display = "flex"
+          customPlanner.classList.remove("n-card")
+          fixedPlanner.classList.add("n-card")
+        }
+
+    });
+
+});
 
 
+// Planner Input
+const plannerInput = document.querySelector("#plan-input");
+// Planner Date
+const plannerDate = document.querySelector("#plan-date");
 
-// empty localstorage pagload function 
-function loadTodosFromStorage() {
+const plannerHour = document.querySelector("#plan-hour");
+const plannerMinute = document.querySelector("#plan-minute");
+const plannerPeriod = document.querySelector("#plan-period");
 
-  const storedTodo = localStorage.getItem("todoItem");
-  const storedGoal = localStorage.getItem("goalItems")
+const addPlannerBtn = document.querySelector("#add-plan-btn");
 
-  if (storedTodo || storedGoal) {
+const plannerList = document.querySelector(".planner-list");
 
-    todos = JSON.parse(storedTodo);
-    goals = JSON.parse(storedGoal)
+const plannerEmptyMessage = document.querySelector(".planner-empty-message");
 
-    renderTodos();
-    renderGoals();
+const planDate = document.querySelector("#plan-date");
+const calendarIcon = document.querySelector(".plan-date i");
+
+calendarIcon.addEventListener("click", () => {
+  planDate.setAttribute("min", today);
+  planDate.showPicker();
+});
+
+// Planner Array
+let planners = [];
+
+// Edit Planner
+let editingPlannerId = null;
+
+
+const fixedplanDate = document.querySelectorAll("#fixed-planner-date");
+const fixedcalendarIcon = document.querySelectorAll(".fixed-planner-date i");
+
+fixedcalendarIcon.forEach((icon) => {
+
+  icon.addEventListener("click", () => {
+
+    const dateInput = icon.closest(".fixed-planner-date").querySelector("input");
+
+    dateInput.min = today;
+    dateInput.showPicker();
+
+  });
+
+});
+
+// planner UI renders
+function renderPlans() {
+  if (planners.length === 0) {
+    plannerEmptyMessage.style.display = "flex";
+  } else {
+    plannerEmptyMessage.style.display = "none";
   }
 
+  let plansHTML = "";
+  
+  planners.forEach((plans) => {
+    const formattedDate = new Date(plans.plansDate).toLocaleDateString("en-GB", {
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
+    });
+
+    plansHTML += ` <div class="custom-plans-items">
+                    <div class="plan-schedule">
+                      <span id="hour">${plans.plansHour}</span>
+                      <span id="column">:</span>
+                      <span id="minute">${plans.plansMintue}</span>
+                      <span id="period">${plans.plansPeriod}</span>
+                    </div>
+                    <span class="plan-desc">${plans.plansDesc}</span>
+                    <span class="plan-date-tag">
+                      ${formattedDate}
+                    </span>
+                    <!-- Delete -->
+
+                    <button class="planner-btn delete-btn" title="Delete Task" data-id="${plans.id}">
+
+                      <i class="ri-delete-bin-line"></i>
+
+                    </button>
+                  </div>`;
+  });
+
+  plannerList.innerHTML = plansHTML;
+}
+
+
+// add planner functionalty
+function addPlanners() {
+  const plansDesc = plannerInput.value.trim();
+  const plansDate = plannerDate.value;
+  const plansHour = plannerHour.value;
+  const plansMintue = plannerMinute.value;
+  const plansPeriod = plannerPeriod.value;
+
+  if (plansDesc === "") {
+    alert("Write you plan's");
+    return;
+  } else if (plansDate === "") {
+    alert("Please select due date.");
+    return;
+  } else if (plansHour === "" || plansMintue === "" || plansPeriod === "") {
+    alert("Please Schedual your Plan's");
+    return
+  }
+
+  const planDetails = {
+    id: Date.now(),
+    plansDesc,
+    plansDate,
+    plansHour,
+    plansMintue,
+    plansPeriod,
+  };
+
+  planners.push(planDetails);
+
+  localStorage.setItem("plansItem", JSON.stringify(planners));
+
+  renderPlans();
+  resetInputs();
+}
+addPlannerBtn.addEventListener("click", addPlanners);
+
+
+// delete planner functionalty
+
+plannerList.addEventListener("click", function(event){
+
+    const deleteBtn = event.target.closest(".delete-btn");
+    const deletedID = Number(deleteBtn.dataset.id);
+    if(!deleteBtn) return;
+
+    planners = planners.filter((item) =>{
+      return item.id !== deletedID;
+    })
+
+    localStorage.setItem("plansItem", JSON.stringify(planners));
+    renderPlans()
+});
+
+
+
+// empty localstorage pagload function
+function loadTodosFromStorage() {
+  const storedTodo = localStorage.getItem("todoItem");
+  const storedGoal = localStorage.getItem("goalItems");
+  const storePlans = localStorage.getItem("plansItem")
+
+  if (storedTodo) {
+    todos = JSON.parse(storedTodo);
+}
+
+if (storedGoal) {
+    goals = JSON.parse(storedGoal);
+}
+
+if (storePlans) {
+    planners = JSON.parse(storePlans);
+}
+
+renderTodos();
+renderGoals();
+renderPlans();
 }
 loadTodosFromStorage();
