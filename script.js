@@ -446,9 +446,14 @@ function renderDashboardTodos() {
 
 // Reset input functionalty
 function resetInputs() {
+  // todoinputs resets
   taskInput.value = "";
   importantCheckbox.checked = false;
   taskDate.value = "";
+
+  // goalsinputs resets
+  goalInput.value = "";
+  goalDate.value = "";
 }
 renderTodos()
 
@@ -505,8 +510,10 @@ const addGoal = document.querySelector("#add-goal-btn")
 goalDate.min = today;
 goalDate.setAttribute("min", today)
 
+
 let goals = []
 
+// render Goals UI
 function renderGoals() {
 
   if (goals.length === 0) {
@@ -536,7 +543,7 @@ function renderGoals() {
 
                     </div>
 
-                    <span class="todo-tag date-tag">
+                    <span class="goal-tag date-tag">
 
                       <!-- <i class="ri-calendar-line"></i> -->
 
@@ -544,14 +551,24 @@ function renderGoals() {
 
                     </span>
 
-                    <!-- Complete -->
+                      <!-- Complete -->
 
                    
-                      <button class="goal-btn goal-complete-btn" title="Edit goal">
+                      <button class="goal-btn goal-complete-btn" title="Edit goal" data-id="${goal.id}">
 
                         <i class="ri-progress-5-line"></i>
 
                       </button>
+
+                      <!-- Delete -->
+
+                      <button class="goal-btn gaol-delete-btn" title="Delete goal" data-id="${goal.id}">
+
+                        <i class="ri-delete-bin-line"></i>
+
+                      </button>
+
+                       
 
                   </li>`
 
@@ -562,6 +579,7 @@ function renderGoals() {
 
 }
 
+// Add Goals funcitonalty
 function addGoals() {
   const goaldesc = goalInput.value.trim();
   const dueDate = goalDate.value;
@@ -588,11 +606,27 @@ function addGoals() {
   localStorage.setItem("goalItems", JSON.stringify(goals));
 
   renderGoals();
+  resetInputs();
 }
 
+addGoal.addEventListener("click", addGoals);
 
-addGoal.addEventListener("click", addGoals)
+// Delete
 
+goalList.addEventListener("click", function(event){
+  const deleteBtn = event.target.closest(".gaol-delete-btn")
+
+  if(!deleteBtn) return;
+
+  const deletedId = Number(deleteBtn.dataset.id)
+
+  goals = goals.filter((item) =>{
+    return item.id !== deletedId
+  })
+
+  localStorage.setItem("goalItems", JSON.stringify(goals))
+  renderGoals();
+})
 
 
 
@@ -600,12 +634,15 @@ addGoal.addEventListener("click", addGoals)
 function loadTodosFromStorage() {
 
   const storedTodo = localStorage.getItem("todoItem");
+  const storedGoal = localStorage.getItem("goalItems")
 
-  if (storedTodo) {
+  if (storedTodo || storedGoal) {
 
     todos = JSON.parse(storedTodo);
+    goals = JSON.parse(storedGoal)
 
     renderTodos();
+    renderGoals();
   }
 
 }

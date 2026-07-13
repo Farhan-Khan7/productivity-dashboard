@@ -2081,7 +2081,7 @@ body {
   font-size: var(--fs-xl);
   /* color: yellow; */
 }
-.date-tag{
+.todo-tag{
   position: absolute;
   left: 65%;
   /* color: yellow; */
