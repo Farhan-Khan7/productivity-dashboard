@@ -2795,7 +2795,11 @@ body {
   flex-shrink: 0;
   width: 80%;
   height: 7%;
-  background: var(--surface);
+  /* background: var(--surface); */
+  background-color: #1c6cb1;
+}
+.fixed-planner-date{
+  position: relative;
 }
 .fixed-planner-input{
   width: 40%;
@@ -2803,8 +2807,9 @@ body {
   padding: var(--space-xs) var(--space-md);
   border-radius: var(--radius-xs);
   border: none;
-  background: var(--surface);
+  /* background: var(--surface); */
   color: var(--heading);
+  background-color: #0d141d;
 }
 .fixed-planner-input:focus{
   outline: none;
@@ -2816,6 +2821,7 @@ body {
   border-radius: var(--radius-xs);
   border: none;
   background: var(--surface);
+  /* background-color: yellowgreen; */
   position: relative;
   color: var(--heading);
 }
@@ -2829,10 +2835,12 @@ body {
 .fixed-planner-date-input input:focus{
   outline: none;
 }
-.fixed-planner-date-input i{
+.fixed-planner-date i{
   cursor: pointer;
+  /* z-index: 5; */
   background: var(--surface);
   position: absolute;
-  top: 25%;
+  font-size: var(--fs-md);
+  top: 26%;
   right: 10%;
 }

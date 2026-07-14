@@ -236,7 +236,9 @@ navTabs.forEach((link) => {
       goalDashboard.style.display = "flex";
     } else if (link.dataset.page === "planner") {
       plannerDashboard.style.display = "flex";
-      alert("Please use either the Fixed Planner or the Custom Planner, not both at the same time.");
+      alert(
+        "Please use either the Fixed Planner or the Custom Planner, not both at the same time.",
+      );
     }
   });
 });
@@ -645,33 +647,32 @@ goalList.addEventListener("click", function (event) {
 
 // goals section fully done
 
-const plannerTabs = document.querySelectorAll(".planner-topbar span")
-const customPlanner = document.querySelector("#custom-planner")
-const fixedPlanner = document.querySelector("#fixed-planner")
+const plannerTabs = document.querySelectorAll(".planner-topbar span");
+const customPlanner = document.querySelector("#custom-planner");
+const fixedPlanner = document.querySelector("#fixed-planner");
 
-const customPlannerContainer = document.querySelector(".custom-planner-container")
-const fixedPlannerContainer = document.querySelector(".fixed-planner-container")
+const customPlannerContainer = document.querySelector(
+  ".custom-planner-container",
+);
+const fixedPlannerContainer = document.querySelector(
+  ".fixed-planner-container",
+);
 
 plannerTabs.forEach((tab) => {
-
-    tab.addEventListener("click", function(event){
-
-        if(event.target.dataset.planner === "custom"){
-          customPlannerContainer.style.display = "initial"
-          fixedPlannerContainer.style.display = "none"
-          customPlanner.classList.add("n-card")
-          fixedPlanner.classList.remove("n-card")
-        }else if(event.target.dataset.planner === "fixed"){
-          customPlannerContainer.style.display = "none"
-          fixedPlannerContainer.style.display = "flex"
-          customPlanner.classList.remove("n-card")
-          fixedPlanner.classList.add("n-card")
-        }
-
-    });
-
+  tab.addEventListener("click", function (event) {
+    if (event.target.dataset.planner === "custom") {
+      customPlannerContainer.style.display = "initial";
+      fixedPlannerContainer.style.display = "none";
+      customPlanner.classList.add("n-card");
+      fixedPlanner.classList.remove("n-card");
+    } else if (event.target.dataset.planner === "fixed") {
+      customPlannerContainer.style.display = "none";
+      fixedPlannerContainer.style.display = "flex";
+      customPlanner.classList.remove("n-card");
+      fixedPlanner.classList.add("n-card");
+    }
+  });
 });
-
 
 // Planner Input
 const plannerInput = document.querySelector("#plan-input");
@@ -702,21 +703,18 @@ let planners = [];
 // Edit Planner
 let editingPlannerId = null;
 
-
 const fixedplanDate = document.querySelectorAll(".fixed-planner-date-input");
-const fixedcalendarIcon = document.querySelectorAll(".fixed-planner-date-input i");
+const fixedcalendarIcon = document.querySelectorAll(".fixed-planner-date i");
 
 fixedcalendarIcon.forEach((icon) => {
-
   icon.addEventListener("click", () => {
-
-    const dateInput = icon.closest(".fixed-planner-date-input").querySelector("input");
+    const dateInput = icon
+      .closest(".fixed-planner-date")
+      .querySelector(".fixed-planner-date-input");
 
     dateInput.min = today;
     dateInput.showPicker();
-
   });
-
 });
 
 // planner UI renders
@@ -728,13 +726,16 @@ function renderPlans() {
   }
 
   let plansHTML = "";
-  
+
   planners.forEach((plans) => {
-    const formattedDate = new Date(plans.plansDate).toLocaleDateString("en-GB", {
-      day: "2-digit",
-      month: "short",
-      year: "numeric",
-    });
+    const formattedDate = new Date(plans.plansDate).toLocaleDateString(
+      "en-GB",
+      {
+        day: "2-digit",
+        month: "short",
+        year: "numeric",
+      },
+    );
 
     plansHTML += ` <div class="custom-plans-items">
                     <div class="plan-schedule">
@@ -760,7 +761,6 @@ function renderPlans() {
   plannerList.innerHTML = plansHTML;
 }
 
-
 // add planner functionalty
 function addPlanners() {
   const plansDesc = plannerInput.value.trim();
@@ -777,7 +777,7 @@ function addPlanners() {
     return;
   } else if (plansHour === "" || plansMintue === "" || plansPeriod === "") {
     alert("Please Schedual your Plan's");
-    return
+    return;
   }
 
   const planDetails = {
@@ -798,60 +798,142 @@ function addPlanners() {
 }
 addPlannerBtn.addEventListener("click", addPlanners);
 
-
 // delete planner functionalty
 
-plannerList.addEventListener("click", function(event){
+plannerList.addEventListener("click", function (event) {
+  const deleteBtn = event.target.closest(".delete-btn");
+  const deletedID = Number(deleteBtn.dataset.id);
+  if (!deleteBtn) return;
 
-    const deleteBtn = event.target.closest(".delete-btn");
-    const deletedID = Number(deleteBtn.dataset.id);
-    if(!deleteBtn) return;
+  planners = planners.filter((item) => {
+    return item.id !== deletedID;
+  });
 
-    planners = planners.filter((item) =>{
-      return item.id !== deletedID;
-    })
-
-    localStorage.setItem("plansItem", JSON.stringify(planners));
-    renderPlans()
+  localStorage.setItem("plansItem", JSON.stringify(planners));
+  renderPlans();
 });
-
 
 const fixedPlannerInputs = document.querySelectorAll(".fixed-planner-input");
 
-document.addEventListener("click", function(event){
+let fixedPlans = [];
 
-  if(event.target.closest(".fixed-planner-item")) return;
+function loadFixedPlans() {
+  fixedPlans.forEach((planItem) => {
+    const plannerItem = document.querySelector(
+      `.fixed-planner-item[data-time="${planItem.time}"]`,
+    );
 
-  fixedPlannerInputs.forEach((input) =>{
+    if (!plannerItem) return;
+
+    const plannerInput = plannerItem.querySelector(".fixed-planner-input");
+
+    const plannerDate = plannerItem.querySelector(".fixed-planner-date-input");
+
+    plannerInput.value = planItem.plan;
+    plannerDate.value = planItem.date;
+  });
+}
+
+// delete function for Fixed plan's
+
+const fixedPlannerList = document.querySelectorAll(".fixedPlannerList");
+
+const fixedPlanDeleteBtn = document.querySelectorAll(
+  ".fixed-planner-delete-btn",
+);
+
+fixedPlannerContainer.addEventListener("click", function (event) {
+  const deleteBtn = event.target.closest(".fixed-planner-delete-btn");
+
+  if (!deleteBtn) return;
+
+  const plannerItem = deleteBtn.closest(".fixed-planner-item");
+  const plan = plannerItem.querySelector(".fixed-planner-input")
+  const date = plannerItem.querySelector(".fixed-planner-date-input");
+
+  console.log(plannerItem)
+  console.log(plan)
+  console.log(date)
+
+});
+
+// Save Function
+function saveFixedPlan(input) {
+  const inputItem = input.closest(".fixed-planner-item");
+
+  const time = inputItem.dataset.time;
+  const plan = input.value;
+  const date = inputItem.querySelector(".fixed-planner-date-input").value;
+
+  const existingPlan = fixedPlans.find((item) => {
+    return item.time === time;
+  });
+
+  if (existingPlan) {
+    existingPlan.plan = plan;
+    existingPlan.date = date;
+  } else {
+    const fixedPlanDetails = {
+      id: Date.now(),
+      time,
+      plan,
+      date,
+    };
+
+    fixedPlans.push(fixedPlanDetails);
+  }
+
+  localStorage.setItem("fixedPlans", JSON.stringify(fixedPlans));
+}
+
+// Events
+fixedPlannerInputs.forEach((input) => {
+  const inputItem = input.closest(".fixed-planner-item");
+  const dateInput = inputItem.querySelector(".fixed-planner-date-input");
+
+  // Edit Start
+  input.addEventListener("focus", function () {
     input.readOnly = false;
+  });
 
-    const plannerItem = input.closest(".fixed-planner-item");
-    const dueDate = plannerItem.querySelector(".fixed-planner-date-input input")
+  // Save on Input Blur
+  input.addEventListener("blur", function () {
+    input.readOnly = true;
+    saveFixedPlan(input);
+  });
 
-    dueDate.disabled = false;
-  })
-})
+  // Save on Date Change
+  dateInput.addEventListener("change", function () {
+    saveFixedPlan(input);
+  });
+});
 
 // empty localstorage pagload function
 function loadTodosFromStorage() {
   const storedTodo = localStorage.getItem("todoItem");
   const storedGoal = localStorage.getItem("goalItems");
-  const storePlans = localStorage.getItem("plansItem")
+  const storePlans = localStorage.getItem("plansItem");
+  const FixedPlans = localStorage.getItem("fixedPlans");
 
   if (storedTodo) {
     todos = JSON.parse(storedTodo);
-}
+  }
 
-if (storedGoal) {
+  if (storedGoal) {
     goals = JSON.parse(storedGoal);
-}
+  }
 
-if (storePlans) {
+  if (storePlans) {
     planners = JSON.parse(storePlans);
-}
+  }
 
-renderTodos();
-renderGoals();
-renderPlans();
+  if (FixedPlans) {
+    fixedPlans = JSON.parse(FixedPlans);
+  }
+
+  renderTodos();
+  renderGoals();
+  renderPlans();
+  loadFixedPlans();
 }
 loadTodosFromStorage();
