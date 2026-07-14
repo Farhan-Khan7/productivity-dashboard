@@ -214,6 +214,7 @@ const dashboard = document.querySelector("#dashboard-main");
 const todoDashboard = document.querySelector("#todo-main");
 const goalDashboard = document.querySelector("#goal-main");
 const plannerDashboard = document.querySelector("#planner-main");
+const timerDashboard = document.querySelector("#timer-main");
 
 const navTabs = document.querySelectorAll(".nav-menu .nav-item");
 
@@ -222,6 +223,9 @@ navTabs.forEach((link) => {
     dashboard.style.display = "none";
     todoDashboard.style.display = "none";
     goalDashboard.style.display = "none";
+    plannerDashboard.style.display = "none";
+    timerDashboard.style.display = "none";
+
     navTabs.forEach((item) => {
       item.classList.remove("active");
     });
@@ -236,6 +240,8 @@ navTabs.forEach((link) => {
       goalDashboard.style.display = "flex";
     } else if (link.dataset.page === "planner") {
       plannerDashboard.style.display = "flex";
+    }else if(link.dataset.page === "timer"){
+      timerDashboard.style.display = "flex";
     }
   });
 });
@@ -489,7 +495,7 @@ function addTodos() {
 addTaskBtn.addEventListener("click", addTodos);
 // todos functionalty done
 
-const dashboardGolas = document.querySelector("#dashboard-goals");
+const dashboardGoals = document.querySelector("#dashboard-goals");
 const goalInput = document.querySelector("#goal-input");
 const goalDate = document.querySelector("#goal-date");
 const goalEmptyMessage = document.querySelector(".goal-empty-message");
@@ -570,7 +576,7 @@ function renderGoals() {
 // Render dashboard goals
 
 function renderDashboardGoals() {
-  dashboardGolas.innerHTML = "";
+  dashboardGoals.innerHTML = "";
   const today = new Date().toLocaleDateString("en-CA");
 
   const todayGoals = goals.filter((item) => {
@@ -589,7 +595,7 @@ function renderDashboardGoals() {
                 </div>`;
   });
 
-  dashboardGolas.innerHTML = dashboardGoalsItem;
+  dashboardGoals.innerHTML = dashboardGoalsItem;
 }
 
 renderDashboardGoals();

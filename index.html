@@ -125,52 +125,59 @@
 
           <!-- Stats row -->
           <section id="stats-row">
-            <div class="stat-card n-card" id="plan-stat">
-              <div class="stat-icon-ring">
-                <i class="ri-calendar-check-line"></i>
+            <div class="stats-card n-card">
+              <div class="stats-top">
+                <span class="material-symbols-outlined">task_alt</span>
+                <p>Todo List</p>
               </div>
-              <div class="stat-text">
-                <div class="stat-label">Plan</div>
-                <div class="stat-value-row">
-                  <span class="stat-value" id="plan-count">5</span>
-                  <span class="stat-sub">Events Today</span>
-                </div>
+              <div class="today-stats">
+                <span class="stats-heading">Today Todos :</span>
+                <span class="stats-data">0</span>
               </div>
-            </div>
-
-            <div class="stat-card n-card" id="focus-stat">
-              <div class="stat-icon-ring"><i class="ri-timer-line"></i></div>
-              <div class="stat-text">
-                <div class="stat-label">Focus Time</div>
-                <div class="stat-value-row">
-                  <span class="stat-value" id="focus-minutes">90</span>
-                  <span class="stat-sub">Mins Today</span>
-                </div>
+              <div class="complete-stats">
+                <span class="stats-heading">Completed Todos :</span>
+                <span class="stats-data">0</span>
               </div>
             </div>
 
-            <div class="stat-card n-card" id="goals-card">
-              <div id="goals-top">
-                <div class="stat-icon-ring"><i class="ri-star-line"></i></div>
-                <div id="goals-numbers" style="flex: 1">
-                  <div class="stat-value-row">
-                    <!-- <span class="stat-label">Goals</span> -->
-                    <div class="goals left">
-                      <span class="stat-sub">Total Goals</span>
-                      <span class="stat-value" id="goals-total">3</span>
-                    </div>
-                  </div>
-                  <div class="goals-right">
-                    <div class="stat-sub">Completed Goals</div>
-                    <div class="stat-value" id="goals-completed">2</div>
-                  </div>
-                </div>
+            <div class="stats-card n-card">
+              <div class="stats-top">
+                <span class="material-symbols-outlined">task_alt</span>
+                <p>Today Events</p>
               </div>
-              <div id="goals-progress-track">
-                <div id="goals-progress-fill"></div>
+              <div class="today-stats">
+                <span class="stats-heading">Today Events :</span>
+                <span class="stats-data">0</span>
               </div>
-              <div id="goals-percent">
-                <span id="goals-percent-text">66%</span> Completed
+              <div class="complete-stats">
+                <span class="stats-heading">Completed Events :</span>
+                <span class="stats-data">0</span>
+              </div>
+            </div>
+
+            <div class="stats-card n-card">
+              <div class="stats-top">
+                <span class="material-symbols-outlined">task_alt</span>
+                <p>Goals</p>
+              </div>
+              <div class="today-stats">
+                <span class="stats-heading">Today Goals :</span>
+                <span class="stats-data">0</span>
+              </div>
+              <div class="complete-stats">
+                <span class="stats-heading">Completed Goals :</span>
+                <span class="stats-data">0</span>
+              </div>
+            </div>
+
+            <div class="stats-card n-card">
+              <div class="focus-stats-top">
+                <span class="material-symbols-outlined">task_alt</span>
+                <p>Focus</p>
+              </div>
+              <div class="focus-stats">
+                <span class="focus-heading">Today Total Focus Time :</span>
+                <span class="focus-data">0<span>M</span></span>
               </div>
             </div>
           </section>
@@ -201,10 +208,7 @@
                 </div> -->
               </div>
               <ul id="planner-list">
-                <li class="planner-item">
-                  <span class="planner-time">09:00 AM</span><span class="planner-task">Study JavaScript</span>
-                  
-                </li>
+               
                </ul>
             </div>
 
@@ -216,7 +220,6 @@
                 </div>
               </div>
               <div id="dashboard-goals">
-
 
               </div>
             </div>
@@ -973,6 +976,41 @@
             </div>
           </div>
         </div>
+
+        <div class="timer-main" id="timer-main">
+          <div class="logout-btn back-btn">
+            <i class="ri-arrow-left-box-line"></i>
+            <h3>Back</h3>
+          </div>
+
+
+          <div id="pomodoro-body">
+                <div id="timer-ring-wrap">
+                  <svg viewBox="0 0 140 140">
+                    <circle id="timer-track" cx="70" cy="70" r="50"></circle>
+                    <circle id="timer-progress" cx="70" cy="70" r="50" stroke-dasharray="377" stroke-dashoffset="80">
+                    </circle>
+                  </svg>
+                  <div id="timer-center">
+                    <div id="timer-display">25:00</div>
+                    <div id="timer-label">Focus Time</div>
+                  </div>
+                </div>
+                <div id="pomodoro-controls">
+                  <button id="start-btn">
+                    <i class="ri-play-fill"></i>Start
+                  </button>
+                  <button id="pause-btn">
+                    <i class="ri-pause-line"></i>Pause
+                  </button>
+                  <button id="reset-btn">
+                    <i class="ri-restart-line"></i>Reset
+                  </button>
+                </div>
+              </div>
+
+        </div>
+        
       </main>
 
     </div>
