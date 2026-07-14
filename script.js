@@ -236,9 +236,6 @@ navTabs.forEach((link) => {
       goalDashboard.style.display = "flex";
     } else if (link.dataset.page === "planner") {
       plannerDashboard.style.display = "flex";
-      alert(
-        "Please use either the Fixed Planner or the Custom Planner, not both at the same time.",
-      );
     }
   });
 });
@@ -548,7 +545,7 @@ function renderGoals() {
                       
                       <!-- Delete -->
 
-                      <button class="goal-btn gaol-delete-btn" title="Delete goal" data-id="${goal.id}">
+                      <button class="goal-btn goal-delete-btn" title="Delete goal" data-id="${goal.id}">
                       
                       <i class="ri-delete-bin-line"></i>
                       
@@ -631,7 +628,7 @@ addGoal.addEventListener("click", addGoals);
 // Goals delete functionalty
 
 goalList.addEventListener("click", function (event) {
-  const deleteBtn = event.target.closest(".gaol-delete-btn");
+  const deleteBtn = event.target.closest(".goal-delete-btn");
 
   if (!deleteBtn) return;
 
@@ -717,6 +714,104 @@ fixedcalendarIcon.forEach((icon) => {
   });
 });
 
+
+
+const dashboardPlannerList = document.querySelector("#planner-list");
+
+// render Dashboard Plans
+function renderDashboardPlanner() {
+
+  dashboardPlannerList.innerHTML = "";
+
+  const today = new Date().toLocaleDateString("en-CA");
+
+  // =========================
+  // Custom Planner
+  // =========================
+
+  const todayCustomPlans = planners
+    .filter((item) => item.plansDate === today)
+    .map((item) => ({
+      id: item.id,
+      time: `${item.plansHour}:${item.plansMintue}`,
+      period: item.plansPeriod,
+      task: item.plansDesc,
+      type: "custom",
+    }));
+
+
+  // =========================
+  // Fixed Planner
+  // =========================
+
+  const todayFixedPlans = fixedPlans
+    .filter((item) => item.date === today)
+    .map((item) => ({
+      id: item.id,
+      time: item.time,
+      task: item.plan,
+      type: "fixed",
+    }));
+
+
+  // =========================
+  // Merge Both Arrays
+  // =========================
+
+  const allPlans = [...todayCustomPlans, ...todayFixedPlans];
+
+
+  // =========================
+  // Sort By Time
+  // =========================
+
+  allPlans.sort((a, b) => {
+    return a.time.localeCompare(b.time);
+  });
+
+
+  // =========================
+  // Render UI
+  // =========================
+
+  let plannerHTML = "";
+
+  allPlans.forEach((item) => {
+
+    plannerHTML += `
+      <li class="planner-item">
+
+        <span class="planner-time">
+          ${
+            item.type === "fixed"
+              ? formatTime(item.time)
+              : `${item.time} ${item.period}`
+          }
+        </span>
+
+        <span class="planner-task">
+          ${item.task}
+        </span>
+
+        <button
+          class="planner-complete-btn"
+          title="Complete Planner"
+          data-id="${item.id}"
+          data-type="${item.type}"
+        >
+          <i class="ri-check-double-line"></i>
+        </button>
+
+      </li>
+    `;
+
+  });
+
+  dashboardPlannerList.innerHTML = plannerHTML;
+
+}
+
+
 // planner UI renders
 function renderPlans() {
   if (planners.length === 0) {
@@ -759,6 +854,8 @@ function renderPlans() {
   });
 
   plannerList.innerHTML = plansHTML;
+
+  renderDashboardPlanner();
 }
 
 // add planner functionalty
@@ -798,8 +895,8 @@ function addPlanners() {
 }
 addPlannerBtn.addEventListener("click", addPlanners);
 
-// delete planner functionalty
 
+// delete planner functionalty
 plannerList.addEventListener("click", function (event) {
   const deleteBtn = event.target.closest(".delete-btn");
   const deletedID = Number(deleteBtn.dataset.id);
@@ -814,65 +911,112 @@ plannerList.addEventListener("click", function (event) {
 });
 
 const fixedPlannerInputs = document.querySelectorAll(".fixed-planner-input");
-
 let fixedPlans = [];
+let isDeleting = false;
 
-function loadFixedPlans() {
+
+
+// render fixed plan's UI 
+function renderFixedPlans() {
+
   fixedPlans.forEach((planItem) => {
+
     const plannerItem = document.querySelector(
-      `.fixed-planner-item[data-time="${planItem.time}"]`,
+      `.fixed-planner-item[data-time="${planItem.time}"]`
     );
 
     if (!plannerItem) return;
 
     const plannerInput = plannerItem.querySelector(".fixed-planner-input");
-
     const plannerDate = plannerItem.querySelector(".fixed-planner-date-input");
 
     plannerInput.value = planItem.plan;
     plannerDate.value = planItem.date;
+
   });
+
+  renderDashboardPlanner();
+
 }
 
-// delete function for Fixed plan's
-
-const fixedPlannerList = document.querySelectorAll(".fixedPlannerList");
-
-const fixedPlanDeleteBtn = document.querySelectorAll(
-  ".fixed-planner-delete-btn",
-);
-
+// delete button 
 fixedPlannerContainer.addEventListener("click", function (event) {
+
   const deleteBtn = event.target.closest(".fixed-planner-delete-btn");
 
   if (!deleteBtn) return;
 
-  const plannerItem = deleteBtn.closest(".fixed-planner-item");
-  const plan = plannerItem.querySelector(".fixed-planner-input")
-  const date = plannerItem.querySelector(".fixed-planner-date-input");
+  isDeleting = true;
 
-  console.log(plannerItem)
-  console.log(plan)
-  console.log(date)
+  const plannerItem = deleteBtn.closest(".fixed-planner-item");
+
+  const plannerInput = plannerItem.querySelector(".fixed-planner-input");
+  const plannerDate = plannerItem.querySelector(".fixed-planner-date-input");
+
+  const time = plannerItem.dataset.time;
+
+  // Clear UI
+  plannerInput.value = "";
+  plannerDate.value = "";
+
+  // Remove from Array
+  fixedPlans = fixedPlans.filter((item) => {
+    return item.time !== time;
+  });
+
+  // Update LocalStorage
+  localStorage.setItem("fixedPlans", JSON.stringify(fixedPlans));
+
+  isDeleting = false;
+
+  
+  renderDashboardPlanner();
 
 });
 
-// Save Function
+
+// time format function
+function formatTime(time) {
+
+  let [hour, minute] = time.split(":");
+
+  hour = Number(hour);
+
+  const period = hour >= 12 ? "PM" : "AM";
+
+  hour = hour % 12;
+
+  if (hour === 0) {
+    hour = 12;
+  }
+
+  return `${String(hour).padStart(2, "0")}:${minute} ${period}`;
+
+}
+
+// data lload in UI 
 function saveFixedPlan(input) {
+
   const inputItem = input.closest(".fixed-planner-item");
 
   const time = inputItem.dataset.time;
-  const plan = input.value;
+  const plan = input.value.trim();
   const date = inputItem.querySelector(".fixed-planner-date-input").value;
+
+  // Don't save empty data
+  if (plan === "" && date === "") return;
 
   const existingPlan = fixedPlans.find((item) => {
     return item.time === time;
   });
 
   if (existingPlan) {
+
     existingPlan.plan = plan;
     existingPlan.date = date;
+
   } else {
+
     const fixedPlanDetails = {
       id: Date.now(),
       time,
@@ -881,31 +1025,43 @@ function saveFixedPlan(input) {
     };
 
     fixedPlans.push(fixedPlanDetails);
+
   }
 
   localStorage.setItem("fixedPlans", JSON.stringify(fixedPlans));
+
+  renderDashboardPlanner();
+
 }
 
-// Events
 fixedPlannerInputs.forEach((input) => {
-  const inputItem = input.closest(".fixed-planner-item");
-  const dateInput = inputItem.querySelector(".fixed-planner-date-input");
 
-  // Edit Start
+  const plannerItem = input.closest(".fixed-planner-item");
+  const dateInput = plannerItem.querySelector(".fixed-planner-date-input");
+
+  // Start Editing
   input.addEventListener("focus", function () {
     input.readOnly = false;
   });
 
-  // Save on Input Blur
+  // Save on Blur
   input.addEventListener("blur", function () {
+
     input.readOnly = true;
+
+    if (isDeleting) return;
+
     saveFixedPlan(input);
+
   });
 
   // Save on Date Change
   dateInput.addEventListener("change", function () {
+
     saveFixedPlan(input);
+
   });
+
 });
 
 // empty localstorage pagload function
@@ -934,6 +1090,6 @@ function loadTodosFromStorage() {
   renderTodos();
   renderGoals();
   renderPlans();
-  loadFixedPlans();
+  renderFixedPlans();
 }
 loadTodosFromStorage();
