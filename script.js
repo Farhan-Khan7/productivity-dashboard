@@ -153,48 +153,137 @@ const feelsLikeValue = document.querySelector("#feels-like-value");
 // Refresh Button
 const weatherRefreshBtn = document.querySelector("#weather-refresh-btn");
 
-navigator.geolocation.getCurrentPosition((position) => {
-  let lat = position.coords.latitude;
-  let lon = position.coords.longitude;
-});
+// navigator.geolocation.getCurrentPosition((position) => {
+//   let lat = position.coords.latitude;
+//   let lon = position.coords.longitude;
+// });
 
-async function getWeather(lat, lon) {
-  const response = await fetch(
-    `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=90e75288217a53e1631469e446f3fbb9&units=metric`,
-  );
+// async function getWeather(lat, lon) {
+//   const response = await fetch(
+//     `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=90e75288217a53e1631469e446f3fbb9&units=metric`,
+//   );
 
-  const data = await response.json();
+//   const data = await response.json();
 
-  locationValue.textContent = `${data.name}, ${data.sys.country}`;
+//   locationValue.textContent = `${data.name}, ${data.sys.country}`;
 
-  tempValue.textContent = Math.round(data.main.temp);
+//   tempValue.textContent = Math.round(data.main.temp);
 
-  weatherDesc.textContent = data.weather[0].description;
+//   weatherDesc.textContent = data.weather[0].description;
 
-  humidityValue.textContent = data.main.humidity + "%";
+//   humidityValue.textContent = data.main.humidity + "%";
 
-  windValue.textContent = Math.round(data.wind.speed) + " km/h";
+//   windValue.textContent = Math.round(data.wind.speed) + " km/h";
 
-  feelsLikeValue.textContent = Math.round(data.main.feels_like) + "°C";
+//   feelsLikeValue.textContent = Math.round(data.main.feels_like) + "°C";
 
-  const weatherMain = data.weather[0].main;
+//   const weatherMain = data.weather[0].main;
 
-  if (weatherMain === "Clear") {
-    weatherIcon.className = "ri-sun-fill";
-  } else if (weatherMain === "Clouds") {
-    weatherIcon.className = "ri-cloudy-2-fill";
-  } else if (weatherMain === "Rain") {
-    weatherIcon.className = "ri-rainy-fill";
-  } else if (weatherMain === "Thunderstorm") {
-    weatherIcon.className = "ri-thunderstorms-fill";
-  } else if (weatherMain === "Snow") {
-    weatherIcon.className = "ri-snowy-fill";
-  } else if (weatherMain === "Mist") {
-    weatherIcon.className = "ri-mist-fill";
-  } else {
-    weatherIcon.className = "ri-cloud-line";
-  }
-}
+//   if (weatherMain === "Clear") {
+//     weatherIcon.className = "ri-sun-fill";
+//   } else if (weatherMain === "Clouds") {
+//     weatherIcon.className = "ri-cloudy-2-fill";
+//   } else if (weatherMain === "Rain") {
+//     weatherIcon.className = "ri-rainy-fill";
+//   } else if (weatherMain === "Thunderstorm") {
+//     weatherIcon.className = "ri-thunderstorms-fill";
+//   } else if (weatherMain === "Snow") {
+//     weatherIcon.className = "ri-snowy-fill";
+//   } else if (weatherMain === "Mist") {
+//     weatherIcon.className = "ri-mist-fill";
+//   } else {
+//     weatherIcon.className = "ri-cloud-line";
+//   }
+// }
+
+// ================= Dashboard Weather Widget - Dynamic JS =================
+// Isolated namespace: dashboardWeather (koi clash nahi weatherTab se)
+
+const dashboardWeather = {
+  coords: {
+    lat: 23.2599,   // default: Bhopal
+    lon: 77.4126,
+  },
+
+  refreshIntervalMs: 10 * 60 * 1000, // har 10 min me auto refresh
+
+  nodes: {
+    tempValue: document.getElementById("temp-value"),
+    desc: document.getElementById("weather-desc"),
+    icon: document.getElementById("weather-icon"),
+    humidity: document.getElementById("humidity-value"),
+    wind: document.getElementById("wind-value"),
+    feelsLike: document.getElementById("feels-like-value"),
+  },
+
+  // WMO code -> { text, remix icon class }
+  codeInfoMap: {
+    0: { text: "Clear Sky", icon: "ri-sun-line" },
+    1: { text: "Mainly Clear", icon: "ri-sun-line" },
+    2: { text: "Partly Cloudy", icon: "ri-cloudy-2-fill" },
+    3: { text: "Overcast", icon: "ri-cloud-fill" },
+    45: { text: "Fog", icon: "ri-foggy-line" },
+    48: { text: "Rime Fog", icon: "ri-foggy-line" },
+    51: { text: "Light Drizzle", icon: "ri-drizzle-line" },
+    53: { text: "Drizzle", icon: "ri-drizzle-line" },
+    55: { text: "Dense Drizzle", icon: "ri-drizzle-line" },
+    61: { text: "Slight Rain", icon: "ri-rainy-line" },
+    63: { text: "Rain", icon: "ri-rainy-line" },
+    65: { text: "Heavy Rain", icon: "ri-heavy-showers-line" },
+    71: { text: "Slight Snow", icon: "ri-snowy-line" },
+    73: { text: "Snow", icon: "ri-snowy-line" },
+    75: { text: "Heavy Snow", icon: "ri-snowy-line" },
+    80: { text: "Rain Showers", icon: "ri-showers-line" },
+    81: { text: "Rain Showers", icon: "ri-showers-line" },
+    82: { text: "Violent Showers", icon: "ri-heavy-showers-line" },
+    95: { text: "Thunderstorm", icon: "ri-thunderstorms-line" },
+    96: { text: "Thunderstorm + Hail", icon: "ri-thunderstorms-line" },
+    99: { text: "Thunderstorm + Hail", icon: "ri-thunderstorms-line" },
+  },
+
+  init() {
+    this.loadWeather();
+
+    // auto refresh loop (koi refresh button nahi hai is widget me isliye interval based)
+    setInterval(() => this.loadWeather(), this.refreshIntervalMs);
+  },
+
+  async loadWeather() {
+    try {
+      const url = `https://api.open-meteo.com/v1/forecast?latitude=${this.coords.lat}&longitude=${this.coords.lon}&current=temperature_2m,relative_humidity_2m,apparent_temperature,wind_speed_10m,weather_code&timezone=auto`;
+
+      const response = await fetch(url);
+      const payload = await response.json();
+
+      this.updateUI(payload.current);
+    } catch (err) {
+      console.error("Dashboard weather fetch error:", err);
+      this.nodes.desc.textContent = "Unavailable";
+    }
+  },
+
+  updateUI(current) {
+    const info = this.codeInfoMap[current.weather_code] || {
+      text: "Unknown",
+      icon: "ri-question-line",
+    };
+
+    this.nodes.tempValue.textContent = Math.round(current.temperature_2m);
+    this.nodes.desc.textContent = info.text;
+
+    // icon class replace (purani remix class hata ke nayi lagayi)
+    this.nodes.icon.className = info.icon;
+    this.nodes.icon.id = "weather-icon"; // id restore, kyunki className poora overwrite karta hai
+
+    this.nodes.humidity.textContent = `${current.relative_humidity_2m}%`;
+    this.nodes.wind.textContent = `${Math.round(current.wind_speed_10m)} km/h`;
+    this.nodes.feelsLike.textContent = `${Math.round(current.apparent_temperature)}°C`;
+  },
+};
+
+document.addEventListener("DOMContentLoaded", () => dashboardWeather.init());
+
+
 
 function getLocation() {
   navigator.geolocation.getCurrentPosition((position) => {
@@ -210,11 +299,166 @@ getLocation();
 
 weatherRefreshBtn.addEventListener("click", getLocation);
 
+
+// ================= Pomodoro Widget - Dynamic JS =================
+// Isolated namespace: pomodoroWidget (weatherTab / dashboardWeather se koi clash nahi)
+
+const pomodoroWidget = {
+  focusDuration: 25 * 60,
+  breakDuration: 5 * 60,
+
+  remainingSeconds: 25 * 60,
+  isRunning: false,
+  isFocusMode: true,
+  intervalId: null,
+
+  circleCircumference: 0, // ab dynamically calculate hoga init me
+  storageKey: "pomodoroWidget-state", // isolated key, koi aur widget use nahi karega
+
+  nodes: {
+    display: document.getElementById("timer-display"),
+    label: document.getElementById("timer-label"),
+    progressRing: document.getElementById("timer-progress"),
+    startBtn: document.getElementById("start-btn"),
+    pauseBtn: document.getElementById("pause-btn"),
+    resetBtn: document.getElementById("reset-btn"),
+  },
+
+  init() {
+    // circumference ko circle ke actual radius se calculate karo (bug fix)
+    const radius = this.nodes.progressRing.getAttribute("r");
+    this.circleCircumference = 2 * Math.PI * radius;
+
+    this.nodes.startBtn.addEventListener("click", () => this.startTimer());
+    this.nodes.pauseBtn.addEventListener("click", () => this.pauseTimer());
+    this.nodes.resetBtn.addEventListener("click", () => this.resetTimer());
+
+    this.loadState();
+    this.updateDisplay();
+    this.updateRing();
+
+    // agar refresh se pehle timer chal raha tha, toh wapas chalu kar do
+    if (this.isRunning) {
+      this.isRunning = false; // startTimer() dobara true karega
+      this.startTimer();
+    }
+  },
+
+  startTimer() {
+    if (this.isRunning) return;
+    this.isRunning = true;
+    this.saveState();
+
+    this.intervalId = setInterval(() => {
+      if (this.remainingSeconds > 0) {
+        this.remainingSeconds--;
+        this.updateDisplay();
+        this.updateRing();
+        this.saveState();
+      } else {
+        this.switchMode();
+      }
+    }, 1000);
+  },
+
+  pauseTimer() {
+    this.isRunning = false;
+    clearInterval(this.intervalId);
+    this.saveState();
+  },
+
+  resetTimer() {
+    this.pauseTimer();
+    this.isFocusMode = true;
+    this.remainingSeconds = this.focusDuration;
+    this.nodes.label.textContent = "Focus Time";
+    this.updateDisplay();
+    this.updateRing();
+    this.saveState();
+  },
+
+  switchMode() {
+    this.isFocusMode = !this.isFocusMode;
+    this.remainingSeconds = this.isFocusMode
+      ? this.focusDuration
+      : this.breakDuration;
+    this.nodes.label.textContent = this.isFocusMode ? "Focus Time" : "Break Time";
+    this.updateDisplay();
+    this.updateRing();
+    this.saveState();
+  },
+
+  updateDisplay() {
+    const mins = Math.floor(this.remainingSeconds / 60);
+    const secs = this.remainingSeconds % 60;
+    this.nodes.display.textContent = `${String(mins).padStart(2, "0")}:${String(
+      secs
+    ).padStart(2, "0")}`;
+  },
+
+  updateRing() {
+    const totalDuration = this.isFocusMode
+      ? this.focusDuration
+      : this.breakDuration;
+
+    const progressFraction = this.remainingSeconds / totalDuration;
+    const offset = this.circleCircumference * (1 - progressFraction);
+
+    this.nodes.progressRing.style.strokeDasharray = this.circleCircumference;
+    this.nodes.progressRing.style.strokeDashoffset = offset;
+  },
+
+  // ================= localStorage persistence =================
+
+  saveState() {
+    const state = {
+      remainingSeconds: this.remainingSeconds,
+      isFocusMode: this.isFocusMode,
+      isRunning: this.isRunning,
+      lastSavedAt: Date.now(), // refresh ke beech ka gap calculate karne ke liye
+    };
+    localStorage.setItem(this.storageKey, JSON.stringify(state));
+  },
+
+  loadState() {
+    const raw = localStorage.getItem(this.storageKey);
+    if (!raw) return;
+
+    try {
+      const state = JSON.parse(raw);
+
+      this.isFocusMode = state.isFocusMode;
+      this.isRunning = state.isRunning;
+
+      let remaining = state.remainingSeconds;
+
+      // agar timer chal raha tha, toh jitna time refresh me nikla wo minus karo
+      if (state.isRunning) {
+        const elapsedSeconds = Math.floor((Date.now() - state.lastSavedAt) / 1000);
+        remaining -= elapsedSeconds;
+      }
+
+      this.remainingSeconds = Math.max(remaining, 0);
+      this.nodes.label.textContent = this.isFocusMode ? "Focus Time" : "Break Time";
+    } catch (err) {
+      console.error("Pomodoro state parse error:", err);
+    }
+  },
+};
+
+document.addEventListener("DOMContentLoaded", () => pomodoroWidget.init());
+
+
+
+
+
 const dashboard = document.querySelector("#dashboard-main");
 const todoDashboard = document.querySelector("#todo-main");
 const goalDashboard = document.querySelector("#goal-main");
 const plannerDashboard = document.querySelector("#planner-main");
 const timerDashboard = document.querySelector("#timer-main");
+const weatherDashboard = document.querySelector("#weather-main");
+const quoteDashboard = document.querySelector("#quote-main");
 
 const navTabs = document.querySelectorAll(".nav-menu .nav-item");
 
@@ -225,6 +469,8 @@ navTabs.forEach((link) => {
     goalDashboard.style.display = "none";
     plannerDashboard.style.display = "none";
     timerDashboard.style.display = "none";
+    weatherDashboard.style.display = "none";
+    quoteDashboard.style.display = "none";
 
     navTabs.forEach((item) => {
       item.classList.remove("active");
@@ -240,8 +486,14 @@ navTabs.forEach((link) => {
       goalDashboard.style.display = "flex";
     } else if (link.dataset.page === "planner") {
       plannerDashboard.style.display = "flex";
-    }else if(link.dataset.page === "timer"){
+    } else if (link.dataset.page === "timer") {
       timerDashboard.style.display = "flex";
+    } else if(link.dataset.page === "weather") {
+      weatherDashboard.style.display = "flex";
+      console.log("clicked")
+    } else if(link.dataset.page === "quote") {
+      quoteDashboard.style.display = "flex"
+      console.log("clicked")
     }
   });
 });
@@ -417,7 +669,7 @@ function renderDashboardTodos() {
   let dashboardTodoItem = "";
   todayTodos.forEach((todo) => {
     dashboardTodoItem += `<div class="dashboard-items">
-                  <span>${todo.taskdesc}</span>
+                  <span class="${todo.complete ? "completed-text" : ""}">${todo.taskdesc}</span>
                   <div class="dashboard-todo-tags">
                     ${
                       todo.isImportant
@@ -426,7 +678,7 @@ function renderDashboardTodos() {
                     </span>`
                         : ""
                     }
-                  <button class="todos-complete-btn" title="Complete Task">
+                  <button class="todos-complete-btn" title="Complete Task" data-id="${todo.id}">
                     <i class="ri-check-double-line"></i>
                   </button>
                   </div>
@@ -434,8 +686,8 @@ function renderDashboardTodos() {
   });
 
   dashboardTodos.innerHTML = dashboardTodoItem;
+  updateStats(); // naya call add kiya
 }
-
 // Reset input functionalty
 function resetInputs() {
   // todoinputs resets
@@ -587,8 +839,7 @@ function renderDashboardGoals() {
 
   todayGoals.forEach((goal) => {
     dashboardGoalsItem += `<div class="dashboard-goal-items">
-                  <span>${goal.goaldesc}</span>
-                  <!-- Complete goals button  -->
+                  <span class="${goal.complete ? "completed-text" : ""}">${goal.goaldesc}</span>
                   <button class="goal-btn goal-complete-btn" title="Complete goal" data-id="${goal.id}">
                     <i class="ri-progress-5-line"></i>
                   </button>
@@ -596,6 +847,7 @@ function renderDashboardGoals() {
   });
 
   dashboardGoals.innerHTML = dashboardGoalsItem;
+  updateStats(); // naya call add kiya
 }
 
 renderDashboardGoals();
@@ -720,20 +972,13 @@ fixedcalendarIcon.forEach((icon) => {
   });
 });
 
-
-
 const dashboardPlannerList = document.querySelector("#planner-list");
 
 // render Dashboard Plans
 function renderDashboardPlanner() {
-
   dashboardPlannerList.innerHTML = "";
 
   const today = new Date().toLocaleDateString("en-CA");
-
-  // =========================
-  // Custom Planner
-  // =========================
 
   const todayCustomPlans = planners
     .filter((item) => item.plansDate === today)
@@ -743,12 +988,8 @@ function renderDashboardPlanner() {
       period: item.plansPeriod,
       task: item.plansDesc,
       type: "custom",
+      complete: item.complete || false,
     }));
-
-
-  // =========================
-  // Fixed Planner
-  // =========================
 
   const todayFixedPlans = fixedPlans
     .filter((item) => item.date === today)
@@ -757,48 +998,26 @@ function renderDashboardPlanner() {
       time: item.time,
       task: item.plan,
       type: "fixed",
+      complete: item.complete || false,
     }));
 
-
-  // =========================
-  // Merge Both Arrays
-  // =========================
-
   const allPlans = [...todayCustomPlans, ...todayFixedPlans];
-
-
-  // =========================
-  // Sort By Time
-  // =========================
 
   allPlans.sort((a, b) => {
     return a.time.localeCompare(b.time);
   });
 
-
-  // =========================
-  // Render UI
-  // =========================
-
   let plannerHTML = "";
 
   allPlans.forEach((item) => {
-
     plannerHTML += `
       <li class="planner-item">
-
         <span class="planner-time">
-          ${
-            item.type === "fixed"
-              ? formatTime(item.time)
-              : `${item.time} ${item.period}`
-          }
+          ${item.type === "fixed" ? formatTime(item.time) : `${item.time} ${item.period}`}
         </span>
-
-        <span class="planner-task">
+        <span class="planner-task ${item.complete ? "completed-text" : ""}">
           ${item.task}
         </span>
-
         <button
           class="planner-complete-btn"
           title="Complete Planner"
@@ -807,17 +1026,13 @@ function renderDashboardPlanner() {
         >
           <i class="ri-check-double-line"></i>
         </button>
-
       </li>
     `;
-
   });
 
   dashboardPlannerList.innerHTML = plannerHTML;
-
+  updateStats(); // naya call add kiya
 }
-
-
 // planner UI renders
 function renderPlans() {
   if (planners.length === 0) {
@@ -901,7 +1116,6 @@ function addPlanners() {
 }
 addPlannerBtn.addEventListener("click", addPlanners);
 
-
 // delete planner functionalty
 plannerList.addEventListener("click", function (event) {
   const deleteBtn = event.target.closest(".delete-btn");
@@ -920,15 +1134,11 @@ const fixedPlannerInputs = document.querySelectorAll(".fixed-planner-input");
 let fixedPlans = [];
 let isDeleting = false;
 
-
-
-// render fixed plan's UI 
+// render fixed plan's UI
 function renderFixedPlans() {
-
   fixedPlans.forEach((planItem) => {
-
     const plannerItem = document.querySelector(
-      `.fixed-planner-item[data-time="${planItem.time}"]`
+      `.fixed-planner-item[data-time="${planItem.time}"]`,
     );
 
     if (!plannerItem) return;
@@ -938,16 +1148,13 @@ function renderFixedPlans() {
 
     plannerInput.value = planItem.plan;
     plannerDate.value = planItem.date;
-
   });
 
   renderDashboardPlanner();
-
 }
 
-// delete button 
+// delete button
 fixedPlannerContainer.addEventListener("click", function (event) {
-
   const deleteBtn = event.target.closest(".fixed-planner-delete-btn");
 
   if (!deleteBtn) return;
@@ -975,15 +1182,11 @@ fixedPlannerContainer.addEventListener("click", function (event) {
 
   isDeleting = false;
 
-  
   renderDashboardPlanner();
-
 });
-
 
 // time format function
 function formatTime(time) {
-
   let [hour, minute] = time.split(":");
 
   hour = Number(hour);
@@ -997,51 +1200,38 @@ function formatTime(time) {
   }
 
   return `${String(hour).padStart(2, "0")}:${minute} ${period}`;
-
 }
 
-// data lload in UI 
+// data lload in UI
 function saveFixedPlan(input) {
-
   const inputItem = input.closest(".fixed-planner-item");
-
   const time = inputItem.dataset.time;
   const plan = input.value.trim();
   const date = inputItem.querySelector(".fixed-planner-date-input").value;
 
-  // Don't save empty data
   if (plan === "" && date === "") return;
 
-  const existingPlan = fixedPlans.find((item) => {
-    return item.time === time;
-  });
+  const existingPlan = fixedPlans.find((item) => item.time === time);
 
   if (existingPlan) {
-
     existingPlan.plan = plan;
     existingPlan.date = date;
-
   } else {
-
     const fixedPlanDetails = {
       id: Date.now(),
       time,
       plan,
       date,
+      complete: false, // naya field
     };
-
     fixedPlans.push(fixedPlanDetails);
-
   }
 
   localStorage.setItem("fixedPlans", JSON.stringify(fixedPlans));
-
   renderDashboardPlanner();
-
 }
 
 fixedPlannerInputs.forEach((input) => {
-
   const plannerItem = input.closest(".fixed-planner-item");
   const dateInput = plannerItem.querySelector(".fixed-planner-date-input");
 
@@ -1052,50 +1242,596 @@ fixedPlannerInputs.forEach((input) => {
 
   // Save on Blur
   input.addEventListener("blur", function () {
-
     input.readOnly = true;
 
     if (isDeleting) return;
 
     saveFixedPlan(input);
-
   });
 
   // Save on Date Change
   dateInput.addEventListener("change", function () {
-
     saveFixedPlan(input);
-
   });
-
 });
 
 // empty localstorage pagload function
-function loadTodosFromStorage() {
-  const storedTodo = localStorage.getItem("todoItem");
-  const storedGoal = localStorage.getItem("goalItems");
-  const storePlans = localStorage.getItem("plansItem");
-  const FixedPlans = localStorage.getItem("fixedPlans");
+// ================= Stats Counter =================
 
-  if (storedTodo) {
-    todos = JSON.parse(storedTodo);
-  }
+function updateStats() {
+  const today = new Date().toLocaleDateString("en-CA");
 
-  if (storedGoal) {
-    goals = JSON.parse(storedGoal);
-  }
+  // ---- Todos ----
+  const todayTodos = todos.filter((t) => t.dueDate === today);
+  const completedTodayTodos = todayTodos.filter((t) => t.complete);
 
-  if (storePlans) {
-    planners = JSON.parse(storePlans);
-  }
+  document.getElementById("todo-today-count").textContent = todayTodos.length;
+  document.getElementById("todo-completed-count").textContent = completedTodayTodos.length;
 
-  if (FixedPlans) {
-    fixedPlans = JSON.parse(FixedPlans);
-  }
+  // ---- Goals ----
+  const todayGoals = goals.filter((g) => g.dueDate === today);
+  const completedTodayGoals = todayGoals.filter((g) => g.complete);
 
-  renderTodos();
-  renderGoals();
-  renderPlans();
-  renderFixedPlans();
+  document.getElementById("goal-today-count").textContent = todayGoals.length;
+  document.getElementById("goal-completed-count").textContent = completedTodayGoals.length;
+
+  // ---- Events (Planner: custom + fixed dono) ----
+  const todayCustomPlans = planners.filter((p) => p.plansDate === today);
+  const todayFixedPlans = fixedPlans.filter((p) => p.date === today);
+
+  const totalTodayEvents = todayCustomPlans.length + todayFixedPlans.length;
+  const completedTodayEvents =
+    todayCustomPlans.filter((p) => p.complete).length +
+    todayFixedPlans.filter((p) => p.complete).length;
+
+  document.getElementById("event-today-count").textContent = totalTodayEvents;
+  document.getElementById("event-completed-count").textContent = completedTodayEvents;
 }
+
+// ================= Complete Button Handlers =================
+
+// Todo complete toggle (dashboard)
+dashboardTodos.addEventListener("click", function (event) {
+  const completeBtn = event.target.closest(".todos-complete-btn");
+  if (!completeBtn) return;
+
+  const id = Number(completeBtn.dataset.id);
+  const todo = todos.find((item) => item.id === id);
+  if (!todo) return;
+
+  todo.complete = !todo.complete;
+  localStorage.setItem("todoItem", JSON.stringify(todos));
+  renderDashboardTodos();
+});
+
+// Goal complete toggle (dashboard)
+dashboardGoals.addEventListener("click", function (event) {
+  const completeBtn = event.target.closest(".goal-complete-btn");
+  if (!completeBtn) return;
+
+  const id = Number(completeBtn.dataset.id);
+  const goal = goals.find((item) => item.id === id);
+  if (!goal) return;
+
+  goal.complete = !goal.complete;
+  localStorage.setItem("goalItems", JSON.stringify(goals));
+  renderDashboardGoals();
+});
+
+// Planner complete toggle (custom + fixed dono, dashboard)
+dashboardPlannerList.addEventListener("click", function (event) {
+  const completeBtn = event.target.closest(".planner-complete-btn");
+  if (!completeBtn) return;
+
+  const id = Number(completeBtn.dataset.id);
+  const type = completeBtn.dataset.type;
+
+  if (type === "custom") {
+    const plan = planners.find((item) => item.id === id);
+    if (!plan) return;
+    plan.complete = !plan.complete;
+    localStorage.setItem("plansItem", JSON.stringify(planners));
+  } else if (type === "fixed") {
+    const plan = fixedPlans.find((item) => item.id === id);
+    if (!plan) return;
+    plan.complete = !plan.complete;
+    localStorage.setItem("fixedPlans", JSON.stringify(fixedPlans));
+  }
+
+  renderDashboardPlanner();
+});
 loadTodosFromStorage();
+
+// specifict timer tabs pomodoro
+
+// Display
+const fixedTimerDisplay = document.querySelector("#fixed-timer-display");
+const fixedTimerLabel = document.querySelector("#fixed-timer-label");
+
+// Circle
+const fixedTimerProgress = document.querySelector("#fixed-timer-progress");
+
+// Buttons
+const fixedStartBtn = document.querySelector("#fixed-start-btn");
+const fixedPauseBtn = document.querySelector("#fixed-pause-btn");
+const fixedResetBtn = document.querySelector("#fixed-reset-btn");
+const fixedSessionType = document.querySelector("#fixed-session-type");
+
+
+fixedSessionType.addEventListener("change", function () {
+
+  localStorage.setItem(
+    "fixedSessionType",
+    fixedSessionType.value
+  );
+
+});
+
+function loadFixedSession() {
+
+  const savedSession = localStorage.getItem("fixedSessionType");
+
+  if (savedSession) {
+    fixedSessionType.value = savedSession;
+  }
+
+}
+
+const FIXED_POMODORO_TIME = 25 * 60; // 25 Minutes
+
+const FIXED_RADIUS = fixedTimerProgress.r.baseVal.value;
+const FIXED_CIRCUMFERENCE = 2 * Math.PI * FIXED_RADIUS;377;
+
+let fixedTimeLeft = FIXED_POMODORO_TIME;
+
+let fixedTimer = null;
+
+let fixedIsRunning = false;
+
+// Total focus today (Seconds)
+let fixedTotalFocusToday = 0;
+
+// End timestamp
+let fixedEndTime = null;
+
+const FIXED_TIMER_KEY = "fixedPomodoro";
+const FIXED_FOCUS_KEY = "fixedFocusTime";
+
+function updateFixedDisplay() {
+  const minutes = Math.floor(fixedTimeLeft / 60);
+
+  const seconds = fixedTimeLeft % 60;
+
+  fixedTimerDisplay.textContent = `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+}
+
+function updateFixedProgress() {
+
+    const progress = fixedTimeLeft / FIXED_POMODORO_TIME;
+
+    const offset = FIXED_CIRCUMFERENCE * (1 - progress);
+
+    fixedTimerProgress.style.strokeDasharray = FIXED_CIRCUMFERENCE;
+
+    fixedTimerProgress.style.strokeDashoffset = offset;
+
+}
+
+function saveFixedPomodoro() {
+  const timerData = {
+    timeLeft: fixedTimeLeft,
+
+    isRunning: fixedIsRunning,
+
+    endTime: fixedEndTime,
+  };
+
+  localStorage.setItem(FIXED_TIMER_KEY, JSON.stringify(timerData));
+}
+
+function loadFixedPomodoro() {
+  const storedTimer = localStorage.getItem(FIXED_TIMER_KEY);
+
+  if (!storedTimer) return;
+
+  const timerData = JSON.parse(storedTimer);
+
+  fixedTimeLeft = timerData.timeLeft;
+
+  fixedIsRunning = timerData.isRunning;
+
+  fixedEndTime = timerData.endTime;
+}
+
+function saveFocusTime() {
+  const today = new Date().toLocaleDateString("en-CA");
+
+  const data = {
+    date: today,
+
+    total: fixedTotalFocusToday,
+  };
+
+  localStorage.setItem(FIXED_FOCUS_KEY, JSON.stringify(data));
+}
+
+function loadFocusTime() {
+  const stored = localStorage.getItem(FIXED_FOCUS_KEY);
+
+  if (!stored) return;
+
+  const data = JSON.parse(stored);
+
+  const today = new Date().toLocaleDateString("en-CA");
+
+  if (data.date === today) {
+    fixedTotalFocusToday = data.total;
+  } else {
+    fixedTotalFocusToday = 0;
+
+    saveFocusTime();
+  }
+}
+
+function checkDailyReset() {
+  const stored = localStorage.getItem(FIXED_FOCUS_KEY);
+
+  if (!stored) return;
+
+  const data = JSON.parse(stored);
+
+  const today = new Date().toLocaleDateString("en-CA");
+
+  if (today !== data.date) {
+    fixedTotalFocusToday = 0;
+
+    saveFocusTime();
+  }
+}
+
+loadFixedPomodoro();
+
+loadFocusTime();
+
+checkDailyReset();
+
+loadFixedSession();
+
+updateFixedDisplay();
+
+updateFixedProgress();
+
+
+function resumeFixedPomodoro() {
+
+    if (!fixedIsRunning || !fixedEndTime) return;
+
+    const remainingSeconds = Math.floor(
+        (fixedEndTime - Date.now()) / 1000
+    );
+
+    // Timer already finished
+    if (remainingSeconds <= 0) {
+
+        fixedTimeLeft = 0;
+
+        updateFixedDisplay();
+
+        updateFixedProgress();
+
+        fixedIsRunning = false;
+
+        // fixedTimerLabel.textContent = "Completed 🎉";
+
+        localStorage.removeItem(FIXED_TIMER_KEY);
+
+        return;
+
+    }
+
+    fixedTimeLeft = remainingSeconds;
+
+    updateFixedDisplay();
+
+    updateFixedProgress();
+
+    runFixedTimer();
+
+}
+
+
+function runFixedTimer() {
+
+    clearInterval(fixedTimer);
+
+    fixedTimer = setInterval(() => {
+
+        fixedTimeLeft--;
+
+
+        fixedTotalFocusToday++;
+
+        updateFixedDisplay();
+
+        updateFixedProgress();
+
+        saveFocusTime();
+
+        saveFixedPomodoro();
+
+        // Timer Finished
+        if (fixedTimeLeft <= 0) {
+
+            clearInterval(fixedTimer);
+
+            fixedIsRunning = false;
+
+            fixedTimeLeft = 0;
+
+            fixedTimerLabel.textContent = "Completed 🎉";
+
+            updateFixedDisplay();
+
+            updateFixedProgress();
+
+            localStorage.removeItem(FIXED_TIMER_KEY);
+
+        }
+
+    }, 1000);
+
+}
+
+
+function startFixedPomodoro() {
+
+    if (fixedIsRunning) return;
+
+    fixedIsRunning = true;
+
+    // fixedTimerLabel.textContent = "Focus Time";
+
+    fixedEndTime =
+        Date.now() + fixedTimeLeft * 1000;
+
+    saveFixedPomodoro();
+
+    runFixedTimer();
+
+}
+
+function pauseFixedPomodoro() {
+
+    clearInterval(fixedTimer);
+
+    fixedIsRunning = false;
+
+    fixedEndTime = null;
+
+    saveFixedPomodoro();
+
+}
+
+
+function resetFixedPomodoro() {
+
+    clearInterval(fixedTimer);
+
+    fixedIsRunning = false;
+
+    fixedTimeLeft = FIXED_POMODORO_TIME;
+
+    fixedEndTime = null;
+
+    updateFixedDisplay();
+
+    updateFixedProgress();
+
+    saveFixedPomodoro();
+
+}
+
+
+resumeFixedPomodoro();
+
+
+fixedStartBtn.addEventListener("click", () => {
+
+    startFixedPomodoro();
+
+});
+
+
+
+fixedPauseBtn.addEventListener("click", () => {
+
+    pauseFixedPomodoro();
+
+});
+
+
+
+fixedResetBtn.addEventListener("click", () => {
+
+    resetFixedPomodoro();
+
+});
+
+
+updateFixedDisplay();
+
+updateFixedProgress();
+
+
+function getTodayFocusTime() {
+
+    const hours = Math.floor(fixedTotalFocusToday / 3600);
+
+    const minutes = Math.floor((fixedTotalFocusToday % 3600) / 60);
+
+    const seconds = fixedTotalFocusToday % 60;
+
+    return `${String(hours).padStart(2, "0")}h ${String(minutes).padStart(2, "0")}m ${String(seconds).padStart(2, "0")}s`;
+
+}
+// weather code functionalty
+
+// ================= Weather Tab - Dynamic JS =================
+
+const weatherTab = {
+  latitude: 23.2599,   // default: Bhopal
+  longitude: 77.4126,
+  locationName: "Bhopal",
+
+  elements: {
+    searchInput: document.getElementById("weather-tab-search-input"),
+    searchBtn: document.getElementById("weather-tab-search-btn"),
+    refreshBtn: document.getElementById("weather-tab-refresh-btn"),
+    location: document.getElementById("weather-tab-location"),
+    temp: document.getElementById("weather-tab-temp"),
+    condition: document.getElementById("weather-tab-condition"),
+    humidity: document.getElementById("weather-tab-humidity"),
+    wind: document.getElementById("weather-tab-wind"),
+    feels: document.getElementById("weather-tab-feels"),
+    pressure: document.getElementById("weather-tab-pressure"),
+    sunrise: document.getElementById("weather-tab-sunrise-time"),
+    sunset: document.getElementById("weather-tab-sunset-time"),
+  },
+
+  // WMO weather codes -> readable text
+  weatherCodeMap: {
+    0: "Clear Sky",
+    1: "Mainly Clear",
+    2: "Partly Cloudy",
+    3: "Overcast",
+    45: "Fog",
+    48: "Rime Fog",
+    51: "Light Drizzle",
+    53: "Drizzle",
+    55: "Dense Drizzle",
+    61: "Slight Rain",
+    63: "Rain",
+    65: "Heavy Rain",
+    71: "Slight Snow",
+    73: "Snow",
+    75: "Heavy Snow",
+    80: "Rain Showers",
+    81: "Rain Showers",
+    82: "Violent Rain Showers",
+    95: "Thunderstorm",
+    96: "Thunderstorm w/ Hail",
+    99: "Thunderstorm w/ Hail",
+  },
+
+  init() {
+    this.elements.searchBtn.addEventListener("click", () => this.handleSearch());
+    this.elements.searchInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") this.handleSearch();
+    });
+    this.elements.refreshBtn.addEventListener("click", () => this.fetchWeather());
+
+    this.fetchWeather();
+  },
+
+  async handleSearch() {
+    const query = this.elements.searchInput.value.trim();
+    if (!query) return;
+
+    try {
+      const geoRes = await fetch(
+        `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(query)}&count=1`
+      );
+      const geoData = await geoRes.json();
+
+      if (!geoData.results || geoData.results.length === 0) {
+        this.elements.condition.textContent = "Location not found";
+        return;
+      }
+
+      const place = geoData.results[0];
+      this.latitude = place.latitude;
+      this.longitude = place.longitude;
+      this.locationName = place.name;
+
+      this.elements.searchInput.value = "";
+      this.fetchWeather();
+    } catch (err) {
+      console.error("Geocoding error:", err);
+      this.elements.condition.textContent = "Search failed";
+    }
+  },
+
+  async fetchWeather() {
+    try {
+      const url = `https://api.open-meteo.com/v1/forecast?latitude=${this.latitude}&longitude=${this.longitude}&current=temperature_2m,relative_humidity_2m,apparent_temperature,wind_speed_10m,surface_pressure,weather_code&daily=sunrise,sunset&timezone=auto`;
+
+      const res = await fetch(url);
+      const data = await res.json();
+
+      this.renderWeather(data);
+    } catch (err) {
+      console.error("Weather fetch error:", err);
+      this.elements.condition.textContent = "Failed to load weather";
+    }
+  },
+
+  renderWeather(data) {
+    const current = data.current;
+    const daily = data.daily;
+
+    this.elements.location.textContent = `📍 ${this.locationName}`;
+    this.elements.temp.textContent = `${Math.round(current.temperature_2m)}°C`;
+    this.elements.condition.textContent =
+      this.weatherCodeMap[current.weather_code] || "Unknown";
+
+    this.elements.humidity.textContent = `${current.relative_humidity_2m}%`;
+    this.elements.wind.textContent = `${Math.round(current.wind_speed_10m)} km/h`;
+    this.elements.feels.textContent = `${Math.round(current.apparent_temperature)}°C`;
+    this.elements.pressure.textContent = `${Math.round(current.surface_pressure)} hPa`;
+
+    this.elements.sunrise.textContent = this.formatTime(daily.sunrise[0]);
+    this.elements.sunset.textContent = this.formatTime(daily.sunset[0]);
+  },
+
+  formatTime(isoString) {
+    const date = new Date(isoString);
+    return date.toLocaleTimeString("en-US", {
+      hour: "numeric",
+      minute: "2-digit",
+      hour12: true,
+    });
+  },
+};
+
+document.addEventListener("DOMContentLoaded", () => weatherTab.init());
+
+
+
+
+
+
+
+
+
+
+
+
+// Quote tabs funcionalty 
+
+const quoteTabText = document.querySelector("#quote-tab-text");
+const quoteTabAuthor = document.querySelector("#quote-tab-author");
+const quoteTabRefreshBtn = document.querySelector("#quote-tab-new-btn");
+
+async function updateTabQuote() {
+  const response = await fetch("https://dummyjson.com/quotes/random");
+
+  const data = await response.json();
+
+  quoteTabText.textContent = data.quote;
+
+  quoteTabAuthor.textContent = data.author;
+}
+updateQuote();
+quoteTabRefreshBtn.addEventListener("click", updateTabQuote);
+
+

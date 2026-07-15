@@ -57,7 +57,7 @@
             <i class="ri-cloud-windy-line"></i>
             Weather
           </a>
-          <a href="#" class="nav-item" data-page="quotes">
+          <a href="#" class="nav-item" data-page="quote">
             <i class="ri-double-quotes-l"></i>
             Quotes
           </a>
@@ -76,14 +76,14 @@
             <i class="ri-user-3-fill"></i>
           </div>
           <div class="user-info">
-            <h4>Hello, Farhan!</h4>
+            <h4>Hello</h4>
             <p>Stay focused and<br />make it happen ✨</p>
           </div>
         </div>
-        <div class="logout-btn">
+        <!-- <div class="logout-btn">
           <i class="ri-logout-box-r-line"></i>
           <h3>Logout</h3>
-        </div>
+        </div> -->
       </aside>
 
       <!-- sidebar done  -->
@@ -94,7 +94,7 @@
           <section id="topbar">
             <div id="greeting-card" class="n-card">
               <h2 id="greeting-title">
-                <span id="greeting-name">Good Morning,</span> <span class="user-name">Farhan!</span>
+                <span id="greeting-name">Good Morning,</span>
                 <span class="wave">👋</span>
               </h2>
               <p id="greeting-subtitle">Focus on progress, not perfection.</p>
@@ -126,60 +126,36 @@
           <!-- Stats row -->
           <section id="stats-row">
             <div class="stats-card n-card">
-              <div class="stats-top">
-                <span class="material-symbols-outlined">task_alt</span>
+              <div class="stats-top"><span class="material-symbols-outlined">task_alt</span>
                 <p>Todo List</p>
               </div>
-              <div class="today-stats">
-                <span class="stats-heading">Today Todos :</span>
-                <span class="stats-data">0</span>
-              </div>
-              <div class="complete-stats">
-                <span class="stats-heading">Completed Todos :</span>
-                <span class="stats-data">0</span>
-              </div>
+              <div class="today-stats"><span class="stats-heading">Today Todos :</span><span class="stats-data"
+                  id="todo-today-count">0</span></div>
+              <div class="complete-stats"><span class="stats-heading">Completed Todos :</span><span class="stats-data"
+                  id="todo-completed-count">0</span></div>
             </div>
 
             <div class="stats-card n-card">
-              <div class="stats-top">
-                <span class="material-symbols-outlined">task_alt</span>
+              <div class="stats-top"><span class="material-symbols-outlined">task_alt</span>
                 <p>Today Events</p>
               </div>
-              <div class="today-stats">
-                <span class="stats-heading">Today Events :</span>
-                <span class="stats-data">0</span>
-              </div>
-              <div class="complete-stats">
-                <span class="stats-heading">Completed Events :</span>
-                <span class="stats-data">0</span>
-              </div>
+              <div class="today-stats"><span class="stats-heading">Today Events :</span><span class="stats-data"
+                  id="event-today-count">0</span></div>
+              <div class="complete-stats"><span class="stats-heading">Completed Events :</span><span class="stats-data"
+                  id="event-completed-count">0</span></div>
             </div>
 
             <div class="stats-card n-card">
-              <div class="stats-top">
-                <span class="material-symbols-outlined">task_alt</span>
+              <div class="stats-top"><span class="material-symbols-outlined">task_alt</span>
                 <p>Goals</p>
               </div>
-              <div class="today-stats">
-                <span class="stats-heading">Today Goals :</span>
-                <span class="stats-data">0</span>
-              </div>
-              <div class="complete-stats">
-                <span class="stats-heading">Completed Goals :</span>
-                <span class="stats-data">0</span>
-              </div>
+              <div class="today-stats"><span class="stats-heading">Today Goals :</span><span class="stats-data"
+                  id="goal-today-count">0</span></div>
+              <div class="complete-stats"><span class="stats-heading">Completed Goals :</span><span class="stats-data"
+                  id="goal-completed-count">0</span></div>
             </div>
 
-            <div class="stats-card n-card">
-              <div class="focus-stats-top">
-                <span class="material-symbols-outlined">task_alt</span>
-                <p>Focus</p>
-              </div>
-              <div class="focus-stats">
-                <span class="focus-heading">Today Total Focus Time :</span>
-                <span class="focus-data">0<span>M</span></span>
-              </div>
-            </div>
+
           </section>
 
           <!-- Content grid -->
@@ -208,8 +184,8 @@
                 </div> -->
               </div>
               <ul id="planner-list">
-               
-               </ul>
+
+              </ul>
             </div>
 
             <!-- Goals -->
@@ -243,7 +219,7 @@
                   <i class="ri-refresh-line"></i>
                 </button>
               </div>
-              <div id="weather-main">
+              <div id="dashboard-weather-main">
                 <div>
                   <div id="weather-temp"><span id="temp-value">32</span>°C</div>
                   <div id="weather-desc">Partly Cloudy</div>
@@ -612,7 +588,7 @@
             </div>
 
             <div class="fixed-planner-container fixedPlannerList">
-              
+
               <!-- 12:00 AM -->
               <div class="fixed-planner-item" data-time="00:00">
                 <div class="fixed-planner-time"><span>12:00 AM</span></div>
@@ -977,40 +953,301 @@
           </div>
         </div>
 
+        <!-- timer dashboar done  -->
         <div class="timer-main" id="timer-main">
           <div class="logout-btn back-btn">
             <i class="ri-arrow-left-box-line"></i>
             <h3>Back</h3>
           </div>
 
+          <div class="timer-container n-card">
+            <div class="timer-topbar">
+              <span id="custom-timer" class="n-card" data-planner="fixed-timer">Pomodoro</span>
+            </div>
 
-          <div id="pomodoro-body">
-                <div id="timer-ring-wrap">
+            <div class="fixed-pomodoro-container">
+              <div id="fixed-pomodoro-body">
+
+                <div id="fixed-timer-ring-wrap">
+
                   <svg viewBox="0 0 140 140">
-                    <circle id="timer-track" cx="70" cy="70" r="50"></circle>
-                    <circle id="timer-progress" cx="70" cy="70" r="50" stroke-dasharray="377" stroke-dashoffset="80">
+
+                    <!-- Background Ring -->
+                    <circle id="fixed-timer-track" cx="70" cy="70" r="50">
                     </circle>
+
+                    <!-- Progress Ring -->
+                    <circle id="fixed-timer-progress" cx="70" cy="70" r="50">
+                    </circle>
+
                   </svg>
-                  <div id="timer-center">
-                    <div id="timer-display">25:00</div>
-                    <div id="timer-label">Focus Time</div>
+
+                  <div id="fixed-timer-center">
+
+                    <div id="fixed-timer-display">
+                      25:00
+                    </div>
+
+                    <select id="fixed-session-type">
+
+                      <option value="work" selected>
+                        💼 Work Session
+                      </option>
+
+                      <option value="study">
+                        📚 Study Session
+                      </option>
+
+                      <option value="coding">
+                        💻 Coding Session
+                      </option>
+
+                      <option value="reading">
+                        📖 Reading Session
+                      </option>
+
+                      <option value="writing">
+                        ✍️ Writing Session
+                      </option>
+
+                      <option value="exercise">
+                        🏃 Exercise
+                      </option>
+
+                      <option value="meditation">
+                        🧘 Meditation
+                      </option>
+
+                      <option value="meeting">
+                        🤝 Meeting
+                      </option>
+
+                      <option value="break">
+                        ☕ Short Break
+                      </option>
+
+                      <option value="long-break">
+                        🌴 Long Break
+                      </option>
+
+                    </select>
+
                   </div>
                 </div>
-                <div id="pomodoro-controls">
-                  <button id="start-btn">
-                    <i class="ri-play-fill"></i>Start
+
+                <div id="fixed-pomodoro-controls">
+
+                  <button id="fixed-start-btn">
+                    <i class="ri-play-fill"></i>
+                    Start
                   </button>
-                  <button id="pause-btn">
-                    <i class="ri-pause-line"></i>Pause
+
+                  <button id="fixed-pause-btn">
+                    <i class="ri-pause-line"></i>
+                    Pause
                   </button>
-                  <button id="reset-btn">
-                    <i class="ri-restart-line"></i>Reset
+
+                  <button id="fixed-reset-btn">
+                    <i class="ri-restart-line"></i>
+                    Reset
                   </button>
+
                 </div>
+
               </div>
 
+            </div>
+          </div>
+
+
+
         </div>
-        
+
+        <div class="weather-main" id="weather-main">
+          <div class="logout-btn back-btn">
+            <i class="ri-arrow-left-box-line"></i>
+            <h3>Back</h3>
+          </div>
+
+          <div class="weather-tab-container n-card">
+
+            <!-- ================= Header ================= -->
+
+            <div class="weather-tab-header">
+
+              <div class="weather-tab-title">
+                <i class="ri-cloud-fill"></i>
+                <h2>Weather</h2>
+              </div>
+
+              <div class="weather-tab-search">
+
+                <input type="text" id="weather-tab-search-input" placeholder="Search a place..." />
+
+                <button id="weather-tab-search-btn">
+                  <i class="ri-search-line"></i>
+                </button>
+
+                <button id="weather-tab-refresh-btn">
+                  <i class="ri-refresh-line"></i>
+                </button>
+
+              </div>
+
+            </div>
+
+
+            <!-- ================= Current Weather ================= -->
+
+            <div class="weather-tab-current">
+
+              <div class="weather-tab-current-left">
+
+                <span id="weather-tab-location">
+                  📍 Bhopal
+                </span>
+
+                <h1 id="weather-tab-temp">
+                  32°C
+                </h1>
+
+                <p id="weather-tab-condition">
+                  Partly Cloudy
+                </p>
+
+              </div>
+
+              <div class="weather-tab-current-right">
+
+                <!-- <img id="weather-tab-main-icon" src="./assets/weather/partly-cloudy.png" alt="Weather Icon" /> -->
+
+              </div>
+
+            </div>
+
+
+            <!-- ================= Weather Details ================= -->
+
+            <div class="weather-tab-details">
+
+              <div class="weather-tab-detail-card">
+
+                <span class="weather-tab-detail-title">
+                  HUMIDITY
+                </span>
+
+                <h3 id="weather-tab-humidity">
+                  59%
+                </h3>
+
+              </div>
+
+              <div class="weather-tab-detail-card">
+
+                <span class="weather-tab-detail-title">
+                  WIND
+                </span>
+
+                <h3 id="weather-tab-wind">
+                  13 km/h
+                </h3>
+
+              </div>
+
+              <div class="weather-tab-detail-card">
+
+                <span class="weather-tab-detail-title">
+                  FEELS
+                </span>
+
+                <h3 id="weather-tab-feels">
+                  37°C
+                </h3>
+
+              </div>
+
+              <div class="weather-tab-detail-card">
+
+                <span class="weather-tab-detail-title">
+                  PRESSURE
+                </span>
+
+                <h3 id="weather-tab-pressure">
+                  951 hPa
+                </h3>
+
+              </div>
+
+            </div>
+
+            <!-- Footer -->
+
+            <div class="weather-tab-footer">
+
+              <div class="weather-tab-sunrise">
+
+                <span>
+                  🌅 Sunrise
+                </span>
+
+                <strong id="weather-tab-sunrise-time">
+                  5:43 AM
+                </strong>
+
+              </div>
+
+              <div class="weather-tab-sunset">
+
+                <span>
+                  🌇 Sunset
+                </span>
+
+                <strong id="weather-tab-sunset-time">
+                  7:09 PM
+                </strong>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- qutoe dashboard complete -->
+        <div class="quote-main" id="quote-main">
+          <div class="logout-btn back-btn">
+            <i class="ri-arrow-left-box-line"></i>
+            <h3>Back</h3>
+          </div>
+
+          <div class="quote-container">
+            <div id="quote-tab-card" class="n-card">
+
+              <div id="quote-tab-header">
+                <i class="ri-double-quotes-l"></i>
+                Daily Motivation
+              </div>
+
+              <p id="quote-tab-text">
+                Success is not final, failure is not fatal: It is the courage to continue that counts.
+              </p>
+
+              <p id="quote-tab-author">
+                — Winston Churchill
+              </p>
+
+              <button id="quote-tab-new-btn">
+                <i class="ri-refresh-line"></i>
+                New Quote
+              </button>
+
+            </div>
+          </div>
+
+
+        </div>
+
       </main>
 
     </div>
